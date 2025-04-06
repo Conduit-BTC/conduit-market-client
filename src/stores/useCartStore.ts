@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 export interface CartItem {
-    id: string;
+    productId: string;
     name: string;
     price: number;
     image: string;
@@ -30,12 +30,12 @@ export const useCartStore = create<CartState>()(
             toggleCart: () => set((state) => ({ isCartOpen: !state.isCartOpen })),
             addToCart: (product: CartItem) => {
                 const existingProduct = get().cart.find((p) =>
-                    p.id === product.id
+                    p.productId === product.productId
                 );
                 if (existingProduct) {
                     set((state) => ({
                         cart: state.cart.map((p) =>
-                            p.id === product.id
+                            p.productId === product.productId
                                 ? { ...p, quantity: p.quantity + 1 }
                                 : p
                         ),
@@ -48,17 +48,17 @@ export const useCartStore = create<CartState>()(
             },
             decreaseQuantity: (product: CartItem) => {
                 const existingProduct = get().cart.find((p) =>
-                    p.id === product.id
+                    p.productId === product.productId
                 );
                 if (existingProduct) {
                     if (existingProduct.quantity === 1) {
                         set((state) => ({
-                            cart: state.cart.filter((p) => p.id !== product.id),
+                            cart: state.cart.filter((p) => p.productId !== product.productId),
                         }));
                     } else {
                         set((state) => ({
                             cart: state.cart.map((p) =>
-                                p.id === product.id
+                                p.productId === product.productId
                                     ? { ...p, quantity: p.quantity - 1 }
                                     : p
                             ),
@@ -68,7 +68,7 @@ export const useCartStore = create<CartState>()(
             },
             removeAllFromCart: (product: CartItem) =>
                 set((state) => ({
-                    cart: state.cart.filter((p) => p.id !== product.id),
+                    cart: state.cart.filter((p) => p.productId !== product.productId),
                 })),
         }),
         {
