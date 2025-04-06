@@ -84,9 +84,7 @@ export const useOrderSubscription = () => {
         if (!events || events.length === 0) return;
 
         const processEvents = async () => {
-            console.log(">>>>> Processing newly-received order events:", events);
             for (const event of events) {
-                console.log(">>>>> Processing newly-received order event:", event);
                 try {
                     // For NIP-17 direct messages, attempt decryption
                     const decryptedEvent: NostrEvent | null = await decryptNip17Message(await getNdk(), event.rawEvent());
@@ -152,6 +150,7 @@ export const useOrderSubscription = () => {
                         }
                     } else if (decryptedEvent.kind === 17) {
                         // Receipt
+                        console.log("RECEIPT: ", decryptedEvent);
                         const receiptResult = validatePaymentReceipt(decryptedEvent);
                         if (receiptResult.success) {
                             orderType = OrderEventType.PAYMENT_RECEIPT;

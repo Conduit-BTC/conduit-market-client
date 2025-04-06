@@ -5,8 +5,10 @@ import {
     useOrderStore,
 } from "@/stores/useOrderStore";
 import { useOrderSubscription } from "@/hooks/useOrderSubscription";
-import { OrderUtils } from "nostr-commerce-schema";
 import BackButton from "@/components/Buttons/BackButton";
+import PaymentRequestItem from "@/components/Orders/PaymentRequestItem";
+import ShippingUpdateItem from "@/components/Orders/ShippingUpdateItem";
+import ReceiptItem from "@/components/Orders/ReceiptItem";
 
 enum OrderTab {
     PAYMENT_REQUESTS = "payment_requests",
@@ -50,76 +52,6 @@ const OrdersPage: React.FC = () => {
     const handleOrderClick = (order: StoredOrderEvent) => {
         // Mark the order as read when clicked
         markAsRead(order.orderId, order.type);
-    };
-
-    // Render a single order item
-    const renderOrderItem = (order: StoredOrderEvent) => {
-        const { event, orderId, type, unread, timestamp } = order;
-
-        return (
-            <div
-                key={order.id}
-                className={`border p-4 rounded-lg mb-4 cursor-pointer hover:bg-gray-50 transition-colors ${
-                    unread ? "bg-blue-50 border-blue-200" : ""
-                }`}
-                onClick={() => handleOrderClick(order)}
-            >
-                <div className="flex justify-between items-start">
-                    <div>
-                        <h3 className="font-semibold text-lg">
-                            {type === OrderEventType.ORDER && "New Order"}
-                            {type === OrderEventType.PAYMENT_REQUEST &&
-                                "Payment Request"}
-                            {type === OrderEventType.SHIPPING_UPDATE &&
-                                "Shipping Update"}
-                            {type === OrderEventType.PAYMENT_RECEIPT &&
-                                "Payment Receipt"}
-                            {unread && (
-                                <span className="ml-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
-                                    New
-                                </span>
-                            )}
-                        </h3>
-                        <p className="text-gray-600">
-                            {OrderUtils.getOrderSummary(event)}
-                        </p>
-                        <p className="text-sm text-gray-500">
-                            Order ID: {orderId}
-                        </p>
-                        <p className="text-sm text-gray-500">
-                            {OrderUtils.formatOrderTime(timestamp)}
-                        </p>
-                    </div>
-                    <div>
-                        {/* Add action buttons based on order type */}
-                        {type === OrderEventType.PAYMENT_REQUEST && (
-                            <button className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">
-                                Pay Now
-                            </button>
-                        )}
-                        {type === OrderEventType.SHIPPING_UPDATE && (() => {
-                            const { tracking } = OrderUtils.getTrackingInfo(
-                                event,
-                            );
-                            return tracking
-                                ? (
-                                    <button className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
-                                        Track Package
-                                    </button>
-                                )
-                                : null;
-                        })()}
-                    </div>
-                </div>
-
-                {/* Display order content if available */}
-                {event.content && (
-                    <div className="mt-2 p-3 bg-gray-100 rounded text-sm">
-                        {event.content}
-                    </div>
-                )}
-            </div>
-        );
     };
 
     const filteredOrders = getFilteredOrders();
@@ -181,7 +113,79 @@ const OrdersPage: React.FC = () => {
 
             {/* Order list */}
             <div className="space-y-4">
-                {filteredOrders.map(renderOrderItem)}
+                {filteredOrders.length === 0
+                    ? (
+                        <div className="text-center text-gray-500 py-8">
+                            No orders found in this category.
+                        </div>
+                    )
+                    : (
+                        filteredOrders.map((order) => {
+                            switch (order.type) {
+                                case OrderEventType.PAYMENT_REQUEST:
+                                    return (
+                                        <PaymentRequestItem
+                                            key={order.id}
+                                            order={order}
+                                            onClick={handleOrderClick}
+                                        />
+                                    );
+                                case OrderEventType.SHIPPING_UPDATE:
+                                    return (
+                                        <ShippingUpdateItem
+                                            key={order.id}
+                                            order={order}
+                                            onClick={handleOrderClick}
+                                        />
+                                    );
+                                case OrderEventType.PAYMENT_RECEIPT:
+                                    return (
+                                        <ReceiptItem
+                                            key={order.id}
+                                            order={order}
+                                            onClick={handleOrderClick}
+                                        />
+                                    );
+                                default:
+                                    // Fallback for any other order types
+                                    return (
+                                        <div
+                                            key={order.id}
+                                            className={`border p-4 rounded-lg mb-4 cursor-pointer hover:bg-gray-50 transition-colors ${
+                                                order.unread
+                                                    ? "bg-blue-50 border-blue-200"
+                                                    : ""
+                                            }`}
+                                            onClick={() =>
+                                                handleOrderClick(order)}
+                                        >
+                                            <div className="flex justify-between items-start">
+                                                <div>
+                                                    <h3 className="font-semibold text-lg">
+                                                        Order
+                                                        {order.unread && (
+                                                            <span className="ml-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+                                                                New
+                                                            </span>
+                                                        )}
+                                                    </h3>
+                                                    <p className="text-sm text-gray-500">
+                                                        Order ID:{" "}
+                                                        {order.orderId}
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            {order.event.content && (
+                                                <div className="mt-2 p-3 bg-gray-100 rounded text-sm">
+                                                    {order.event.content}
+                                                </div>
+                                            )}
+                                        </div>
+                                    );
+                            }
+                        })
+                    )}
             </div>
         </div>
     );

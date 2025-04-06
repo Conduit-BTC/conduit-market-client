@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { type NostrEvent } from '@nostr-dev-kit/ndk';
+import { OrderUtils, type ProductListing } from 'nostr-commerce-schema';
 
 export enum OrderEventType {
     ORDER = 'order',
@@ -19,16 +20,81 @@ export enum OrderProcessingStatus {
     FAILED = 'failed'
 }
 
+export enum OrderErrorType {
+    PAYMENT_FAILED = 'payment_failed',
+    SHIPPING_FAILED = 'shipping_failed',
+    OTHER = 'other'
+}
+
 // Interface for an order in our store
-export interface StoredOrderEvent {
-    id: string;           // Event ID
+export interface OrderError {
+    type: OrderErrorType
+    message: string
+    eventId?: string
+}
+export interface CM_Order {
+    event: NostrEvent;    // The initial Order Creation event
     orderId: string;      // Order ID from the order tag
-    event: NostrEvent;    // The full Nostr event
-    type: OrderEventType;      // Type of order event
-    unread: boolean;      // Whether the order needs attention
     timestamp: number;    // Event timestamp
+    unread: boolean;      // Whether the order needs attention
+
+    shippingEventId: string;     // Reference to shipping option
+    address: string;             // Shipping address
+    email?: string;              // Customer email
+    phone?: string;              // Customer phone number
+    items: ProductListing[];     // List of items in the order
+
+    paymentRequest: CM_PaymentRequest; // Payment request
+    statusUpdates: CM_StatusUpdate[];  // Status updates
+    shippingUpdates: CM_ShippingUpdate[]; // Shipping updates
+    receipts: NostrEvent[]; // Payment receipts
+
     processingStatus?: OrderProcessingStatus; // For tracking payment/shipping process
-    error?: string;       // Error message if any
+    errors?: OrderError[];       // Error messages
+}
+
+export interface CM_PaymentRequest {
+    event: NostrEvent;    // The full Nostr event
+    orderId: string;      // Order ID from the order tag
+    timestamp: number;    // Event timestamp
+    unread: boolean;      // Whether the order needs attention
+
+    lightningInvoice?: string; // Lightning invoice for payment requests
+}
+
+export interface CM_StatusUpdate {
+    event: NostrEvent;    // The full Nostr event
+    orderId: string;      // Order ID from the order tag
+    timestamp: number;    // Event timestamp
+    unread: boolean;      // Whether the order needs attention
+
+    message: string;      // Status update message
+    status: OrderProcessingStatus; // Status of the order
+}
+
+export interface CM_ShippingUpdate {
+    event: NostrEvent;    // The full Nostr event
+    orderId: string;      // Order ID from the order tag
+    timestamp: number;    // Event timestamp
+    unread: boolean;      // Whether the order needs attention
+
+    status: OrderProcessingStatus; // Status of the order
+
+    message?: string;      // Shipping update message
+    tracking?: string;   // Tracking number for shipping
+    carrier?: string;    // Shipping carrier
+    eta: number;         // Estimated time of arrival, unix timestamp
+}
+
+export interface CM_Receipt {
+    event: NostrEvent;    // The full Nostr event
+    orderId: string;      // Order ID from the order tag
+    timestamp: number;    // Event timestamp
+    unread: boolean;      // Whether the order needs attention
+
+    paymentProof: string; // Payment proof
+    amount: number;       // Amount paid
+    currency: string;     // Currency code
 }
 
 interface OrderState {
@@ -100,9 +166,11 @@ export const useOrderStore = create<OrderState>()(
                             };
                         case OrderEventType.PAYMENT_REQUEST:
                             if (state.paymentRequests.some(o => o.id === order.id)) return state;
+                            console.log("Payment request order:", order.event);
+                            const lightningInvoice = OrderUtils.getPaymentMethod(order.event)?.value;
                             return {
                                 ...state,
-                                paymentRequests: [...state.paymentRequests, order]
+                                paymentRequests: [...state.paymentRequests, { ...order, lightningInvoice }]
                             };
                         case OrderEventType.STATUS_UPDATE:
                             if (state.statusUpdates.some(o => o.id === order.id)) return state;

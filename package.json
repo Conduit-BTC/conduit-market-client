@@ -13,9 +13,10 @@
         "ndk": "^1.0.0",
         "nostr-hooks": "^4.2.3",
         "nostr-tools": "^2.10.4",
+        "qrcode.react": "^4.2.0",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
-        "wouter": "^3.3.5",
+        "wouter": "^3.6.0",
         "zod": "^3.24.1",
         "zustand": "5.0.2"
     },
