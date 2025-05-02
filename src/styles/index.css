@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=JetBrains+Mono&display=swap');
-@import '@/styles/theme.css';
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=JetBrains+Mono&display=swap");
+@import "./theme.css";
 
 @tailwind base;
 @tailwind components;
@@ -20,7 +20,11 @@
     -webkit-text-size-adjust: 100%;
   }
 
-  h1, h2, h3, h4, h5 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
     font-family: var(--font-secondary);
     font-weight: var(--font-weight-bold);
     line-height: var(--line-height-tight);
@@ -63,7 +67,8 @@
     text-decoration: underline;
   }
 
-  code, pre {
+  code,
+  pre {
     font-family: var(--font-mono);
     background-color: var(--color-neutral-100);
     border-radius: var(--radius-sm);
@@ -78,18 +83,22 @@
     padding: 0.2em 0.4em;
   }
 
-  button, .btn {
+  button,
+  .btn {
     font-weight: var(--font-weight-medium);
     transition: all var(--transition-normal);
     border-radius: var(--radius-md);
   }
 
-  button:focus, .btn:focus {
+  button:focus,
+  .btn:focus {
     outline: 2px solid var(--color-primary);
     outline-offset: 2px;
   }
 
-  input, textarea, select {
+  input,
+  textarea,
+  select {
     font-family: var(--font-primary);
     border: 1px solid var(--color-neutral-300);
     border-radius: var(--radius-md);
@@ -97,7 +106,9 @@
     transition: border-color var(--transition-fast);
   }
 
-  input:focus, textarea:focus, select:focus {
+  input:focus,
+  textarea:focus,
+  select:focus {
     border-color: var(--color-primary);
     outline: none;
     box-shadow: 0 0 0 2px var(--color-primary-light);
@@ -111,7 +122,8 @@
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
     overflow: hidden;
-    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    transition: transform var(--transition-normal),
+      box-shadow var(--transition-normal);
   }
 
   .card:hover {
@@ -168,7 +180,8 @@
     background-color: var(--color-neutral-800);
   }
 
-  code, pre {
+  code,
+  pre {
     background-color: var(--color-neutral-800);
   }
 }
