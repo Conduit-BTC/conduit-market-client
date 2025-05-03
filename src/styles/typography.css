@@ -1,0 +1,57 @@
+.booming-voice {
+  font-family: var(--font-display);
+  font-size: var(--text-6xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--leading-tight);
+  text-shadow: var(--text-shadow);
+}
+
+.loud-voice {
+  font-family: var(--font-body);
+  font-size: var(--text-3xl);
+  line-height: var(--leading-tight);
+}
+
+.attention-voice {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  line-height: var(--leading-tight);
+}
+
+.firm-voice {
+  font-family: var(--font-body);
+  font-size: var(--text-xl);
+  line-height: var(--leading-tight);
+}
+
+.notice-voice {
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  line-height: var(--leading-normal);
+}
+
+.calm-voice {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+}
+
+.whisper-voice {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-gray-500);
+  line-height: var(--leading-normal);
+}
+
+.solid-voice {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--leading-normal);
+}
+
+.micro-voice {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+}
