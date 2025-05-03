@@ -55,7 +55,7 @@ const PostNostrNote: React.FC = () => {
                         value={nsec}
                         onChange={(e) => setNsec(e.target.value)}
                         placeholder="nsec1..."
-                        className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 outline-none"
+                        className="w-full p-2 border rounded-sm focus:ring-2 focus:ring-blue-500 outline-hidden"
                         required
                     />
                 </div>
@@ -67,7 +67,7 @@ const PostNostrNote: React.FC = () => {
                     <textarea
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
-                        className="w-full p-2 border rounded h-32 focus:ring-2 focus:ring-blue-500 outline-none"
+                        className="w-full p-2 border rounded-sm h-32 focus:ring-2 focus:ring-blue-500 outline-hidden"
                         placeholder="What's on your mind?"
                         required
                     />
@@ -75,7 +75,7 @@ const PostNostrNote: React.FC = () => {
 
                 <button
                     type="submit"
-                    className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors"
+                    className="w-full bg-blue-500 text-white py-2 px-4 rounded-sm hover:bg-blue-600 transition-colors"
                 >
                     Post Note
                 </button>

@@ -93,7 +93,7 @@ const OrdersPage: React.FC = () => {
                     <div>
                         {/* Add action buttons based on order type */}
                         {type === OrderEventType.PAYMENT_REQUEST && (
-                            <button className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">
+                            <button className="bg-green-500 text-white px-3 py-1 rounded-sm hover:bg-green-600">
                                 Pay Now
                             </button>
                         )}
@@ -103,7 +103,7 @@ const OrdersPage: React.FC = () => {
                             );
                             return tracking
                                 ? (
-                                    <button className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
+                                    <button className="bg-blue-500 text-white px-3 py-1 rounded-sm hover:bg-blue-600">
                                         Track Package
                                     </button>
                                 )
@@ -114,7 +114,7 @@ const OrdersPage: React.FC = () => {
 
                 {/* Display order content if available */}
                 {event.content && (
-                    <div className="mt-2 p-3 bg-gray-100 rounded text-sm">
+                    <div className="mt-2 p-3 bg-gray-100 rounded-sm text-sm">
                         {event.content}
                     </div>
                 )}
@@ -174,7 +174,7 @@ const OrdersPage: React.FC = () => {
 
             {/* Error state */}
             {error && (
-                <div className="bg-red-100 border border-red-300 text-red-700 p-4 rounded mb-4">
+                <div className="bg-red-100 border border-red-300 text-red-700 p-4 rounded-sm mb-4">
                     Error: {error}
                 </div>
             )}

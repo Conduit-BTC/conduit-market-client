@@ -58,7 +58,7 @@ export const CartDrawer = () => {
                     </button>
                 </header>
 
-                <div className="flex-grow overflow-y-auto">
+                <div className="grow overflow-y-auto">
                     {cart.length === 0
                         ? (
                             <div className="flex flex-col items-center justify-center h-full p-6 text-center">
@@ -79,16 +79,16 @@ export const CartDrawer = () => {
                                 {cart.map((product, i) => (
                                     <div
                                         key={product.id + `-${i}`}
-                                        className="flex items-center p-3 rounded-lg bg-neutral-50 dark:bg-neutral-700 shadow-sm"
+                                        className="flex items-center p-3 rounded-lg bg-neutral-50 dark:bg-neutral-700 shadow-xs"
                                     >
-                                        <div className="w-10 h-10 rounded-md overflow-hidden flex-shrink-0 bg-white mr-3">
+                                        <div className="w-10 h-10 rounded-md overflow-hidden shrink-0 bg-white mr-3">
                                             <img
                                                 src={product.image}
                                                 alt={product.name}
                                                 className="w-full h-full object-cover"
                                             />
                                         </div>
-                                        <div className="flex-grow mr-2">
+                                        <div className="grow mr-2">
                                             <h3 className="font-medium text-neutral-900 dark:text-white text-sm">
                                                 {product.name}
                                             </h3>

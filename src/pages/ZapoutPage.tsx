@@ -173,16 +173,16 @@ export default function ZapoutPage() {
                                     {cart.map((item) => (
                                         <div
                                             key={item.productId}
-                                            className="flex items-center gap-4 p-4 bg-white dark:bg-neutral-700 rounded-md shadow-sm"
+                                            className="flex items-center gap-4 p-4 bg-white dark:bg-neutral-700 rounded-md shadow-xs"
                                         >
-                                            <div className="w-16 h-16 flex-shrink-0">
+                                            <div className="w-16 h-16 shrink-0">
                                                 <img
                                                     src={item.image}
                                                     alt={item.name}
                                                     className="w-full h-full object-cover rounded-md"
                                                 />
                                             </div>
-                                            <div className="flex-grow">
+                                            <div className="grow">
                                                 <h3 className="font-medium text-lg">
                                                     {item.name}
                                                 </h3>
@@ -262,7 +262,7 @@ export default function ZapoutPage() {
                                     <div className="inline-block">
                                         <button
                                             onClick={openLoginWindow}
-                                            className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded transition-colors"
+                                            className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-sm transition-colors"
                                         >
                                             Login with Nostr Signer Extension
                                         </button>

@@ -79,7 +79,7 @@ const ShippingForm = (
             <div className="w-full h-1 bg-gray-600 my-8" />
 
             {displayError && (
-                <div className="sticky top-0 z-50 w-full p-4 mb-8 bg-red-100 border-2 border-red-500 text-red-700 text-center rounded text-lg font-bold">
+                <div className="sticky top-0 z-50 w-full p-4 mb-8 bg-red-100 border-2 border-red-500 text-red-700 text-center rounded-sm text-lg font-bold">
                     {displayError} ❌
                 </div>
             )}
@@ -154,7 +154,7 @@ const ShippingForm = (
                 />
                 <button
                     type="submit"
-                    className="w-full mt-8 bg-orange-600 hover:bg-orange-700 p-6 text-xl text-[var(--main-text-color)] font-bold disabled:opacity-50"
+                    className="w-full mt-8 bg-orange-600 hover:bg-orange-700 p-6 text-xl text-(--main-text-color) font-bold disabled:opacity-50"
                 >
                     {`>> Pay With Lightning <<`}
                 </button>

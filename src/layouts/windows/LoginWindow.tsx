@@ -41,7 +41,7 @@ const LoginWindow: React.FC<LoginLayoutProps> = ({ children }) => {
                             login().catch((err) =>
                                 console.error("Login error:", err)
                             )}
-                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded transition-colors"
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-sm transition-colors"
                     >
                         Login with Nostr Signer Extension
                     </button>
