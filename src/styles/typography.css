@@ -4,6 +4,8 @@
   font-weight: var(--font-weight-bold);
   line-height: var(--leading-tight);
   text-shadow: var(--text-shadow);
+  -webkit-text-stroke: 1px var(--color-ink);
+  -webkit-text-fill-color: transparent;
 }
 
 .loud-voice {
