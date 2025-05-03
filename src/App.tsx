@@ -6,7 +6,7 @@ import { WindowTypes } from "./stores/useWindowState.ts";
 import SubWindows from "./layouts/windows/SubWindows.tsx";
 import AppInitializer from "./AppInitializer.tsx";
 import OrdersPage from "./pages/OrdersPage.tsx";
-
+import StyleGuidePage from "./pages/StyleGuide.tsx";
 const UnknownWindow: React.FC<{ windowId: WindowTypes }> = ({ windowId }) => (
   <div className="p-4 text-center">
     <div className="text-amber-500 mb-2">⚠️</div>
@@ -26,6 +26,7 @@ function App() {
         <Route path="/zapout" component={ZapoutPage} />
         <Route path="/checkout" component={ZapoutPage} />
         <Route path="/orders" component={OrdersPage} />
+        <Route path="/style-guide" component={StyleGuidePage} />
       </Switch>
     </AppInitializer>
   );
