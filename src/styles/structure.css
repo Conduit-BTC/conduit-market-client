@@ -1,0 +1,32 @@
+body #root {
+  display: grid;
+  grid-auto-rows: auto 1fr auto; /* main fills up available space + push the footer down */
+  min-height: 100vh; /* be at least a full viewport height */
+}
+
+.inner-column {
+  display: block;
+  width: 100%;
+  max-width: 1100px; /* could be a variable in settings */
+  margin-right: auto;
+  margin-left: auto;
+  padding: calc(var(--spacing) * 8) calc(var(--spacing) * 4); /* a loose default */
+}
+
+.inner-column.wide {
+  max-width: 1400px; /* could be a variable in settings */
+}
+
+.inner-column.narrow {
+  max-width: 800px; /* could be a variable in settings */
+}
+
+.inner-column.full {
+  max-width: 100%;
+}
+
+/*.site-header {
+	position: sticky;
+	top: 0;
+	z-index: 5;
+}*/

@@ -1,9 +1,80 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=JetBrains+Mono&display=swap");
-@import "./theme.css";
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap")
+layer(base);
+@import "./theme-old.css" layer(base);
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@custom-variant dark (&:is([data-mode="dark"] *));
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+/* Custom component classes */
+@utility card {
+  background-color: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  transition: transform var(--transition-normal),
+    box-shadow var(--transition-normal);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+}
+@utility btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  font-weight: var(--font-weight-medium);
+
+  &:hover {
+    background-color: var(--color-primary-dark);
+  }
+}
+@utility btn-secondary {
+  background-color: var(--color-secondary);
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  font-weight: var(--font-weight-medium);
+
+  &:hover {
+    background-color: var(--color-secondary-dark);
+  }
+}
+@utility badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-medium);
+}
+@utility badge-primary {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary-dark);
+}
+@utility badge-secondary {
+  background-color: var(--color-secondary-light);
+  color: var(--color-secondary-dark);
+}
 
 /* Apply theme tokens to base elements */
 @layer base {
@@ -112,65 +183,6 @@
     border-color: var(--color-primary);
     outline: none;
     box-shadow: 0 0 0 2px var(--color-primary-light);
-  }
-}
-
-/* Custom component classes */
-@layer components {
-  .card {
-    background-color: white;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
-    overflow: hidden;
-    transition: transform var(--transition-normal),
-      box-shadow var(--transition-normal);
-  }
-
-  .card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
-  }
-
-  .btn-primary {
-    background-color: var(--color-primary);
-    color: white;
-    padding: 0.5rem 1rem;
-    border: none;
-    font-weight: var(--font-weight-medium);
-  }
-
-  .btn-primary:hover {
-    background-color: var(--color-primary-dark);
-  }
-
-  .btn-secondary {
-    background-color: var(--color-secondary);
-    color: white;
-    padding: 0.5rem 1rem;
-    border: none;
-    font-weight: var(--font-weight-medium);
-  }
-
-  .btn-secondary:hover {
-    background-color: var(--color-secondary-dark);
-  }
-
-  .badge {
-    display: inline-block;
-    padding: 0.25rem 0.5rem;
-    border-radius: var(--radius-full);
-    font-size: 0.75rem;
-    font-weight: var(--font-weight-medium);
-  }
-
-  .badge-primary {
-    background-color: var(--color-primary-light);
-    color: var(--color-primary-dark);
-  }
-
-  .badge-secondary {
-    background-color: var(--color-secondary-light);
-    color: var(--color-secondary-dark);
   }
 }
 
