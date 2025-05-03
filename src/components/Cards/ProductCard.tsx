@@ -107,12 +107,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ event }) => {
                     loading="lazy"
                 />
                 {stock !== null && stock <= 5 && stock > 0 && (
-                    <span className="absolute top-2 right-2 bg-amber-500 text-xs font-bold px-2 py-1 rounded">
+                    <span className="absolute top-2 right-2 bg-amber-500 text-xs font-bold px-2 py-1 rounded-sm">
                         Only {stock} left
                     </span>
                 )}
                 {stock === 0 && (
-                    <span className="absolute top-2 right-2 bg-red-500 text-xs font-bold px-2 py-1 rounded">
+                    <span className="absolute top-2 right-2 bg-red-500 text-xs font-bold px-2 py-1 rounded-sm">
                         Out of stock
                     </span>
                 )}

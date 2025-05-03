@@ -19,7 +19,7 @@ const ZapoutButton: React.FC<ZapoutButtonProps> = ({
     onClick = () => {},
 }) => {
     const baseStyles =
-        "font-semibold rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2";
+        "font-semibold rounded-lg transition-colors focus:outline-hidden focus:ring-2 focus:ring-offset-2";
     const variantStyles = {
         primary: "bg-blue-500 text-white hover:bg-blue-600 focus:ring-blue-500",
         secondary:
