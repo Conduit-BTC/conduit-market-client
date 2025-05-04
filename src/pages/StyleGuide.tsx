@@ -1,7 +1,7 @@
 //
 
-import { ColorGuide } from "@/components/StyleGuide/ColorGuide";
-
+import { ColorGuide } from '@/components/StyleGuide/ColorGuide'
+import { VoicesGuide } from '@/components/StyleGuide/VoicesGuide'
 export default function StyleGuidePage() {
   return (
     <main className="">
@@ -23,6 +23,12 @@ export default function StyleGuidePage() {
           <ColorGuide />
         </div>
       </section>
+
+      <section>
+        <div className="inner-column wide">
+          <VoicesGuide />
+        </div>
+      </section>
     </main>
-  );
+  )
 }
