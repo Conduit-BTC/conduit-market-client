@@ -6,14 +6,14 @@
     --base-s: 8%;
 
     /* Conduit Purple */
-    --primary-h: 275;
+    --primary-h: 280;
     --primary-s: 94%;
 
     /* Conduit Orange */
     --secondary-h: 24;
     --secondary-s: 77%;
 
-    /* Conduit Fuchsia */
+    /* Conduit Rose */
     --tertiary-h: 338;
     --tertiary-s: 54%;
 
@@ -157,12 +157,13 @@
 @theme {
   /* typography */
   /* Font families */
-  --font-display: "Poppins", system-ui, sans-serif;
-  --font-body: "Poppins", system-ui, sans-serif;
-  --font-primary: "Poppins", system-ui, sans-serif;
-  --font-secondary: "Poppins", system-ui, sans-serif;
+  --font-display: 'Iceberg', system-ui, sans-serif;
+  --font-body: 'Poppins', system-ui, sans-serif;
 
-  --font-mono: "JetBrains Mono", monospace;
+  --font-primary: var(--font-body);
+  --font-secondary: var(--font-display);
+
+  --font-mono: 'JetBrains Mono', monospace;
 
   /* Line heights */
   --leading-tight: 1.2;
@@ -212,8 +213,8 @@
   --color-primary-800: var(--primary-800);
   --color-primary-900: var(--primary-900);
   --color-primary-950: var(--primary-950);
-  --color-primary: var(--primary-50);
-  --color-primary-foreground: var(--primary-950);
+  --color-primary: var(--primary-600);
+  --color-primary-foreground: var(--primary-100);
 
   --color-secondary-50: var(--secondary-50);
   --color-secondary-100: var(--secondary-100);
@@ -226,7 +227,7 @@
   --color-secondary-800: var(--secondary-800);
   --color-secondary-900: var(--secondary-900);
   --color-secondary-950: var(--secondary-950);
-  --color-secondary: var(--secondary-700);
+  --color-secondary: var(--secondary-600);
   --color-secondary-foreground: var(--secondary-200);
 
   --color-tertiary-50: var(--tertiary-50);
@@ -240,7 +241,7 @@
   --color-tertiary-800: var(--tertiary-800);
   --color-tertiary-900: var(--tertiary-900);
   --color-tertiary-950: var(--tertiary-950);
-  --color-tertiary: var(--tertiary-700);
+  --color-tertiary: var(--tertiary-600);
   --color-tertiary-foreground: var(--tertiary-200);
 
   --color-accent-50: var(--accent-50);
@@ -262,23 +263,24 @@
 
   /* static colors */
   --color-destructive: hsla(0, 100%, var(--status-lightness), 1);
+  --color-warning: hsla(60, 100%, var(--status-lightness), 1);
   --color-success: hsla(127, 100%, var(--status-lightness), 1);
-  --color-warning: hsla(30, 100%, var(--status-lightness), 1);
   --color-info: hsla(200, 100%, var(--status-lightness), 1);
+
   --color-destructive-foreground: hsla(
     0,
     100%,
     var(--status-foreground-lightness),
     1
   );
-  --color-success-foreground: hsla(
-    127,
+  --color-warning-foreground: hsla(
+    60,
     100%,
     var(--status-foreground-lightness),
     1
   );
-  --color-warning-foreground: hsla(
-    30,
+  --color-success-foreground: hsla(
+    127,
     100%,
     var(--status-foreground-lightness),
     1
@@ -297,4 +299,10 @@
   --text-shadow: 0 0 0.625em var(--color-primary-500),
     0 0 1.25em var(--color-primary-400), 0 0 2.5em var(--color-primary-300),
     0 0 5em var(--color-primary-200);
+
+  --shadow-border-glow: 0 0 0.1rem var(--color-ink), 0 0 0.1rem var(--color-ink),
+    0 0 1rem var(--tw-shadow-color), 0 0 0.1rem var(--tw-shadow-color),
+    0 0 0.15rem var(--tw-shadow-color), inset 0 0 0.2rem var(--tw-shadow-color);
+
+  /* Borders */
 }
