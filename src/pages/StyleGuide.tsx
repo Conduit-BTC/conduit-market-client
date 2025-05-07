@@ -2,9 +2,12 @@
 
 import { ColorGuide } from '@/components/StyleGuide/ColorGuide'
 import { VoicesGuide } from '@/components/StyleGuide/VoicesGuide'
+import { ButtonGuide } from '@/components/StyleGuide/ButtonGuide'
+import { ComponentsGuide } from '@/components/StyleGuide/ComponentsGuide'
+
 export default function StyleGuidePage() {
   return (
-    <main className="">
+    <main className="grid gap-16 pb-30">
       <section>
         <div className="inner-column">
           <div>
@@ -27,6 +30,18 @@ export default function StyleGuidePage() {
       <section>
         <div className="inner-column wide">
           <VoicesGuide />
+        </div>
+      </section>
+
+      <section>
+        <div className="inner-column wide">
+          <ButtonGuide />
+        </div>
+      </section>
+
+      <section>
+        <div className="inner-column wide">
+          <ComponentsGuide />
         </div>
       </section>
     </main>
