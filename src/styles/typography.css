@@ -1,28 +1,28 @@
 .booming-voice {
   font-family: var(--font-display);
-  font-size: var(--text-6xl);
+  font-size: var(--text-8xl);
   font-weight: var(--font-weight-bold);
   line-height: var(--leading-tight);
   text-shadow: var(--text-shadow);
-  -webkit-text-stroke: 1px var(--color-ink);
-  -webkit-text-fill-color: transparent;
+  /* -webkit-text-stroke: 1px var(--color-ink);
+  -webkit-text-fill-color: transparent; */
 }
 
 .loud-voice {
   font-family: var(--font-body);
-  font-size: var(--text-3xl);
+  font-size: var(--text-6xl);
   line-height: var(--leading-tight);
 }
 
 .attention-voice {
   font-family: var(--font-display);
-  font-size: var(--text-2xl);
+  font-size: var(--text-4xl);
   line-height: var(--leading-tight);
 }
 
 .firm-voice {
   font-family: var(--font-body);
-  font-size: var(--text-xl);
+  font-size: var(--text-2xl);
   line-height: var(--leading-tight);
 }
 
