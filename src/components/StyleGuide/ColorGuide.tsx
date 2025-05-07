@@ -128,12 +128,12 @@ const colors: ColorScheme = {
 
   shadow: {
     'p-xs': 'shadow-primary shadow-xs',
-    's-xs': 'shadow-secondary shadow-xs',
-    't-xs': 'shadow-tertiary shadow-xs',
-    'a-xs': 'shadow-accent shadow-xs',
     'p-2xl': 'shadow-primary shadow-2xl',
+    's-xs': 'shadow-secondary shadow-xs',
     's-2xl': 'shadow-secondary shadow-2xl',
+    't-xs': 'shadow-tertiary shadow-xs',
     't-2xl': 'shadow-tertiary shadow-2xl',
+    'a-xs': 'shadow-accent shadow-xs',
     'a-2xl': 'shadow-accent shadow-2xl'
   }
 }
@@ -171,7 +171,7 @@ export function ColorGuide() {
           <div key={category} className="space-y-4">
             <h3 className="text-lg font-medium">{categoryName} Colors</h3>
             <p className="micro-voice font-mono">--color-{category}</p>
-            <div className="flex flex-wrap gap-1">
+            <div className="flex flex-wrap gap-2">
               {Object.entries(value).map(([subKey, subValue]) => (
                 <ColorSwatch
                   key={`${category}-${subKey}`}
