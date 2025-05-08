@@ -80,9 +80,12 @@ const Header: React.FC = () => {
           <div className="inner-column flex justify-between items-center">
             {/* Logo/Title */}
             <div className="flex items-center">
-              <h1 className="text-xl font-bold text-gray-800">
-                Conduit Market
-              </h1>
+              <picture>
+                <img
+                  src="@/assets/images/logo/logo-full.svg"
+                  alt="Conduit Market"
+                />
+              </picture>
             </div>
 
             {/* Actions Area (Cart and Account) */}

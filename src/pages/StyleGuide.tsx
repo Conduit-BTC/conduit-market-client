@@ -7,7 +7,7 @@ import { ComponentsGuide } from '@/components/StyleGuide/ComponentsGuide'
 
 export default function StyleGuidePage() {
   return (
-    <main className="grid gap-16 pb-30">
+    <main className="grid gap-16">
       <section>
         <div className="inner-column">
           <div>

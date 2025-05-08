@@ -37,7 +37,7 @@ const components: Component[] = [
         props: {
           name: 'User Avatar',
           imageUrl: 'https://avatar.iran.liara.run/public',
-          size: 5,
+          size: 6,
           showName: false
         }
       },
