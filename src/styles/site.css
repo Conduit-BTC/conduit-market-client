@@ -44,12 +44,16 @@ layer(base);
   body {
     background-color: var(--color-paper);
     color: var(--color-ink);
-
+    padding-bottom: 300px;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%;
+  }
+
+  #root {
+    position: relative;
   }
 }
 
@@ -158,4 +162,21 @@ layer(base);
 @utility badge-secondary {
   background-color: var(--color-secondary-light);
   color: var(--color-secondary-dark);
+}
+
+/* components */
+
+@layer components {
+  .cart-drawer {
+    @apply bg-primary mb-4 flex justify-between gap-4 from-primary-800 to-primary/80 bg-gradient-to-b relative rounded-lg;
+  }
+
+  .cart-drawer::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(to bottom, var(--color-ink), transparent);
+    border-radius: var(--radius-lg);
+    z-index: -1;
+  }
 }
