@@ -10,8 +10,9 @@
 
 .loud-voice {
   font-family: var(--font-body);
-  font-size: var(--text-6xl);
+  font-size: var(--text-5xl);
   line-height: var(--leading-tight);
+  font-weight: var(--font-weight-bold);
 }
 
 .attention-voice {
@@ -24,12 +25,14 @@
   font-family: var(--font-body);
   font-size: var(--text-2xl);
   line-height: var(--leading-tight);
+  font-weight: var(--font-weight-bold);
 }
 
 .notice-voice {
   font-family: var(--font-body);
-  font-size: var(--text-lg);
+  font-size: var(--text-xl);
   line-height: var(--leading-normal);
+  font-weight: var(--font-weight-light);
 }
 
 .calm-voice {
@@ -41,7 +44,7 @@
 .whisper-voice {
   font-family: var(--font-body);
   font-size: var(--text-sm);
-  color: var(--color-gray-500);
+  color: var(--color-base-200);
   line-height: var(--leading-normal);
 }
 
@@ -56,4 +59,5 @@
   font-family: var(--font-body);
   font-size: var(--text-xs);
   line-height: var(--leading-normal);
+  font-weight: var(--font-weight-light);
 }
