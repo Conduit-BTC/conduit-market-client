@@ -157,13 +157,12 @@
 @theme {
   /* typography */
   /* Font families */
-  --font-display: 'Iceberg', system-ui, sans-serif;
+  --font-display: 'Whyte Inktrap Variable', system-ui, sans-serif;
   --font-body: 'Poppins', system-ui, sans-serif;
+  --font-mono: 'Whyte Mono Inktrap Variable', monospace;
 
   --font-primary: var(--font-body);
   --font-secondary: var(--font-display);
-
-  --font-mono: 'JetBrains Mono', monospace;
 
   /* Line heights */
   --leading-tight: 1.2;
