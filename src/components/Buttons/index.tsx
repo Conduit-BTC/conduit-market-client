@@ -11,7 +11,7 @@
 import { useCartStore, type CartItem } from '@/stores/useCartStore.ts'
 import { Minus, Plus, Trash, ShoppingCart } from 'lucide-react'
 import Button from './Button'
-
+import { cn } from '@/lib/utils'
 // Add to cart button
 interface AddToCartButtonProps {
   product: CartItem
@@ -38,7 +38,13 @@ const AddToCartButton = ({ product, disabled }: AddToCartButtonProps) => {
 }
 
 // Update cart item quantity buttons
-const UpdateCartItemQuantityButtons = ({ product }: { product: CartItem }) => {
+export const UpdateCartItemQuantityButtons = ({
+  product,
+  className
+}: {
+  product: CartItem
+  className?: string
+}) => {
   const { addToCart, getItemCount, decreaseQuantity } = useCartStore()
   const cartQuantity = getItemCount(product)
 
@@ -51,22 +57,22 @@ const UpdateCartItemQuantityButtons = ({ product }: { product: CartItem }) => {
   }
 
   return (
-    <div className="flex items-center gap-4 border border-muted  rounded-full p-2">
+    <div
+      className={cn(
+        'flex items-center gap-4 border border-muted  rounded-full p-2',
+        className
+      )}
+    >
       <Button
         size="icon"
         onClick={handleDecreaseQuantity}
-        rounded={false}
         variant={cartQuantity === 1 ? 'destructive' : 'primary'}
       >
-        {cartQuantity === 1 ? (
-          <Trash className="size-4" />
-        ) : (
-          <Minus className="size-4" />
-        )}
+        {cartQuantity === 1 ? <Trash /> : <Minus />}
       </Button>
       <p className="firm-voice">{cartQuantity}</p>
-      <Button size="icon" onClick={handleIncreaseQuantity} rounded={false}>
-        <Plus className="size-4" />
+      <Button size="icon" onClick={handleIncreaseQuantity}>
+        <Plus />
       </Button>
     </div>
   )
