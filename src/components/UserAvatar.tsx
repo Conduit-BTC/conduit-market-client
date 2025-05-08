@@ -1,4 +1,5 @@
 import React from 'react'
+import { cn } from '@/lib/utils'
 
 interface UserAvatarProps {
   name?: string
@@ -10,14 +11,16 @@ interface UserAvatarProps {
 const UserAvatar: React.FC<UserAvatarProps> = ({
   name = 'John Doe',
   imageUrl = 'https://avatar.iran.liara.run/public',
-  size = 10,
+  size = 8,
   showName = true
 }) => {
-  const sizeClass = `w-${size} h-${size}`
+  const pictureClass = cn('rounded-full relative bg-gray-800', {
+    [`w-${size} h-${size}`]: size
+  })
 
   return (
     <div className="flex items-center gap-1">
-      <picture className={`${sizeClass} rounded-full relative bg-gray-800`}>
+      <picture className={pictureClass}>
         {imageUrl ? (
           <img
             src={imageUrl}

@@ -21,8 +21,8 @@ const UserCounter: React.FC<UserCounterProps> = ({
           <li
             key={idx}
             className={cn({
-              'z-10': idx === 1, // middle avatar with yellow ring
-              'z-20': idx === 2, // rightmost avatar on top
+              'z-1': idx === 1, // middle avatar with yellow ring
+              'z-2': idx === 2, // rightmost avatar on top
               'z-0': idx === 0 // leftmost avatar
             })}
           >
