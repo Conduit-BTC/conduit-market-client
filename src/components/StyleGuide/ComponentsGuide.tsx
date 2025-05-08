@@ -1,86 +1,144 @@
-import ProductCard from '@/components/Cards/ProductCard'
 import UserAvatar from '../UserAvatar'
 import UserCounter from '../UserCounter'
+import { Badge } from '../Badge'
+import { CardsGuide } from './CardsGuide'
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent
+} from '../Cards/CardComponents'
+import { cn } from '@/lib/utils'
 
-const cards = [
-  {
-    name: 'Product Card',
-    component: ProductCard,
-    demoVariants: ['base', 'discount', 'soldout', 'new', 'avatars']
-  },
-  {
-    name: 'Article Card'
-    // component: ArticleCard,
-  },
-  {
-    name: 'Store Card'
-    // component: StoreCard,
-  },
-  {
-    name: 'Collection Card'
-    // component: CollectionCard,
-  },
-  {
-    name: 'Category Card'
-    // component: CategoryCard,
-  },
-  {
-    name: 'Promotion Card'
-    // component: PromotionCard,
-  }
-]
+interface Component {
+  name: string
+  component: React.ComponentType<any>
+  fullWidth?: boolean
+  states: {
+    label: string
+    props: any
+  }[]
+}
 
-const avatars = [
+const components: Component[] = [
   {
-    name: 'User Avatar',
-    imageUrl: 'https://avatar.iran.liara.run/public',
-    component: UserAvatar
-  },
-  {
-    name: 'User Avatar',
-    imageUrl: 'https://avatar.iran.liara.run/public',
-    size: 5,
-    showName: false,
-    component: UserAvatar
-  },
-  {
-    name: 'User Avatar',
-    size: 10,
-    showName: false,
-    component: UserAvatar
-  },
-  {
-    name: 'User Counter',
-    users: [
+    name: 'Avatars',
+    component: UserAvatar,
+    states: [
       {
-        name: 'Brooj',
-        imageUrl: 'https://avatar.iran.liara.run/public'
+        label: 'Default',
+        props: {
+          name: 'User Avatar',
+          imageUrl: 'https://avatar.iran.liara.run/public'
+        }
       },
       {
-        name: 'Jane Doe',
-        imageUrl: 'https://avatar.iran.liara.run/public'
+        label: 'Small without name',
+        props: {
+          name: 'User Avatar',
+          imageUrl: 'https://avatar.iran.liara.run/public',
+          size: 5,
+          showName: false
+        }
       },
-      { name: 'Burooj' }
-    ],
-    count: 100,
-    component: UserCounter
+      {
+        label: 'Large without name',
+        props: {
+          name: 'User Avatar',
+          size: 10,
+          showName: false
+        }
+      }
+    ]
   },
   {
-    name: 'User Counter',
-    users: [
+    name: 'User Counters',
+    component: UserCounter,
+    states: [
       {
-        name: 'Brooj',
-        imageUrl: 'https://avatar.iran.liara.run/public'
+        label: 'Default Counter',
+        props: {
+          users: [
+            {
+              name: 'Brooj',
+              imageUrl: 'https://avatar.iran.liara.run/public'
+            },
+            {
+              name: 'Jane Doe',
+              imageUrl: 'https://avatar.iran.liara.run/public'
+            },
+            { name: 'Burooj' }
+          ],
+          count: 100
+        }
       },
       {
-        name: 'Jane Doe',
-        imageUrl: 'https://avatar.iran.liara.run/public'
+        label: 'Counter with Zap',
+        props: {
+          users: [
+            {
+              name: 'Brooj',
+              imageUrl: 'https://avatar.iran.liara.run/public'
+            },
+            {
+              name: 'Jane Doe',
+              imageUrl: 'https://avatar.iran.liara.run/public'
+            },
+            { name: 'Burooj' }
+          ],
+          count: 100,
+          showZap: true
+        }
+      }
+    ]
+  },
+  {
+    name: 'Badges',
+    component: Badge,
+    states: [
+      {
+        label: 'Primary',
+        props: {
+          children: 'Primary Badge',
+          variant: 'primary'
+        }
       },
-      { name: 'Burooj' }
-    ],
-    count: 100,
-    showZap: true,
-    component: UserCounter
+      {
+        label: 'Secondary',
+        props: {
+          children: 'Secondary Badge',
+          variant: 'secondary'
+        }
+      },
+      {
+        label: 'Muted',
+        props: {
+          children: 'Muted Badge',
+          variant: 'muted'
+        }
+      },
+      {
+        label: 'Destructive',
+        props: {
+          children: 'Destructive Badge',
+          variant: 'destructive'
+        }
+      },
+      {
+        label: 'Success',
+        props: {
+          children: 'Success Badge',
+          variant: 'success'
+        }
+      },
+      {
+        label: 'Warning',
+        props: {
+          children: 'Warning Badge',
+          variant: 'warning'
+        }
+      }
+    ]
   }
 ]
 
@@ -89,45 +147,38 @@ export function ComponentsGuide() {
     <div className="space-y-8">
       <h2 className="attention-voice mb-6">Components</h2>
 
-      {/* Avatars */}
-      <div>
-        <h3 className="firm-voice">Avatars</h3>
-        <ul className="flex flex-wrap items-center gap-4">
-          {avatars.map((avatar, index) => (
-            <li key={index}>
-              <avatar.component
-                name={avatar.name}
-                imageUrl={avatar.imageUrl}
-                size={avatar.size}
-                showName={avatar.showName}
-                users={avatar.users}
-                count={avatar.count}
-                showZap={avatar.showZap}
-              />
-            </li>
-          ))}
-        </ul>
-      </div>
+      {components.map((componentGroup, groupIndex) => (
+        <div key={groupIndex} className="space-y-4">
+          <h3 className="firm-voice">{componentGroup.name}</h3>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {componentGroup.states.map((state, stateIndex) => {
+              const Component = componentGroup.component
+              return (
+                <li
+                  key={stateIndex}
+                  className={cn({
+                    'col-span-full': componentGroup.fullWidth
+                  })}
+                >
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="solid-voice">
+                        {state.label}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex items-center justify-center min-h-[100px]">
+                      <Component {...state.props} />
+                    </CardContent>
+                  </Card>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+      ))}
 
       {/* Cards */}
-      <div className="flex flex-wrap items-center gap-4">
-        {cards.map(
-          (card) =>
-            card.component && (
-              <div key={card.name}>
-                <h4 className="notice-voice font-bold mt-4">{card.name}</h4>
-                <ul className="flex flex-wrap gap-4">
-                  {card.demoVariants.map((variant) => (
-                    <li key={variant}>
-                      <p className="calm-voice">{variant}</p>
-                      <card.component demo={true} demoVariant={variant} />
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )
-        )}
-      </div>
+      <CardsGuide />
     </div>
   )
 }
