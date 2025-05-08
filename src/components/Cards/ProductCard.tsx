@@ -13,7 +13,6 @@ import {
   CardHeader,
   CardTitle
 } from './CardComponents.tsx'
-import Button from '@/components/Buttons/Button.tsx'
 import { ShoppingCart, Star } from 'lucide-react'
 import { useCartStore } from '@/stores/useCartStore.ts'
 import UserCounter from '@/components/UserCounter.tsx'
@@ -21,10 +20,7 @@ import { Badge } from '@/components/Badge.tsx'
 import { cn, formatPrice } from '@/lib/utils.ts'
 import AddToCartButton from '../Buttons/index.tsx'
 
-const PLACEHOLDER_IMAGE = new URL(
-  '@/assets/images/placeholders/product.png',
-  import.meta.url
-).href
+const PLACEHOLDER_IMAGE = 'https://prd.place/600/400'
 
 interface ProductCardProps {
   event: NDKEvent
@@ -132,7 +128,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ event }) => {
           <img
             src={mainImage}
             alt={title}
-            className="w-full h-full object-contain mix-blend-multiply"
+            className="w-full h-full object-contain"
             onError={() => setImageError(true)}
             loading="lazy"
           />
