@@ -176,6 +176,7 @@
   --transition-fast: 150ms ease;
   --transition-normal: 250ms ease;
   --transition-slow: 350ms ease;
+  --ease-bounce: cubic-bezier(0.47, 1.64, 0.41, 0.8);
 
   /*  */
   /*  */
