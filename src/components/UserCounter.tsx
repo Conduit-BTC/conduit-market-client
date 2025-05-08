@@ -1,6 +1,7 @@
 import React from 'react'
 import UserAvatar from './UserAvatar'
 import { Zap } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 interface UserCounterProps {
   users: Record<string, any>[] // expects exactly 3 users
@@ -9,8 +10,8 @@ interface UserCounterProps {
 }
 
 const UserCounter: React.FC<UserCounterProps> = ({
-  users,
-  count,
+  users = [1, 2, 3],
+  count = 100,
   showZap = false
 }) => {
   return (
@@ -19,13 +20,11 @@ const UserCounter: React.FC<UserCounterProps> = ({
         {users.map((user, idx) => (
           <li
             key={idx}
-            className={
-              idx === 1
-                ? 'z-10' // middle avatar with yellow ring
-                : idx === 2
-                ? 'z-20' // rightmost avatar on top
-                : 'z-0' // leftmost avatar
-            }
+            className={cn({
+              'z-10': idx === 1, // middle avatar with yellow ring
+              'z-20': idx === 2, // rightmost avatar on top
+              'z-0': idx === 0 // leftmost avatar
+            })}
           >
             <UserAvatar
               name={user.name}

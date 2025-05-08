@@ -8,8 +8,8 @@ interface UserAvatarProps {
 }
 
 const UserAvatar: React.FC<UserAvatarProps> = ({
-  name,
-  imageUrl,
+  name = 'John Doe',
+  imageUrl = 'https://avatar.iran.liara.run/public',
   size = 10,
   showName = true
 }) => {
