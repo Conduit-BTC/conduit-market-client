@@ -1,89 +1,180 @@
-import React, { useMemo, useState } from "react";
-import { NDKEvent } from "@nostr-dev-kit/ndk";
+import React, { useMemo, useState } from 'react'
+import { NDKEvent } from '@nostr-dev-kit/ndk'
 import {
-    type ProductListing,
-    ProductListingUtils,
-    validateProductListing,
-} from "nostr-commerce-schema";
+  type ProductListing,
+  ProductListingUtils,
+  validateProductListing
+} from 'nostr-commerce-schema'
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "./CardComponents.tsx";
-import Button from "@/components/Buttons/Button.tsx";
-import { ShoppingCart } from "lucide-react";
-import { useCartStore } from "@/stores/useCartStore.ts";
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle
+} from './CardComponents.tsx'
+import Button from '@/components/Buttons/Button.tsx'
+import { ShoppingCart, Star } from 'lucide-react'
+import { useCartStore } from '@/stores/useCartStore.ts'
+import UserCounter from '@/components/UserCounter.tsx'
+import { Badge } from '@/components/Badge.tsx'
+import { cn, formatPrice } from '@/lib/utils.ts'
+import AddToCartButton from '../Buttons/index.tsx'
 
-const PLACEHOLDER_IMAGE = "/api/placeholder/400/300";
+const PLACEHOLDER_IMAGE = new URL(
+  '@/assets/images/placeholders/product.png',
+  import.meta.url
+).href
 
 interface ProductCardProps {
-    event: NDKEvent;
+  event: NDKEvent
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ event }) => {
-    // Memoize the validation check so it only runs when the event changes
-    const validationMemo = useMemo(() => {
-        const validationResult = validateProductListing(event);
+  // #todo: remove this once we have a real event
 
-        if (!validationResult.success) {
-            console.warn("Invalid product event:", validationResult.error);
-            return { valid: false, productEvent: null };
-        }
+  // Memoize the validation check so it only runs when the event changes
+  const validationMemo = useMemo(() => {
+    const validationResult = validateProductListing(event)
 
-        // Now we can safely treat it as a ProductListing
-        return {
-            valid: true,
-            productEvent: event as unknown as ProductListing,
-        };
-    }, [event.id, event.tags, event.content, event.pubkey]); // Dependencies that should trigger revalidation
-
-    // Early return if validation failed
-    if (!validationMemo.valid) {
-        return null;
+    if (!validationResult.success) {
+      console.warn('Invalid product event:', validationResult.error)
+      return { valid: false, productEvent: null }
     }
 
-    const productEvent = validationMemo.productEvent!;
-    const { pubkey } = event;
-    const { addToCart } = useCartStore();
-
-    const [imageError, setImageError] = useState(false);
-
-    // Use schema functions to extract data
-    const productId = ProductListingUtils.getProductId(productEvent);
-    const title = ProductListingUtils.getProductTitle(productEvent);
-    const price = ProductListingUtils.getProductPrice(productEvent);
-    const images = ProductListingUtils.getProductImages(productEvent);
-    const stock = ProductListingUtils.getProductStock(productEvent);
-    const summary = ProductListingUtils.getProductSummary(productEvent);
-
-    // If any required field is missing, don't render the card
-    if (!productId || !title || !price) {
-        console.warn("Product missing required fields:", {
-            productId,
-            title,
-            price,
-        });
-        return null;
+    // Now we can safely treat it as a ProductListing
+    return {
+      valid: true,
+      productEvent: event as unknown as ProductListing
     }
+  }, [event.id, event.tags, event.content, event.pubkey]) // Dependencies that should trigger revalidation
 
-    // Format price with currency
-    const formatPrice = () => {
-        if (!price) return "Price not set";
-        return new Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: price.currency || "USD",
-        }).format(parseFloat(price.amount));
-    };
+  // Early return if validation failed
+  if (!validationMemo.valid) {
+    return null
+  }
 
-    const mainImage = images.length > 0 && !imageError
-        ? images[0].url
-        : PLACEHOLDER_IMAGE;
+  const productEvent = validationMemo.productEvent!
+  const { pubkey } = event
+  const { addToCart } = useCartStore()
 
-    const handleAddToCart = () => {
-        addToCart({
+  const [imageError, setImageError] = useState(false)
+
+  // Use schema functions to extract data
+  const productId = ProductListingUtils.getProductId(productEvent)
+  const title = ProductListingUtils.getProductTitle(productEvent)
+  const price = ProductListingUtils.getProductPrice(productEvent)
+  const images = ProductListingUtils.getProductImages(productEvent)
+  const stock = ProductListingUtils.getProductStock(productEvent)
+  const summary = ProductListingUtils.getProductSummary(productEvent)
+  const visibility = ProductListingUtils.getProductVisibility(productEvent)
+
+  console.log(images)
+
+  // If any required field is missing, don't render the card
+  if (!productId || !title || !price) {
+    console.warn('Product missing required fields:', {
+      productId,
+      title,
+      price
+    })
+    return null
+  }
+  // if price is not set, return 'Price not set'
+  if (!price) return 'Price not set'
+
+  // Format price with currency
+
+  const mainImage =
+    images.length > 0 && !imageError ? images[0].url : PLACEHOLDER_IMAGE
+
+  // #todo: remove this once we have a real event
+  const hasUserInteractions = true
+
+  // --- BADGE & PRICE LOGIC ---
+  const isOutOfStock = stock !== null && stock === 0
+  const isOnSale = stock !== null && stock > 5 && visibility === 'on-sale'
+  const isLowStock = stock !== null && stock <= 5 && stock > 0
+  const discountPercent = 10 // mock value
+  const originalPrice = formatPrice(parseFloat(price.amount), price.currency)
+  const discountedPrice = formatPrice(
+    parseFloat(price.amount) * (1 - discountPercent / 100),
+    price.currency
+  )
+
+  let badge = null
+  if (isOutOfStock) {
+    badge = <Badge variant="destructive">Out of stock</Badge>
+  } else if (isLowStock) {
+    badge = <Badge variant="warning">Only {stock} left</Badge>
+  } else if (isOnSale) {
+    badge = <Badge variant="success">{discountPercent}% off</Badge>
+  }
+
+  return (
+    <Card
+      className={cn(
+        'w-full max-w-sm overflow-hidden',
+        isOutOfStock && 'grayscale'
+      )}
+    >
+      <div className="relative">
+        {/* floating indicators */}
+        <div className="w-full absolute top-0 p-4 flex items-center justify-between">
+          {/* left */}
+          <div>{badge}</div>
+          {/* right */}
+          <div>{hasUserInteractions && <UserCounter />}</div>
+        </div>
+
+        {/* image */}
+        <picture className="aspect-video bg-ink">
+          <img
+            src={mainImage}
+            alt={title}
+            className="w-full h-full object-contain mix-blend-multiply"
+            onError={() => setImageError(true)}
+            loading="lazy"
+          />
+        </picture>
+      </div>
+      <CardHeader className="grid gap-1">
+        <CardTitle className="line-clamp-2">{title}</CardTitle>
+
+        {/* rating */}
+        <div className="flex items-center gap-1">
+          <Star
+            className="size-4 text-transparent"
+            fill="var(--color-primary-400)"
+          />
+          <p className="calm-voice font-bold">4.5</p>
+        </div>
+      </CardHeader>
+      <CardContent className="relative">
+        {/* pubkey */}
+        {/* <p className="whisper-voice">{pubkey}</p> */}
+
+        {/* summary */}
+        {summary && (
+          <CardDescription className="line-clamp-2">{summary}</CardDescription>
+        )}
+      </CardContent>
+      <CardFooter className="flex justify-between items-center">
+        {/* price */}
+        <div>
+          <div className="flex items-center gap-1">
+            <p className="firm-voice font-bold">{discountedPrice}</p>
+            {isOnSale && (
+              <p className="text-base-600 line-through notice-voice">
+                {originalPrice}
+              </p>
+            )}
+          </div>
+          <p className="whisper-voice">{discountedPrice}</p>
+        </div>
+        {/* add to cart */}
+        <AddToCartButton
+          product={{
             eventId: event.id,
             productId,
             tags: event.tags,
@@ -92,58 +183,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ event }) => {
             price: parseFloat(price.amount),
             currency: price.currency,
             quantity: 1,
-            merchantPubkey: pubkey,
-        });
-    };
+            merchantPubkey: pubkey
+          }}
+          disabled={isOutOfStock}
+        />
+      </CardFooter>
+    </Card>
+  )
+}
 
-    return (
-        <Card className="w-full max-w-sm overflow-hidden">
-            <div className="relative w-full h-48 overflow-hidden bg-gray-100">
-                <img
-                    src={mainImage}
-                    alt={title}
-                    className="w-full h-full object-cover"
-                    onError={() => setImageError(true)}
-                    loading="lazy"
-                />
-                {stock !== null && stock <= 5 && stock > 0 && (
-                    <span className="absolute top-2 right-2 bg-amber-500 text-xs font-bold px-2 py-1 rounded-sm">
-                        Only {stock} left
-                    </span>
-                )}
-                {stock === 0 && (
-                    <span className="absolute top-2 right-2 bg-red-500 text-xs font-bold px-2 py-1 rounded-sm">
-                        Out of stock
-                    </span>
-                )}
-            </div>
-            <CardHeader>
-                <CardTitle className="text-xl font-semibold">{title}</CardTitle>
-                <p className="text-xs text-gray-500">
-                    {pubkey}
-                </p>
-                {summary && (
-                    <CardDescription className="line-clamp-2">
-                        {summary}
-                    </CardDescription>
-                )}
-            </CardHeader>
-            <CardContent>
-                <div className="inline-flex px-3 py-1 text-sm font-medium bg-gray-700 text-gray-100 rounded-md mb-4">
-                    {formatPrice()}
-                </div>
-            </CardContent>
-            <CardFooter className="flex justify-between items-center">
-                <Button
-                    onClick={handleAddToCart}
-                    disabled={stock === 0}
-                >
-                    <ShoppingCart className="mr-2 h-4 w-4" />
-                    Add to Cart
-                </Button>
-            </CardFooter>
-        </Card>
-    );
-};
-
-export default ProductCard;
+export default ProductCard
