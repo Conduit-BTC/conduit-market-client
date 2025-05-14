@@ -1,4 +1,6 @@
 import React from 'react'
+import Button from './Buttons/Button'
+import { Heart } from 'lucide-react'
 
 interface NavLink {
   name: string
@@ -12,80 +14,197 @@ interface NavSection {
 
 const navs: NavSection[] = [
   {
-    heading: 'Navigation',
+    heading: 'Shop',
     links: [
       {
-        name: 'Home',
-        link: '#hero-landing'
+        name: 'All',
+        link: '/shop/all'
       },
       {
-        name: 'About',
-        link: '#about-section'
+        name: 'Categories',
+        link: '/shop/categories'
       },
       {
-        name: 'Services',
-        link: '#services-section'
+        name: 'Search',
+        link: '/shop/search'
       },
       {
-        name: 'Contact',
-        link: '#contact-section'
-      },
-      {
-        name: 'Register',
-        link: '#register'
+        name: 'Trending',
+        link: '/shop/trending'
       }
     ]
   },
   {
-    heading: 'Contact',
+    heading: 'Sell',
     links: [
       {
-        name: 'Email Form',
-        link: ''
+        name: 'Your stores',
+        link: '/sell/stores'
       },
       {
-        name: 'Presentation',
-        link: ''
+        name: 'Your products',
+        link: '/sell/products'
+      },
+      {
+        name: 'Manage store',
+        link: '/sell/manage'
+      },
+      {
+        name: 'Messages',
+        link: '/sell/messages'
+      }
+    ]
+  },
+  {
+    heading: 'For Sellers',
+    links: [
+      {
+        name: 'Book a demo',
+        link: '/sellers/demo'
+      },
+      {
+        name: 'Create a store',
+        link: '/sellers/create'
+      },
+      {
+        name: 'Features',
+        link: '/sellers/features'
+      },
+      {
+        name: 'Why Conduit',
+        link: '/sellers/why-conduit'
+      },
+      {
+        name: 'FAQ',
+        link: '/sellers/faq'
+      }
+    ]
+  },
+  {
+    heading: 'For Shoppers',
+    links: [
+      {
+        name: 'Join waitlist',
+        link: '/shoppers/waitlist'
+      },
+      {
+        name: 'Features',
+        link: '/shoppers/features'
+      },
+      {
+        name: 'Why Conduit',
+        link: '/shoppers/why-conduit'
+      },
+      {
+        name: 'About us',
+        link: '/shoppers/about'
+      },
+      {
+        name: 'FAQ',
+        link: '/shoppers/faq'
+      }
+    ]
+  },
+  {
+    heading: 'You',
+    links: [
+      {
+        name: 'Your profile',
+        link: '/profile'
+      },
+      {
+        name: 'Settings',
+        link: '/settings'
+      },
+      {
+        name: 'Link Twenty Three',
+        link: '/link-23'
+      },
+      {
+        name: 'Link Twenty Four',
+        link: '/link-24'
+      },
+      {
+        name: 'Link Twenty Five',
+        link: '/link-25'
       }
     ]
   }
 ]
 
-const socials = {
-  links: [
-    {
-      name: 'X',
-      link: 'https://x.com/DeSciWorld'
-    },
-    {
-      name: 'LinkedIn',
-      link: 'https://www.linkedin.com/company/desciworld'
-    },
-    {
-      name: 'Discord',
-      link: 'https://discord.gg/3X5YzJ9'
-    },
-    {
-      name: 'Telegram',
-      link: 'https://t.me/DeSciWorld'
-    }
-  ]
-}
+const socials = [
+  {
+    name: 'GitHub',
+    link: '#',
+    icon: 'github'
+  },
+  {
+    name: 'Facebook',
+    link: '#',
+    icon: 'facebook'
+  },
+  {
+    name: 'Instagram',
+    link: '#',
+    icon: 'instagram'
+  },
+  {
+    name: 'X',
+    link: '#',
+    icon: 'x'
+  },
+  {
+    name: 'LinkedIn',
+    link: '#',
+    icon: 'linkedin'
+  }
+]
+
+const legalLinks = [
+  {
+    name: 'Privacy Policy',
+    link: '/privacy'
+  },
+  {
+    name: 'Terms of Service',
+    link: '/terms'
+  },
+  {
+    name: 'Cookies Settings',
+    link: '/cookies'
+  }
+]
 
 const Footer = () => {
   return (
-    <footer className="bg-paper sticky bottom-0 z-[-1] overflow-hidden">
+    <footer className="bg-paper overflow-hidden">
       <section className="links">
-        <div className="inner-column pt-12 grid gap-8 grid-cols-[repeat(auto-fill,minmax(200px,1fr))]">
+        <div className="inner-column wide pt-12 grid gap-8 grid-cols-[repeat(auto-fill,minmax(200px,1fr))]">
+          <picture className="max-w-50">
+            <img
+              src={
+                new URL('@/assets/images/logo/logo-full.svg', import.meta.url)
+                  .href
+              }
+              alt="Conduit Market"
+            />
+          </picture>
           {navs.map((nav) => (
             <nav key={nav.heading}>
-              <h3 className="teaser-voice">{nav.heading}</h3>
-              <ul className="mt-2 grid gap-1 justify-start">
+              <h3 className="calm-voice font-bold">{nav.heading}</h3>
+              <ul className="mt-4 grid gap-1 justify-start">
                 {nav.links.map((link) => (
                   <li key={link.name}>
-                    <a href={link.link} className="text">
+                    <Button
+                      variant="link"
+                      size="sm"
+                      isLink
+                      to={link.link}
+                      rounded={false}
+                      className="justify-start pl-0"
+                    >
                       {link.name}
-                    </a>
+                    </Button>
                   </li>
                 ))}
               </ul>
@@ -93,9 +212,45 @@ const Footer = () => {
           ))}
         </div>
       </section>
-      <div className="w-full relative bottom-[-10px] pt-6">
-        <img src="/assets/images/logo-text.svg" alt="13Black" />
-      </div>
+
+      <section className="legal-social">
+        <div className="inner-column wide border-t border-base py-8 flex flex-col md:flex-row justify-between items-center">
+          <div className="legal flex items-center flex-wrap gap-4">
+            <span className="whisper-voice">
+              © 2024 Conduit. All rights reserved.
+            </span>
+            {legalLinks.map((link) => (
+              <React.Fragment key={link.name}>
+                <span className="text-base-400">|</span>
+                <Button
+                  variant="link"
+                  size="sm"
+                  isLink
+                  to={link.link}
+                  rounded={false}
+                >
+                  {link.name}
+                </Button>
+              </React.Fragment>
+            ))}
+          </div>
+
+          <div className="social flex gap-2">
+            {socials.map((social) => (
+              <Button
+                key={social.name}
+                variant="link"
+                size="icon"
+                isLink
+                to={social.link}
+                rounded={false}
+              >
+                <Heart />
+              </Button>
+            ))}
+          </div>
+        </div>
+      </section>
     </footer>
   )
 }
