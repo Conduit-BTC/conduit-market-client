@@ -17,6 +17,7 @@ export interface ButtonProps {
   onClick?: () => void
   isLink?: boolean
   to?: string
+  className?: string
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -27,11 +28,12 @@ const Button: React.FC<ButtonProps> = ({
   children,
   isLink = false,
   to = '',
-  onClick
+  onClick,
+  className
 }) => {
   const classNameValue = cn(
     // Base styles applied to all buttons
-    'flex items-center gap-2 justify-center font-bold transition-colors focus:outline-hidden focus:ring-2 focus:ring-offset-2',
+    'flex items-center gap-2 justify-center font-bold transition-colors focus:outline-hidden focus:ring-2 focus:ring-offset-2 whitespace-nowrap flex-shrink-0',
     {
       // Primary variant - Solid background with primary color
       'bg-primary-500 text-primary-foreground hover:bg-primary-600 focus:ring-primary':
@@ -52,20 +54,21 @@ const Button: React.FC<ButtonProps> = ({
       'bg-destructive text-destructive-foreground hover:bg-destructive/90 focus:ring-destructive':
         variant === 'destructive',
       // Link variant - Appears as a text link with hover underline
-      'text-ink-foreground hover:text-ink-foreground/80 hover:underline focus:ring-ink':
+      'text-ink-foreground font-normal hover:text-ink-foreground/80 hover:underline focus:ring-ink':
         variant === 'link',
       // Size variants
       'px-3 py-1.5 text-sm': size === 'sm', // Small size
       'px-4 py-2 text-base': size === 'md', // Medium size (default)
       'px-6 py-3 text-lg': size === 'lg', // Large size
-      'p-2': size === 'icon', // Icon button (square padding)
+      'p-1': size === 'icon', // Icon button (square padding)
       // State styles
       'opacity-50 cursor-not-allowed': disabled, // Disabled state
       'cursor-pointer': !disabled, // Enabled state
       // Border radius variants
       'rounded-full': rounded, // Fully rounded corners
       'rounded-lg': !rounded // Slightly rounded corners
-    }
+    },
+    className
   )
 
   if (isLink) {
