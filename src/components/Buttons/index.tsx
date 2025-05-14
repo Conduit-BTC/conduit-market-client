@@ -59,7 +59,7 @@ export const UpdateCartItemQuantityButtons = ({
   return (
     <div
       className={cn(
-        'flex items-center gap-4 border border-muted  rounded-full p-2',
+        'flex items-center gap-4 border border-muted  rounded-full p-2 justify-between',
         className
       )}
     >
@@ -67,11 +67,12 @@ export const UpdateCartItemQuantityButtons = ({
         size="icon"
         onClick={handleDecreaseQuantity}
         variant={cartQuantity === 1 ? 'destructive' : 'primary'}
+        className="max-w-7"
       >
         {cartQuantity === 1 ? <Trash /> : <Minus />}
       </Button>
       <p className="firm-voice">{cartQuantity}</p>
-      <Button size="icon" onClick={handleIncreaseQuantity}>
+      <Button size="icon" onClick={handleIncreaseQuantity} className="max-w-7">
         <Plus />
       </Button>
     </div>
