@@ -24,9 +24,13 @@ const PLACEHOLDER_IMAGE = 'https://prd.place/600/400'
 
 interface ProductCardProps {
   event: NDKEvent
+  isHomeCard?: boolean
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ event }) => {
+const ProductCard: React.FC<ProductCardProps> = ({
+  event,
+  isHomeCard = false
+}) => {
   // #todo: remove this once we have a real event
 
   // Memoize the validation check so it only runs when the event changes
@@ -65,7 +69,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ event }) => {
   const summary = ProductListingUtils.getProductSummary(productEvent)
   const visibility = ProductListingUtils.getProductVisibility(productEvent)
 
-  console.log(images)
+  //   const storeName = ProductListingUtils.getStoreName(productEvent) #fixme
+  const storeName = 'Example Store'
 
   // If any required field is missing, don't render the card
   if (!productId || !title || !price) {
@@ -104,14 +109,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ event }) => {
   } else if (isLowStock) {
     badge = <Badge variant="warning">Only {stock} left</Badge>
   } else if (isOnSale) {
-    badge = <Badge variant="success">{discountPercent}% off</Badge>
+    badge = <Badge variant="success">-{discountPercent}%</Badge>
   }
 
   return (
     <Card
       className={cn(
         'w-full max-w-sm overflow-hidden',
-        isOutOfStock && 'grayscale'
+        isOutOfStock && 'grayscale',
+        isHomeCard && 'max-w-50'
       )}
     >
       <div className="relative">
@@ -120,11 +126,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ event }) => {
           {/* left */}
           <div>{badge}</div>
           {/* right */}
-          <div>{hasUserInteractions && <UserCounter />}</div>
+          <div>{!isHomeCard && hasUserInteractions && <UserCounter />}</div>
         </div>
 
         {/* image */}
-        <picture className="aspect-video bg-ink">
+        <picture
+          className={cn(
+            'bg-ink',
+            isHomeCard ? 'aspect-square' : 'aspect-video'
+          )}
+        >
           <img
             src={mainImage}
             alt={title}
@@ -134,8 +145,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ event }) => {
           />
         </picture>
       </div>
-      <CardHeader className="grid gap-1">
-        <CardTitle className="line-clamp-2">{title}</CardTitle>
+      <CardHeader className="flex gap-1 items-start justify-between">
+        <CardTitle className={cn('line-clamp-2', isHomeCard && 'calm-voice')}>
+          {title}
+        </CardTitle>
 
         {/* rating */}
         <div className="flex items-center gap-1">
@@ -146,43 +159,57 @@ const ProductCard: React.FC<ProductCardProps> = ({ event }) => {
           <p className="calm-voice font-bold">4.5</p>
         </div>
       </CardHeader>
-      <CardContent className="relative">
+      <CardContent className="relative pb-0">
         {/* pubkey */}
         {/* <p className="whisper-voice">{pubkey}</p> */}
 
-        {/* summary */}
-        {summary && (
+        {/* summary #todo*/}
+        {summary && false && (
           <CardDescription className="line-clamp-2">{summary}</CardDescription>
         )}
-      </CardContent>
-      <CardFooter className="flex justify-between items-center">
-        {/* price */}
-        <div>
-          <div className="flex items-center gap-1">
-            <p className="firm-voice font-bold">{discountedPrice}</p>
-            {isOnSale && (
-              <p className="text-base-600 line-through notice-voice">
-                {originalPrice}
-              </p>
-            )}
-          </div>
-          <p className="whisper-voice">{discountedPrice}</p>
+
+        {/* in Satoshis */}
+        <div className="flex items-center gap-1">
+          <p className={cn('firm-voice font-bold', isHomeCard && 'calm-voice')}>
+            {discountedPrice} SAT
+          </p>
+          {isOnSale && (
+            <p
+              className={cn(
+                'text-base-600 line-through notice-voice',
+                isHomeCard && 'calm-voice'
+              )}
+            >
+              {originalPrice}
+            </p>
+          )}
         </div>
-        {/* add to cart */}
-        <AddToCartButton
-          product={{
-            eventId: event.id,
-            productId,
-            tags: event.tags,
-            image: mainImage,
-            name: title,
-            price: parseFloat(price.amount),
-            currency: price.currency,
-            quantity: 1,
-            merchantPubkey: pubkey
-          }}
-          disabled={isOutOfStock}
-        />
+      </CardContent>
+      <CardFooter className="flex justify-between items-center pt-0">
+        <div className="flex flex-col">
+          {/* in Dollars */}
+          <p className="whisper-voice">{discountedPrice}</p>
+          {isHomeCard && storeName && (
+            <p className="whisper-voice text-base-600">{storeName}</p>
+          )}
+        </div>
+        {/* add to cart - only show if not home card */}
+        {!isHomeCard && (
+          <AddToCartButton
+            product={{
+              eventId: event.id,
+              productId,
+              tags: event.tags,
+              image: mainImage,
+              name: title,
+              price: parseFloat(price.amount),
+              currency: price.currency,
+              quantity: 1,
+              merchantPubkey: pubkey
+            }}
+            disabled={isOutOfStock}
+          />
+        )}
       </CardFooter>
     </Card>
   )
