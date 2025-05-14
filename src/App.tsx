@@ -32,7 +32,7 @@ function App() {
         <Route path="/style-guide" component={StyleGuidePage} />
       </Switch>
       <CartDrawer />
-      {/* <Footer /> */}
+      <Footer />
     </AppInitializer>
   )
 }
