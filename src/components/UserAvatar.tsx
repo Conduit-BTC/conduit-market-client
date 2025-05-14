@@ -2,15 +2,17 @@ import React from 'react'
 import { cn } from '@/lib/utils'
 
 interface UserAvatarProps {
-  name?: string
-  imageUrl?: string
+  name?: string | null
+  imageUrl?: string | null
   size?: number
   showName?: boolean
 }
 
+const DEFAULT_IMAGE_URL = 'https://avatar.iran.liara.run/public'
+
 const UserAvatar: React.FC<UserAvatarProps> = ({
   name = 'John Doe',
-  imageUrl = 'https://avatar.iran.liara.run/public',
+  imageUrl = DEFAULT_IMAGE_URL,
   size = 8,
   showName = true
 }) => {
