@@ -19,13 +19,9 @@ export default function StyleGuidePage() {
           {/* <div className="fixed right-4 top-4 w-[300px]">
           <ThemeToggle />
         </div> */}
-        </div>
-      </section>
 
-      <section>
-        <div className="inner-column">
-          <nav className="prose">
-            <h2 className="attention-voice mb-4">Table of Contents</h2>
+          <nav className="prose mt-12">
+            <h2 className="firm-voice mb-4">Table of Contents</h2>
             <ul className="grid gap-2">
               <li>
                 <a href="#colors" className="text-primary hover:underline">
