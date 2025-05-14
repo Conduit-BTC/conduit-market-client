@@ -27,6 +27,9 @@ products[2].tags = products[2].tags.map((tag) =>
   tag[0] === 'stock' ? ['stock', '4'] : tag
 )
 
+products.pop()
+products.pop()
+
 const cards: Card[] = [
   {
     name: 'Product Card',
