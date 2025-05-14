@@ -10,6 +10,8 @@ import {
 } from '../Cards/CardComponents'
 import { cn } from '@/lib/utils'
 import Breadcrumbs from '../Breadcumbs'
+import Field from '../Form/Field'
+import { SearchIcon, XIcon } from 'lucide-react'
 
 interface Component {
   name: string
@@ -154,6 +156,49 @@ const components: Component[] = [
             { label: 'Drinks', path: '/drinks' },
             { label: 'Coffee', path: '/coffee', isActive: true }
           ]
+        }
+      }
+    ]
+  },
+
+  {
+    name: 'Fields',
+    component: Field,
+    states: [
+      {
+        label: 'Default',
+        props: {
+          name: 'username'
+        }
+      },
+      {
+        label: 'With Type',
+        props: {
+          label: 'Email',
+          name: 'email',
+          type: 'email',
+          placeholder: 'Enter your email'
+        }
+      },
+      {
+        label: 'Disabled',
+        props: {
+          label: 'Password',
+          name: 'password',
+          type: 'password',
+          disabled: true,
+          placeholder: 'Enter your password'
+        }
+      },
+      {
+        label: 'With Icons',
+        props: {
+          label: 'Search',
+          name: 'search',
+          type: 'search',
+          placeholder: 'Search...',
+          leftIcon: <SearchIcon className="w-4 h-4 text-base-400" />,
+          rightIcon: <XIcon className="w-4 h-4 text-base-400" />
         }
       }
     ]
