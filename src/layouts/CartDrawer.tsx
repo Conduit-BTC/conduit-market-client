@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import ZapoutButton from '@/components/Buttons/ZapoutButton.tsx'
 import { cn, formatPrice } from '@/lib/utils'
 import Button from '@/components/Buttons/Button'
-import { CartItemCard } from '@/components/Cards/CartItemCard'
+import CartItemCard from '@/components/Cards/CartItemCard'
 
 export const CartDrawer = () => {
   const {
