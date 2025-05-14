@@ -9,6 +9,7 @@ import {
   CardContent
 } from '../Cards/CardComponents'
 import { cn } from '@/lib/utils'
+import Breadcrumbs from '../Breadcumbs'
 
 interface Component {
   name: string
@@ -45,7 +46,7 @@ const components: Component[] = [
         label: 'Large without name',
         props: {
           name: 'User Avatar',
-          size: 10,
+          size: 11,
           showName: false
         }
       }
@@ -136,6 +137,23 @@ const components: Component[] = [
         props: {
           children: 'Warning Badge',
           variant: 'warning'
+        }
+      }
+    ]
+  },
+  {
+    name: 'Breadcrumbs',
+    component: Breadcrumbs,
+    states: [
+      {
+        label: 'Default',
+        props: {
+          items: [
+            { label: 'Shop', path: '/' },
+            { label: 'Category', path: '/category' },
+            { label: 'Drinks', path: '/drinks' },
+            { label: 'Coffee', path: '/coffee', isActive: true }
+          ]
         }
       }
     ]
