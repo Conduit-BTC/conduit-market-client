@@ -9,7 +9,7 @@
 }
 
 .loud-voice {
-  font-family: var(--font-body);
+  font-family: var(--font-display);
   font-size: var(--text-5xl);
   line-height: var(--leading-tight);
   font-weight: var(--font-weight-bold);
@@ -22,7 +22,7 @@
 }
 
 .firm-voice {
-  font-family: var(--font-body);
+  font-family: var(--font-display);
   font-size: var(--text-2xl);
   line-height: var(--leading-tight);
   font-weight: var(--font-weight-bold);
