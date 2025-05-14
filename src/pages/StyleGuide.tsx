@@ -21,25 +21,56 @@ export default function StyleGuidePage() {
         </div> */}
         </div>
       </section>
+
       <section>
+        <div className="inner-column">
+          <nav className="prose">
+            <h2 className="attention-voice mb-4">Table of Contents</h2>
+            <ul className="grid gap-2">
+              <li>
+                <a href="#colors" className="text-primary hover:underline">
+                  Colors
+                </a>
+              </li>
+              <li>
+                <a href="#voices" className="text-primary hover:underline">
+                  Typography & Voices
+                </a>
+              </li>
+              <li>
+                <a href="#buttons" className="text-primary hover:underline">
+                  Buttons
+                </a>
+              </li>
+              <li>
+                <a href="#components" className="text-primary hover:underline">
+                  Components
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </section>
+
+      <section id="colors">
         <div className="inner-column wide">
           <ColorGuide />
         </div>
       </section>
 
-      <section>
+      <section id="voices">
         <div className="inner-column wide">
           <VoicesGuide />
         </div>
       </section>
 
-      <section>
+      <section id="buttons">
         <div className="inner-column wide">
           <ButtonGuide />
         </div>
       </section>
 
-      <section>
+      <section id="components">
         <div className="inner-column wide">
           <ComponentsGuide />
         </div>
