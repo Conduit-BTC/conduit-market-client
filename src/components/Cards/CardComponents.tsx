@@ -26,7 +26,7 @@ export const CardHeader = ({
   children: React.ReactNode
   className?: string
 }) => {
-  return <div className={cn('p-4', className)}>{children}</div>
+  return <div className={cn('px-2 py-2', className)}>{children}</div>
 }
 
 export const CardTitle = ({
@@ -56,7 +56,7 @@ export const CardContent = ({
   children: React.ReactNode
   className?: string
 }) => {
-  return <div className={cn('p-4 pt-0', className)}>{children}</div>
+  return <div className={cn('px-2 py-2', className)}>{children}</div>
 }
 
 export const CardFooter = ({
@@ -66,5 +66,5 @@ export const CardFooter = ({
   children: React.ReactNode
   className?: string
 }) => {
-  return <div className={cn('p-4', className)}>{children}</div>
+  return <div className={cn('px-2 py-2', className)}>{children}</div>
 }
