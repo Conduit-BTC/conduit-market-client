@@ -35,7 +35,7 @@ const UserAvatar: React.FC<UserAvatarProps> = ({
           </p>
         )}
       </picture>
-      {showName && name && <p className="calm-voice font-medium">{name}</p>}
+      {showName && name && <p className="solid-voice font-medium">{name}</p>}
     </div>
   )
 }
