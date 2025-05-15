@@ -7,7 +7,7 @@ import StoreCard from '@/components/Cards/StoreCard'
 import ArticleCard from '../Cards/ArticleCard'
 import CollectionCard from '../Cards/CollectionCard'
 import PromoCard from '../Cards/PromoCard'
-
+import RankProductCard from '../Cards/RankProductCard'
 interface Card<T = any> {
   name: string
   component?: React.ComponentType<T>
@@ -38,6 +38,15 @@ const cards: Card[] = [
       event,
       isHomeCard: false
     }))
+  },
+  {
+    name: 'Rank Product Card',
+    component: RankProductCard,
+    variants: [
+      {
+        event: products[0] // Using first product event as mock rank product event
+      }
+    ]
   },
   {
     name: 'Store Card',
