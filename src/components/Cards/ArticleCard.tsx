@@ -7,9 +7,9 @@ import {
   CardTitle
 } from './CardComponents.tsx'
 import Button from '../Buttons/Button.tsx'
-import UserCounter from '../UserCounter.tsx'
+import { UserPill, MultiUserPill } from '../Pill'
 import { ZapButton } from '../Buttons/ZapButton.tsx'
-import UserAvatar from '../UserAvatar.tsx'
+
 const PLACEHOLDER_IMAGE =
   'https://placehold.co/600x400?text=Article%20Card&font=poppins'
 
@@ -39,7 +39,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ event }) => {
 
       {/* card header with usercounter and zap button */}
       <CardHeader className="flex items-center justify-between">
-        <UserCounter showZap={true} size="md" />
+        <MultiUserPill className="border-none" showZap={true} size="md" />
         <ZapButton />
       </CardHeader>
 
@@ -52,7 +52,11 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ event }) => {
 
       {/* Footer with article author avatar and read button */}
       <CardFooter className="flex justify-between items-center ">
-        <UserAvatar name={articleAuthor} imageUrl={articleAuthorImage} />
+        <UserPill
+          name={articleAuthor}
+          imageUrl={articleAuthorImage}
+          className="border-none"
+        />
         <Button
           variant="secondary"
           rounded={false}
