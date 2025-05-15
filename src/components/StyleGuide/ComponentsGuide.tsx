@@ -11,6 +11,7 @@ import Breadcrumbs from '../Breadcumbs'
 import Field from '../Form/Field'
 import { SearchIcon, XIcon } from 'lucide-react'
 import RankingTable from '../RankingTable'
+import CategoryHeader from '../CategoryHeader/CategoryHeader'
 import {
   Pill,
   CategoryPill,
@@ -20,6 +21,8 @@ import {
   IconPill
 } from '../Pill'
 import Avatar from '../Avatar'
+import NewsletterSignup from '../NewsletterSignup/NewsletterSignup'
+import HelpSection from '../HelpSection/HelpSection'
 
 interface Component {
   name: string
@@ -32,6 +35,47 @@ interface Component {
 }
 
 const components: Component[] = [
+  {
+    name: 'Miscellaneous',
+    component: ({ variant, ...props }) => {
+      switch (variant) {
+        case 'newsletter':
+          return <NewsletterSignup {...props} />
+        case 'help':
+          return <HelpSection {...props} />
+        case 'breadcrumbs':
+          return <Breadcrumbs {...props} />
+        default:
+          return null
+      }
+    },
+    states: [
+      {
+        label: 'Newsletter Section',
+        props: {
+          variant: 'newsletter'
+        }
+      },
+      {
+        label: 'Help Section',
+        props: {
+          variant: 'help'
+        }
+      },
+      {
+        label: 'Breadcrumbs',
+        props: {
+          variant: 'breadcrumbs',
+          items: [
+            { label: 'Shop', path: '/' },
+            { label: 'Category', path: '/category' },
+            { label: 'Drinks', path: '/drinks' },
+            { label: 'Coffee', path: '/coffee', isActive: true }
+          ]
+        }
+      }
+    ]
+  },
   {
     name: 'Pills',
     component: ({ variant, ...props }) => {
@@ -222,24 +266,6 @@ const components: Component[] = [
     ]
   },
   {
-    name: 'Breadcrumbs',
-    component: Breadcrumbs,
-    states: [
-      {
-        label: 'Default',
-        props: {
-          items: [
-            { label: 'Shop', path: '/' },
-            { label: 'Category', path: '/category' },
-            { label: 'Drinks', path: '/drinks' },
-            { label: 'Coffee', path: '/coffee', isActive: true }
-          ]
-        }
-      }
-    ]
-  },
-
-  {
     name: 'Fields',
     component: Field,
     states: [
@@ -291,12 +317,27 @@ const components: Component[] = [
         props: {}
       }
     ]
+  },
+  {
+    name: 'Category Headers',
+    component: CategoryHeader,
+    fullWidth: true,
+    states: [
+      {
+        label: 'Default',
+        props: {
+          title: 'Coffee',
+          description:
+            "Coffee is a beverage brewed from roasted, ground coffee beans. Darkly colored, bitter, and slightly acidic, coffee has a stimulating effect on humans, primarily due to its caffeine content. It has the highest sales in the world market for hot drinks. Coffee is one of the most popular drinks in the world and can be prepared and presented in a variety of ways. The effect of coffee on human health has been a subject of many studies; however, results have varied in terms of coffee's relative benefit."
+        }
+      }
+    ]
   }
 ]
 
 export function ComponentsGuide() {
   return (
-    <div className="space-y-8">
+    <div className="space-y-20">
       <h2 className="attention-voice mb-6">Components</h2>
 
       {components.map((componentGroup, groupIndex) => (
@@ -312,7 +353,7 @@ export function ComponentsGuide() {
                     'col-span-full': componentGroup.fullWidth
                   })}
                 >
-                  <Card>
+                  <Card className="border-base-900">
                     <CardHeader>
                       <CardTitle className="solid-voice">
                         {state.label}
