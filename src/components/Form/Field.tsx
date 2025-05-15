@@ -55,7 +55,7 @@ const Field = React.forwardRef<HTMLInputElement, FieldProps>(
       'p-2',
 
       // Borders & Shape
-      'rounded-lg border border-base-400',
+      'rounded-lg border border-base-700',
 
       // Colors & Background
       'bg-base-900',

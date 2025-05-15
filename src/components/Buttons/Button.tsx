@@ -58,7 +58,7 @@ const Button: React.FC<ButtonProps> = ({
       'bg-destructive text-destructive-foreground hover:bg-destructive/90 focus:ring-destructive':
         variant === 'destructive',
       // Link variant - Appears as a text link with hover underline
-      'text-ink-foreground font-normal hover:text-ink-foreground/80 hover:underline focus:ring-ink':
+      'text-ink-foreground font-medium hover:text-ink-foreground/80 hover:underline focus:ring-0 ':
         variant === 'link',
       // Size variants
       'px-3 py-1.5 text-sm': size === 'sm', // Small size
