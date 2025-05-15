@@ -20,16 +20,23 @@ export default function StyleGuidePage() {
 
           <Tabs defaultValue="colors" className="w-full">
             <TabsList className="w-full justify-start">
+              <TabsTrigger value="all">All</TabsTrigger>
               <TabsTrigger value="colors">Colors</TabsTrigger>
               <TabsTrigger value="voices">Typography & Voices</TabsTrigger>
               <TabsTrigger value="buttons">Buttons</TabsTrigger>
               <TabsTrigger value="components">Components</TabsTrigger>
             </TabsList>
 
+            <TabsContent value="all" className="mt-6">
+              <ColorGuide />
+              <VoicesGuide />
+              <ButtonGuide />
+              <ComponentsGuide />
+            </TabsContent>
+
             <TabsContent value="colors" className="mt-6">
               <ColorGuide />
             </TabsContent>
-
             <TabsContent value="voices" className="mt-6">
               <VoicesGuide />
             </TabsContent>
