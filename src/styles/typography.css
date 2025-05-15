@@ -61,3 +61,17 @@
   line-height: var(--leading-normal);
   font-weight: var(--font-weight-light);
 }
+
+p,
+span,
+li,
+button,
+a,
+div,
+input,
+textarea,
+select,
+option,
+label {
+  font-family: var(--font-body);
+}
