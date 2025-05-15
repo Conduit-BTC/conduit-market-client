@@ -16,7 +16,7 @@ const RankingTable: React.FC<RankingTableProps> = ({ limit = 5 }) => {
     <div className="w-full max-w-5xl mx-auto">
       <div className="grid gap-4">
         {/* header */}
-        <div className="grid grid-cols-5 items-center justify-items-cendter gap-4">
+        <div className="grid grid-cols-5 items-center justify-items-cendter gap-4 border-b border-ink-500 pb-2 mb-2">
           <p className="solid-voice">Rank</p>
           <p className="solid-voice col-span-2">Product</p>
           <p className="solid-voice">Sales</p>
@@ -24,7 +24,7 @@ const RankingTable: React.FC<RankingTableProps> = ({ limit = 5 }) => {
         </div>
         {/* rows */}
         {displayEvents.map((event, index) => (
-          <RankProductCard key={event.id + index} event={event} />
+          <RankProductCard key={index} event={event} />
         ))}
       </div>
     </div>
