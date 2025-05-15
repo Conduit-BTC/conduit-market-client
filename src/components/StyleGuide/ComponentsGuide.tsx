@@ -12,6 +12,7 @@ import { cn } from '@/lib/utils'
 import Breadcrumbs from '../Breadcumbs'
 import Field from '../Form/Field'
 import { SearchIcon, XIcon } from 'lucide-react'
+import RankingTable from '../RankingTable'
 
 interface Component {
   name: string
@@ -200,6 +201,17 @@ const components: Component[] = [
           leftIcon: <SearchIcon className="w-4 h-4 text-base-400" />,
           rightIcon: <XIcon className="w-4 h-4 text-base-400" />
         }
+      }
+    ]
+  },
+  {
+    name: 'Ranking Table',
+    component: RankingTable,
+    fullWidth: true,
+    states: [
+      {
+        label: 'Default',
+        props: {}
       }
     ]
   }
