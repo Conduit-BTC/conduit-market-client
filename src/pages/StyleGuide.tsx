@@ -1,5 +1,6 @@
 //
 
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/Tabs'
 import { ColorGuide } from '@/components/StyleGuide/ColorGuide'
 import { VoicesGuide } from '@/components/StyleGuide/VoicesGuide'
 import { ButtonGuide } from '@/components/StyleGuide/ButtonGuide'
@@ -7,68 +8,40 @@ import { ComponentsGuide } from '@/components/StyleGuide/ComponentsGuide'
 
 export default function StyleGuidePage() {
   return (
-    <main className="grid gap-16">
+    <main className="grid gap-8">
       <section>
-        <div className="inner-column">
-          <div>
+        <div className="inner-column wide">
+          <div className="mb-8">
             <h1 className="booming-voice mb-6">Style Guide</h1>
             <p className="text-muted-foreground">
               A comprehensive guide to the design system and components.
             </p>
           </div>
-          {/* <div className="fixed right-4 top-4 w-[300px]">
-          <ThemeToggle />
-        </div> */}
 
-          <nav className="prose mt-12">
-            <h2 className="firm-voice mb-4">Table of Contents</h2>
-            <ul className="grid gap-2">
-              <li>
-                <a href="#colors" className="text-primary hover:underline">
-                  Colors
-                </a>
-              </li>
-              <li>
-                <a href="#voices" className="text-primary hover:underline">
-                  Typography & Voices
-                </a>
-              </li>
-              <li>
-                <a href="#buttons" className="text-primary hover:underline">
-                  Buttons
-                </a>
-              </li>
-              <li>
-                <a href="#components" className="text-primary hover:underline">
-                  Components
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </section>
+          <Tabs defaultValue="colors" className="w-full">
+            <TabsList className="w-full justify-start">
+              <TabsTrigger value="colors">Colors</TabsTrigger>
+              <TabsTrigger value="voices">Typography & Voices</TabsTrigger>
+              <TabsTrigger value="buttons">Buttons</TabsTrigger>
+              <TabsTrigger value="components">Components</TabsTrigger>
+            </TabsList>
 
-      <section id="colors">
-        <div className="inner-column wide">
-          <ColorGuide />
-        </div>
-      </section>
+            <TabsContent value="colors" className="mt-6">
+              <ColorGuide />
+            </TabsContent>
 
-      <section id="voices">
-        <div className="inner-column wide">
-          <VoicesGuide />
-        </div>
-      </section>
+            <TabsContent value="voices" className="mt-6">
+              <VoicesGuide />
+            </TabsContent>
 
-      <section id="buttons">
-        <div className="inner-column wide">
-          <ButtonGuide />
-        </div>
-      </section>
+            <TabsContent value="buttons" className="mt-6">
+              <ButtonGuide />
+            </TabsContent>
 
-      <section id="components">
-        <div className="inner-column wide">
-          <ComponentsGuide />
+            <TabsContent value="components" className="mt-6">
+              <ComponentsGuide />
+            </TabsContent>
+          </Tabs>
         </div>
       </section>
     </main>
