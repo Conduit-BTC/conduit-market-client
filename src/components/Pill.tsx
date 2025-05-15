@@ -54,7 +54,7 @@ const StorePill: React.FC<StorePillProps> = ({
   ...props
 }) => {
   return (
-    <Pill>
+    <Pill className={className}>
       <Avatar
         imageUrl={imageUrl}
         alt={storeName}
