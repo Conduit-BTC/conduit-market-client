@@ -18,7 +18,7 @@ export default function StyleGuidePage() {
             </p>
           </div>
 
-          <Tabs defaultValue="colors" className="w-full">
+          <Tabs defaultValue="all" className="w-full">
             <TabsList className="w-full justify-start">
               <TabsTrigger value="all">All</TabsTrigger>
               <TabsTrigger value="colors">Colors</TabsTrigger>

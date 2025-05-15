@@ -68,7 +68,7 @@ const CollectionCard: React.FC<CollectionCardProps> = ({ event }) => {
           className="border-none"
         />
         <Button
-          variant="secondary"
+          variant="muted"
           rounded={false}
           size="lg"
           to={`/collection/${collectionSlug}`}

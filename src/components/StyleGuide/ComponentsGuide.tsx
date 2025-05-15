@@ -161,6 +161,14 @@ const components: Component[] = [
         props: {
           fallback: 'JD'
         }
+      },
+      {
+        label: 'Extra Large',
+        props: {
+          imageUrl: 'https://avatar.iran.liara.run/public',
+          alt: 'User Avatar',
+          size: 'xl'
+        }
       }
     ]
   },

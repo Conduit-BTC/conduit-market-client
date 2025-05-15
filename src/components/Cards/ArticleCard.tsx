@@ -58,7 +58,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ event }) => {
           className="border-none"
         />
         <Button
-          variant="secondary"
+          variant="muted"
           rounded={false}
           size="lg"
           to={`/article/${articleSlug}`}

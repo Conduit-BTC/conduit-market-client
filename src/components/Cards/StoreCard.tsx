@@ -30,7 +30,7 @@ const StoreCard: React.FC<StoreCardProps> = ({ event }) => {
       <CardFooter className="flex justify-between items-center ">
         <div className="text-xl font-bold">{storeName}</div>
         <Button
-          variant="secondary"
+          variant="muted"
           rounded={false}
           size="lg"
           to={`/store/${storeSlug}`}

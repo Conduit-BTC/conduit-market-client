@@ -63,9 +63,9 @@ const StorePill: React.FC<StorePillProps> = ({
       />
       <div className="flex flex-col leading-none">
         <span className="text-xs text-muted-foreground">Shop at</span>
-        <span className="font-semibold">{storeName}</span>
+        <span className="font-semibold whitespace-nowrap">{storeName}</span>
       </div>
-      <ChevronRight className="size-5 ml-auto text-muted-foreground" />
+      <ChevronRight className="size-5 ml-auto text-muted-foreground shrink-0" />
     </Pill>
   )
 }
