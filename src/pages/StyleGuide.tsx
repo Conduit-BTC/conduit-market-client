@@ -27,7 +27,7 @@ export default function StyleGuidePage() {
               <TabsTrigger value="components">Components</TabsTrigger>
             </TabsList>
 
-            <TabsContent value="all" className="mt-6">
+            <TabsContent value="all" className="mt-6 grid gap-20">
               <ColorGuide />
               <VoicesGuide />
               <ButtonGuide />
