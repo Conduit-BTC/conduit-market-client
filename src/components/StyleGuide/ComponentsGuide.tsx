@@ -1,5 +1,3 @@
-import UserAvatar from '../UserAvatar'
-import UserCounter from '../UserCounter'
 import { Badge } from '../Badge'
 import { CardsGuide } from './CardsGuide'
 import {
@@ -13,6 +11,15 @@ import Breadcrumbs from '../Breadcumbs'
 import Field from '../Form/Field'
 import { SearchIcon, XIcon } from 'lucide-react'
 import RankingTable from '../RankingTable'
+import {
+  Pill,
+  CategoryPill,
+  StorePill,
+  UserPill,
+  MultiUserPill,
+  IconPill
+} from '../Pill'
+import Avatar from '../Avatar'
 
 interface Component {
   name: string
@@ -26,42 +33,66 @@ interface Component {
 
 const components: Component[] = [
   {
-    name: 'Avatars',
-    component: UserAvatar,
-    states: [
-      {
-        label: 'Default',
-        props: {
-          name: 'User Avatar',
-          imageUrl: 'https://avatar.iran.liara.run/public'
-        }
-      },
-      {
-        label: 'Small without name',
-        props: {
-          name: 'User Avatar',
-          imageUrl: 'https://avatar.iran.liara.run/public',
-          size: 6,
-          showName: false
-        }
-      },
-      {
-        label: 'Large without name',
-        props: {
-          name: 'User Avatar',
-          size: 11,
-          showName: false
-        }
+    name: 'Pills',
+    component: ({ variant, ...props }) => {
+      switch (variant) {
+        case 'category':
+          return <CategoryPill {...props} />
+        case 'store':
+          return <StorePill {...props} />
+        case 'user':
+          return <UserPill {...props} />
+        case 'multi-user':
+          return <MultiUserPill {...props} />
+        case 'icon':
+          return <IconPill {...props} />
+        default:
+          return <Pill {...props}>{props.children}</Pill>
       }
-    ]
-  },
-  {
-    name: 'User Counters',
-    component: UserCounter,
+    },
     states: [
       {
-        label: 'Default Counter',
+        label: 'Base Pill',
         props: {
+          children: 'Basic Pill Content'
+        }
+      },
+      {
+        label: 'Icon Pill',
+        props: {
+          variant: 'icon',
+          text: 'Icon Pill',
+          leftIcon: <SearchIcon />
+        }
+      },
+      {
+        label: 'Category Pill',
+        props: {
+          variant: 'category',
+          imageUrl: 'https://avatar.iran.liara.run/public',
+          label: 'Category'
+        }
+      },
+      {
+        label: 'Store Pill',
+        props: {
+          variant: 'store',
+          imageUrl: 'https://avatar.iran.liara.run/public',
+          storeName: 'Store Name'
+        }
+      },
+      {
+        label: 'User Pill',
+        props: {
+          variant: 'user',
+          imageUrl: 'https://avatar.iran.liara.run/public',
+          name: 'User Name'
+        }
+      },
+      {
+        label: 'Multi-User Pill',
+        props: {
+          variant: 'multi-user',
           users: [
             {
               name: 'Brooj',
@@ -77,8 +108,9 @@ const components: Component[] = [
         }
       },
       {
-        label: 'Counter with Zap',
+        label: 'Multi-User Pill with Zap',
         props: {
+          variant: 'multi-user',
           users: [
             {
               name: 'Brooj',
@@ -96,6 +128,43 @@ const components: Component[] = [
       }
     ]
   },
+  {
+    name: 'Avatars',
+    component: Avatar,
+    states: [
+      {
+        label: 'Small',
+        props: {
+          imageUrl: 'https://avatar.iran.liara.run/public',
+          alt: 'User Avatar',
+          size: 'sm'
+        }
+      },
+      {
+        label: 'Medium',
+        props: {
+          imageUrl: 'https://avatar.iran.liara.run/public',
+          alt: 'User Avatar',
+          size: 'md'
+        }
+      },
+      {
+        label: 'Large',
+        props: {
+          imageUrl: 'https://avatar.iran.liara.run/public',
+          alt: 'User Avatar',
+          size: 'lg'
+        }
+      },
+      {
+        label: 'Fallback',
+        props: {
+          fallback: 'JD'
+        }
+      }
+    ]
+  },
+
   {
     name: 'Badges',
     component: Badge,
