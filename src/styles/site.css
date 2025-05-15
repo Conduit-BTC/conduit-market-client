@@ -197,4 +197,19 @@ layer(base);
     border-radius: var(--radius-lg);
     z-index: -1;
   }
+
+  .tabs-list {
+    @apply flex items-center p-1 relative;
+
+    /* &::before {
+      content: '';
+      position: absolute;
+      height: 2px;
+      bottom: 0;
+      left: var(--tab-left, 0);
+      width: var(--tab-width, 30px);
+      background: var(--color-primary);
+      transition: left var(--transition-normal), width var(--transition-normal);
+    }*/
+  }
 }
