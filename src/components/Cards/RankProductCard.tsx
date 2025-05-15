@@ -2,7 +2,7 @@ import React from 'react'
 import { Card, CardContent, CardHeader } from './CardComponents'
 import { formatNumber } from '@/lib/utils'
 import { NDKEvent } from '@nostr-dev-kit/ndk'
-import UserAvatar from '../UserAvatar'
+import { StorePill } from '../Pill'
 
 interface RankProductCardProps {
   event: NDKEvent
@@ -43,7 +43,7 @@ const RankProductCard: React.FC<RankProductCardProps> = ({ event }) => {
           <p className="font-semibold">{formatNumber(sales)}</p>
         </div>
         <div className="">
-          <UserAvatar name={storeName} />
+          <StorePill storeName={storeName} />
         </div>
       </CardContent>
     </Card>
