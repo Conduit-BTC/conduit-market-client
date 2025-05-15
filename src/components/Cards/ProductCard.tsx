@@ -15,7 +15,7 @@ import {
 } from './CardComponents.tsx'
 import { ShoppingCart, Star } from 'lucide-react'
 import { useCartStore } from '@/stores/useCartStore.ts'
-import UserCounter from '@/components/UserCounter.tsx'
+import { MultiUserPill } from '@/components/Pill'
 import { Badge } from '@/components/Badge.tsx'
 import { cn, formatPrice } from '@/lib/utils.ts'
 import AddToCartButton from '../Buttons/index.tsx'
@@ -126,7 +126,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
           {/* left */}
           <div>{badge}</div>
           {/* right */}
-          <div>{!isHomeCard && hasUserInteractions && <UserCounter />}</div>
+          <div>
+            {!isHomeCard && hasUserInteractions && (
+              <MultiUserPill className="border-none" />
+            )}
+          </div>
         </div>
 
         {/* image */}
