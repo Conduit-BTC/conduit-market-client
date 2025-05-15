@@ -21,7 +21,7 @@ const RankProductCard: React.FC<RankProductCardProps> = ({ event }) => {
   const storeName = 'Store Name'
 
   return (
-    <Card className="">
+    <Card className="border-none">
       <CardContent className="grid grid-cols-5 items-center justify-items-cendter gap-4">
         {/* Rank number */}
         <p className="firm-voice">{rank}</p>
@@ -43,7 +43,7 @@ const RankProductCard: React.FC<RankProductCardProps> = ({ event }) => {
           <p className="font-semibold">{formatNumber(sales)}</p>
         </div>
         <div className="">
-          <StorePill storeName={storeName} />
+          <StorePill className="border-none" storeName={storeName} />
         </div>
       </CardContent>
     </Card>

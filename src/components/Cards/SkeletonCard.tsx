@@ -1,9 +1,4 @@
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle
-} from '@/components/Cards/CardComponents'
+import { Card } from '@/components/Cards/CardComponents'
 import Skeleton from '@/components/Skeleton'
 
 const SkeletonCard = () => {
