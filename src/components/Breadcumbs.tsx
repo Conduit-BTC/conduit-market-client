@@ -19,7 +19,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
         <React.Fragment key={item.path}>
           <Button
             variant="link"
-            size="md"
+            size="sm"
             isLink
             to={item.path}
             disabled={item.isActive}
@@ -27,7 +27,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
             {item.label}
           </Button>
           {index < items.length - 1 && (
-            <span className="text-gray-400 font-bold">/</span>
+            <span className="text-base-400 font-bold">/</span>
           )}
         </React.Fragment>
       ))}
