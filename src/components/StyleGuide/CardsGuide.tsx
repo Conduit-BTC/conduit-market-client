@@ -8,6 +8,7 @@ import ArticleCard from '../Cards/ArticleCard'
 import CollectionCard from '../Cards/CollectionCard'
 import PromoCard from '../Cards/PromoCard'
 import RankProductCard from '../Cards/RankProductCard'
+import SkeletonCard from '../Cards/SkeletonCard'
 interface Card<T = any> {
   name: string
   component?: React.ComponentType<T>
@@ -31,6 +32,11 @@ products.pop()
 products.pop()
 
 const cards: Card[] = [
+  {
+    name: 'Skeleton Card',
+    component: SkeletonCard,
+    variants: [1, 2, 3]
+  },
   {
     name: 'Product Card',
     component: ProductCard,
@@ -120,7 +126,7 @@ export function CardsGuide() {
                   {card.variants.map((variant, index) => {
                     const Component = card.component!
                     return (
-                      <li key={index} className="">
+                      <li key={index} className="min-w-[30%]">
                         <Component {...variant} />
                       </li>
                     )

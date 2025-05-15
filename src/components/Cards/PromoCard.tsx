@@ -77,7 +77,7 @@ const PromoCard: React.FC<PromoCardProps> = ({ event, variant = '4items' }) => {
       <CardFooter className="flex justify-between items-center ">
         <p className="notice-voice">{categoryName}</p>
         <Button
-          variant="secondary"
+          variant="muted"
           rounded={false}
           size="lg"
           to={`/promo/${promoSlug}`}

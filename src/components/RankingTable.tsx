@@ -13,7 +13,7 @@ const RankingTable: React.FC<RankingTableProps> = ({ limit = 5 }) => {
   const displayEvents = events.slice(0, limit)
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
+    <div className="w-full max-w-5xl mx-auto">
       <div className="grid gap-4">
         {/* header */}
         <div className="grid grid-cols-5 items-center justify-items-cendter gap-4">

@@ -4,10 +4,15 @@ import { Zap } from 'lucide-react'
 const buttonVariants = [
   'primary',
   'secondary',
+  'muted',
   'outline',
   'destructive',
-  'link'
+  'ghost',
+  'link',
+  'accent'
 ] as const
+
+const buttonSizes = ['sm', 'md', 'lg'] as const
 
 export function ButtonGuide() {
   return (

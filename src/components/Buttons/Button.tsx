@@ -5,11 +5,12 @@ export interface ButtonProps {
   variant?:
     | 'primary'
     | 'secondary'
+    | 'accent'
+    | 'muted'
     | 'outline'
     | 'ghost'
     | 'destructive'
     | 'link'
-    | 'accent'
   size?: 'sm' | 'md' | 'lg' | 'icon'
   rounded?: boolean
   disabled?: boolean
@@ -39,8 +40,11 @@ const Button: React.FC<ButtonProps> = ({
       'bg-primary-500 text-primary-foreground hover:bg-primary-600 focus:ring-primary':
         variant === 'primary',
       // Secondary variant - Muted background with subtle hover effect
-      'bg-muted text-muted-foreground hover:bg-muted-foreground/10 focus:ring-muted':
+      'bg-secondary text-secondary-foreground hover:bg-secondary-foreground/10 focus:ring-secondary':
         variant === 'secondary',
+      // Muted variant - Muted background with subtle hover effect
+      'bg-muted text-muted-foreground hover:bg-muted-foreground/10 focus:ring-muted':
+        variant === 'muted',
       // Outline variant - Bordered button with transparent background
       'border-2 border-ink-500 text-ink-foreground hover:bg-ink/20 focus:ring-ink':
         variant === 'outline',
