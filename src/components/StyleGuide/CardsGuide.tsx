@@ -48,46 +48,27 @@ const cards: Card[] = [
   {
     name: 'Rank Product Card',
     component: RankProductCard,
-    variants: [
-      {
-        event: products[0] // Using first product event as mock rank product event
-      }
-    ]
+    variants: products
   },
   {
     name: 'Store Card',
     component: StoreCard,
-    variants: [
-      {
-        event: products[0] // Using first product event as mock store event
-      }
-    ]
+    variants: products
   },
   {
     name: 'Article Card',
     component: ArticleCard,
-    variants: [
-      {
-        event: products[0] // Using first product event as mock article event
-      }
-    ]
+    variants: products
   },
   {
     name: 'Collection Card',
     component: CollectionCard,
-    variants: [
-      {
-        event: products[0] // Using first product event as mock collection event
-      }
-    ]
+    variants: products
   },
   {
     name: 'Promo Card',
     component: PromoCard,
-    variants: [
-      { event: products[0] }, // Default variant
-      { event: products[0], variant: '1item' } // 1-item variant
-    ]
+    variants: products
   },
   {
     name: 'Cart Item',
