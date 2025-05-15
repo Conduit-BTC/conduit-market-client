@@ -24,7 +24,7 @@ const RankingTable: React.FC<RankingTableProps> = ({ limit = 5 }) => {
         </div>
         {/* rows */}
         {displayEvents.map((event, index) => (
-          <RankProductCard key={event.id} event={event} />
+          <RankProductCard key={event.id + index} event={event} />
         ))}
       </div>
     </div>
