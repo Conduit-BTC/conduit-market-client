@@ -1,0 +1,67 @@
+html {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+} /* https://www.paulirish.com/2012/box-sizing-border-box-ftw */
+
+a {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+p a {
+  display: inline;
+  text-decoration: underline;
+  font-size: inherit !important;
+}
+
+:is(li, p) :is(button, a).text {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+picture {
+  display: block;
+  overflow: hidden;
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/*// selects for custom elements*/
+:where(:not(:defined)) {
+  display: block;
+}
+
+button,
+label {
+  cursor: pointer;
+}
+
+/* a {
+  position: relative;
+}
+
+a::before {
+  position: absolute;
+  content: '';
+  bottom: -0.5em;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: currentColor;
+} */

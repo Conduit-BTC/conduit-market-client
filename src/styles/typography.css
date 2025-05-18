@@ -1,0 +1,77 @@
+.booming-voice {
+  font-family: var(--font-display);
+  font-size: var(--text-8xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--leading-tight);
+  text-shadow: var(--text-shadow);
+  /* -webkit-text-stroke: 1px var(--color-ink);
+  -webkit-text-fill-color: transparent; */
+}
+
+.loud-voice {
+  font-family: var(--font-display);
+  font-size: var(--text-5xl);
+  line-height: var(--leading-tight);
+  font-weight: var(--font-weight-bold);
+}
+
+.attention-voice {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  line-height: var(--leading-tight);
+}
+
+.firm-voice {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  line-height: var(--leading-tight);
+  font-weight: var(--font-weight-bold);
+}
+
+.notice-voice {
+  font-family: var(--font-body);
+  font-size: var(--text-xl);
+  line-height: var(--leading-normal);
+  font-weight: var(--font-weight-light);
+}
+
+.calm-voice {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+}
+
+.whisper-voice {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-base-200);
+  line-height: var(--leading-normal);
+}
+
+.solid-voice {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--leading-normal);
+}
+
+.micro-voice {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+  font-weight: var(--font-weight-light);
+}
+
+p,
+span,
+li,
+button,
+a,
+div,
+input,
+textarea,
+select,
+option,
+label {
+  font-family: var(--font-body);
+}

@@ -41,7 +41,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ event, onClose }) => {
         : [];
 
     return (
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-white rounded-lg shadow-sm p-6">
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl font-semibold">Order Details</h2>
                 {onClose && (
@@ -157,7 +157,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ event, onClose }) => {
                                 {" "}
                                 {paymentMethod.type}
                             </p>
-                            <div className="mt-2 p-2 bg-gray-100 rounded text-sm break-all">
+                            <div className="mt-2 p-2 bg-gray-100 rounded-sm text-sm break-all">
                                 {paymentMethod.value}
                             </div>
                         </>
@@ -240,7 +240,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ event, onClose }) => {
             {event.content && (
                 <div className="mt-6">
                     <h3 className="font-medium text-gray-700 mb-2">Message</h3>
-                    <div className="bg-gray-100 p-4 rounded whitespace-pre-wrap">
+                    <div className="bg-gray-100 p-4 rounded-sm whitespace-pre-wrap">
                         {event.content}
                     </div>
                 </div>
@@ -249,17 +249,17 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ event, onClose }) => {
             {/* Action buttons */}
             <div className="mt-6 flex justify-end space-x-3">
                 {type === "2" && (
-                    <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">
+                    <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-sm">
                         Process Payment
                     </button>
                 )}
                 {type === "1" && (
-                    <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+                    <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-sm">
                         Send Payment Request
                     </button>
                 )}
                 {type === "4" && trackingInfo.tracking && (
-                    <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+                    <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-sm">
                         Track Package
                     </button>
                 )}
