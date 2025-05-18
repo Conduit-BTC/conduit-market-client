@@ -23,15 +23,17 @@ function App() {
   return (
     <AppInitializer>
       <Header />
-      <SubWindows defaultComponent={UnknownWindow} />
-      <Switch>
-        <Route path="/" component={ProductExplorerPage} />
-        <Route path="/zapout" component={ZapoutPage} />
-        <Route path="/checkout" component={ZapoutPage} />
-        <Route path="/orders" component={OrdersPage} />
-        <Route path="/style-guide" component={StyleGuidePage} />
-      </Switch>
-      <CartDrawer />
+      <main>
+        <SubWindows defaultComponent={UnknownWindow} />
+        <Switch>
+          <Route path="/" component={ProductExplorerPage} />
+          <Route path="/zapout" component={ZapoutPage} />
+          <Route path="/checkout" component={ZapoutPage} />
+          <Route path="/orders" component={OrdersPage} />
+          <Route path="/style-guide" component={StyleGuidePage} />
+        </Switch>
+        <CartDrawer />
+      </main>
       <Footer />
     </AppInitializer>
   )
