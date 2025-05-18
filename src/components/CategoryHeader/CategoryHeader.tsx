@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import Button from '../Buttons/Button'
 import { cn } from '@/lib/utils'
 
@@ -12,12 +12,29 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({
   description
 }) => {
   const [isExpanded, setIsExpanded] = useState(false)
+  const [isTextTruncated, setIsTextTruncated] = useState(false)
+  const textRef = useRef<HTMLParagraphElement>(null)
+
+  useEffect(() => {
+    const checkTruncation = () => {
+      if (textRef.current) {
+        const isOverflowing =
+          textRef.current.scrollHeight > textRef.current.clientHeight
+        setIsTextTruncated(isOverflowing)
+      }
+    }
+
+    checkTruncation()
+    window.addEventListener('resize', checkTruncation)
+    return () => window.removeEventListener('resize', checkTruncation)
+  }, [description])
 
   return (
     <div className="grid gap-2 ">
       <h2 className="loud-voice">{title}</h2>
-      <div className="grid justify-items-end">
+      <div className="grid">
         <p
+          ref={textRef}
           className={cn(
             'notice-voice max-w-prose',
             !isExpanded && 'line-clamp-3'
@@ -25,13 +42,16 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({
         >
           {description}
         </p>
-        <Button
-          variant="link"
-          size="md"
-          onClick={() => setIsExpanded(!isExpanded)}
-        >
-          {isExpanded ? 'Show less' : 'Show more'}
-        </Button>
+        {isTextTruncated && (
+          <Button
+            className="justify-self-end"
+            variant="link"
+            size="md"
+            onClick={() => setIsExpanded(!isExpanded)}
+          >
+            {isExpanded ? 'Show less' : 'Show more'}
+          </Button>
+        )}
       </div>
     </div>
   )
