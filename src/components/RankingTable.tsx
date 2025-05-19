@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import RankProductCard from './Cards/RankProductCard'
 import { NDKEvent } from '@nostr-dev-kit/ndk'
 import { ProductListingMocks } from 'nostr-commerce-schema'
@@ -8,10 +8,23 @@ interface RankingTableProps {
 }
 
 const RankingTable: React.FC<RankingTableProps> = ({ limit = 5 }) => {
-  // Take only the specified number of events
-  const products = ProductListingMocks.generateEventsArray(
-    limit
-  ) as unknown as NDKEvent[]
+  const [products, setProducts] = useState<NDKEvent[]>([])
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const events = (await ProductListingMocks.generateEventsArray(
+          5
+        )) as unknown as NDKEvent[]
+        setProducts(events)
+      } catch (error) {
+        console.error('Error fetching products:', error)
+        setProducts([])
+      }
+    }
+
+    fetchProducts()
+  }, [])
 
   return (
     <div className="w-full max-w-5xl mx-auto">
