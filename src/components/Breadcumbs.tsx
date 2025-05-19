@@ -23,11 +23,12 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
             isLink
             to={item.path}
             disabled={item.isActive}
+            className={cn(index === 0 && 'pl-0')}
           >
             {item.label}
           </Button>
           {index < items.length - 1 && (
-            <span className="text-base-400 font-bold">/</span>
+            <span className="text-base-400 font-bold text-xs">/</span>
           )}
         </React.Fragment>
       ))}

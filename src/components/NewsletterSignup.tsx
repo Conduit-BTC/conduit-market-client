@@ -1,6 +1,6 @@
 import React from 'react'
-import Field from '../Form/Field'
-import Button from '../Buttons/Button'
+import Field from './Form/Field'
+import Button from './Buttons/Button'
 
 const NewsletterSignup: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {

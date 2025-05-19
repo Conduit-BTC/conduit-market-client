@@ -1,7 +1,7 @@
 import React from 'react'
-import Button from '../Buttons/Button'
+import Button from './Button'
 
-const HelpSection: React.FC = () => {
+const ContactHelp: React.FC = () => {
   const onClick = () => {
     console.log('help section')
   }
@@ -21,4 +21,4 @@ const HelpSection: React.FC = () => {
   )
 }
 
-export default HelpSection
+export default ContactHelp

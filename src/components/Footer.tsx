@@ -217,7 +217,7 @@ const Footer = () => {
         <div className="inner-column wide border-t border-base py-8 flex flex-col md:flex-row justify-between items-center">
           <div className="legal flex items-center flex-wrap gap-4">
             <span className="whisper-voice">
-              © 2024 Conduit. All rights reserved.
+              © 2025 Conduit. All rights reserved.
             </span>
             {legalLinks.map((link) => (
               <React.Fragment key={link.name}>

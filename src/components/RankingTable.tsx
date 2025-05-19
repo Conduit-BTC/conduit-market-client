@@ -9,8 +9,9 @@ interface RankingTableProps {
 
 const RankingTable: React.FC<RankingTableProps> = ({ limit = 5 }) => {
   // Take only the specified number of events
-  const events = ProductListingMocks.getEventsArray() as unknown as NDKEvent[]
-  const displayEvents = events.slice(0, limit)
+  const products = ProductListingMocks.generateEventsArray(
+    limit
+  ) as unknown as NDKEvent[]
 
   return (
     <div className="w-full max-w-5xl mx-auto">
@@ -23,7 +24,7 @@ const RankingTable: React.FC<RankingTableProps> = ({ limit = 5 }) => {
           <p className="solid-voice">Store</p>
         </div>
         {/* rows */}
-        {displayEvents.map((event, index) => (
+        {products.map((event, index) => (
           <RankProductCard key={index} event={event} />
         ))}
       </div>

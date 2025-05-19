@@ -30,7 +30,7 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({
   }, [description])
 
   return (
-    <div className="grid gap-2 ">
+    <div className="grid gap-2">
       <h2 className="loud-voice">{title}</h2>
       <div className="grid">
         <p

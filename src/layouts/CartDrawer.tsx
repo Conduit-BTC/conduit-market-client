@@ -35,9 +35,7 @@ export const CartDrawer = () => {
     <div
       className={cn(
         'fixed bottom-0 left-0 w-full z-50 transition-all duration-600 ease-bounce',
-        isCartOpen
-          ? 'translate-y-0 opacity-100'
-          : 'translate-y-full opacity-100'
+        isCartOpen ? 'translate-y-0 opacity-90' : 'translate-y-full  opacity-50'
       )}
     >
       <div className="inner-column cart-drawer px-10 relative">

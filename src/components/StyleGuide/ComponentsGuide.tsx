@@ -21,8 +21,8 @@ import {
   IconPill
 } from '../Pill'
 import Avatar from '../Avatar'
-import NewsletterSignup from '../NewsletterSignup/NewsletterSignup'
-import HelpSection from '../HelpSection/HelpSection'
+import NewsletterSignup from '../NewsletterSignup'
+import ContactHelp from '../Buttons/ContactHelp'
 
 interface Component {
   name: string
@@ -42,7 +42,7 @@ const components: Component[] = [
         case 'newsletter':
           return <NewsletterSignup {...props} />
         case 'help':
-          return <HelpSection {...props} />
+          return <ContactHelp {...props} />
         case 'breadcrumbs':
           return <Breadcrumbs {...props} />
         default:
