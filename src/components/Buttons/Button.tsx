@@ -7,6 +7,7 @@ export interface ButtonProps {
     | 'secondary'
     | 'accent'
     | 'muted'
+    | 'ink'
     | 'outline'
     | 'ghost'
     | 'destructive'
@@ -19,6 +20,7 @@ export interface ButtonProps {
   isLink?: boolean
   to?: string
   className?: string
+  ref?: React.RefObject<HTMLButtonElement>
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -30,7 +32,8 @@ const Button: React.FC<ButtonProps> = ({
   isLink = false,
   to = '',
   onClick,
-  className
+  className,
+  ref
 }) => {
   const classNameValue = cn(
     // Base styles applied to all buttons
@@ -43,8 +46,11 @@ const Button: React.FC<ButtonProps> = ({
       'bg-secondary text-secondary-foreground hover:bg-secondary-foreground/10 focus:ring-secondary':
         variant === 'secondary',
       // Muted variant - Muted background with subtle hover effect
-      'bg-muted text-muted-foreground hover:bg-muted-foreground/10 focus:ring-muted':
+      'bg-muted text-muted-foreground hover:bg-muted/80 focus:ring-muted':
         variant === 'muted',
+      // Ink variant - Muted background with subtle hover effect
+      'bg-ink text-paper hover:bg-paper hover:text-ink focus:ring-ink':
+        variant === 'ink',
       // Outline variant - Bordered button with transparent background
       'border-2 border-ink-500 text-ink-foreground hover:bg-ink/20 focus:ring-ink':
         variant === 'outline',
@@ -83,7 +89,12 @@ const Button: React.FC<ButtonProps> = ({
     )
   }
   return (
-    <button className={classNameValue} disabled={disabled} onClick={onClick}>
+    <button
+      className={classNameValue}
+      disabled={disabled}
+      onClick={onClick}
+      ref={ref}
+    >
       {children}
     </button>
   )

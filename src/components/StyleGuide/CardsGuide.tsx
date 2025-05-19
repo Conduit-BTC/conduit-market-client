@@ -8,6 +8,14 @@ import CollectionCard from '../Cards/CollectionCard'
 import PromoCard from '../Cards/PromoCard'
 import RankProductCard from '../Cards/RankProductCard'
 import SkeletonCard from '../Cards/SkeletonCard'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious
+} from '@/components/Carousel'
+
 interface Card<T = any> {
   name: string
   component?: React.ComponentType<T>
@@ -27,9 +35,6 @@ products[2].tags = products[2].tags.map((tag) =>
   tag[0] === 'stock' ? ['stock', '4'] : tag
 )
 
-products.pop()
-products.pop()
-
 const cards: Card[] = [
   {
     name: 'Skeleton Card',
@@ -44,11 +49,7 @@ const cards: Card[] = [
       isHomeCard: false
     }))
   },
-  {
-    name: 'Rank Product Card',
-    component: RankProductCard,
-    variants: products
-  },
+
   {
     name: 'Store Card',
     component: StoreCard,
@@ -95,23 +96,35 @@ export function CardsGuide() {
   return (
     <div>
       <h3 className="firm-voice">Cards</h3>
-      <div className="grid gap-4">
+      <div className="grid gap-8">
         {cards.map(
           (card) =>
             card.component &&
             card.variants && (
               <div key={card.name}>
                 <h4 className="notice-voice font-bold mt-4">{card.name}</h4>
-                <ul className="flex flex-wrap gap-4">
-                  {card.variants.map((variant, index) => {
-                    const Component = card.component!
-                    return (
-                      <li key={index} className="min-w-[30%]">
-                        <Component {...variant} />
-                      </li>
-                    )
-                  })}
-                </ul>
+                <div className="relative">
+                  <Carousel
+                    opts={{
+                      align: 'start',
+                      loop: true
+                    }}
+                    className="w-full"
+                  >
+                    <CarouselContent className="-ml-4">
+                      {card.variants.map((variant, index) => {
+                        const Component = card.component!
+                        return (
+                          <CarouselItem key={index} className="">
+                            <Component {...variant} />
+                          </CarouselItem>
+                        )
+                      })}
+                    </CarouselContent>
+                    <CarouselPrevious />
+                    <CarouselNext />
+                  </Carousel>
+                </div>
               </div>
             )
         )}
