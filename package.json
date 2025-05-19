@@ -10,6 +10,7 @@
   "dependencies": {
     "@nostr-dev-kit/ndk": "^2.10.7",
     "clsx": "^2.1.1",
+    "embla-carousel-react": "^8.6.0",
     "lucide-react": "^0.469.0",
     "ndk": "^1.0.0",
     "nostr-hooks": "^4.2.3",

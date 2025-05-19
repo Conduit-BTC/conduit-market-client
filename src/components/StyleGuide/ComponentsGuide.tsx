@@ -23,6 +23,8 @@ import {
 import Avatar from '../Avatar'
 import NewsletterSignup from '../NewsletterSignup'
 import ContactHelp from '../Buttons/ContactHelp'
+import Carousel from '../Carousel'
+import SkeletonCard from '../Cards/SkeletonCard'
 
 interface Component {
   name: string
@@ -45,6 +47,7 @@ const components: Component[] = [
           return <ContactHelp {...props} />
         case 'breadcrumbs':
           return <Breadcrumbs {...props} />
+
         default:
           return null
       }
@@ -71,6 +74,25 @@ const components: Component[] = [
             { label: 'Category', path: '/category' },
             { label: 'Drinks', path: '/drinks' },
             { label: 'Coffee', path: '/coffee', isActive: true }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    name: 'Carousel',
+    component: Carousel,
+    fullWidth: true,
+    states: [
+      {
+        label: 'Default',
+        props: {
+          children: [
+            <SkeletonCard />,
+            <SkeletonCard />,
+            <SkeletonCard />,
+            <SkeletonCard />,
+            <SkeletonCard />
           ]
         }
       }
