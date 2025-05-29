@@ -7,9 +7,9 @@ import {
   CardTitle
 } from './CardComponents.tsx'
 import Button from '../Buttons/Button.tsx'
-import UserCounter from '../UserCounter.tsx'
+// import UserCounter from '../UserCounter.tsx'
 import { ZapButton } from '../Buttons/ZapButton.tsx'
-import UserAvatar from '../UserAvatar.tsx'
+// import UserAvatar from '../UserAvatar.tsx'
 import { cn } from '@/lib/utils.ts'
 
 //

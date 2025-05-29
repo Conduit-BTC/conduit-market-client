@@ -1,0 +1,3 @@
+[submodule "external/nostr-commerce-schema"]
+	path = external/nostr-commerce-schema
+	url = https://github.com/Conduit-BTC/nostr-commerce-schema.git
