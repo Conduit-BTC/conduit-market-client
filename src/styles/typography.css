@@ -1,65 +1,24 @@
-.booming-voice {
-  font-family: var(--font-display);
-  font-size: var(--text-8xl);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--leading-tight);
-  text-shadow: var(--text-shadow);
-  /* -webkit-text-stroke: 1px var(--color-ink);
-  -webkit-text-fill-color: transparent; */
-}
+@layer base {
+  :root {
+    --font-size--2: var(--text-xs);
+    --font-size--1: var(--text-sm);
+    --font-size-0: var(--text-base);
+    --font-size-1: var(--text-lg);
+    --font-size-2: var(--text-xl);
+    --font-size-3: var(--text-2xl);
+    --font-size-4: 2rem;
+    --font-size-5: var(--text-4xl);
+    --font-size-6: 2.5rem;
 
-.loud-voice {
-  font-family: var(--font-display);
-  font-size: var(--text-5xl);
-  line-height: var(--leading-tight);
-  font-weight: var(--font-weight-bold);
-}
-
-.attention-voice {
-  font-family: var(--font-display);
-  font-size: var(--text-4xl);
-  line-height: var(--leading-tight);
-}
-
-.firm-voice {
-  font-family: var(--font-display);
-  font-size: var(--text-2xl);
-  line-height: var(--leading-tight);
-  font-weight: var(--font-weight-bold);
-}
-
-.notice-voice {
-  font-family: var(--font-body);
-  font-size: var(--text-xl);
-  line-height: var(--leading-normal);
-  font-weight: var(--font-weight-light);
-}
-
-.calm-voice {
-  font-family: var(--font-body);
-  font-size: var(--text-base);
-  line-height: var(--leading-normal);
-}
-
-.whisper-voice {
-  font-family: var(--font-body);
-  font-size: var(--text-sm);
-  color: var(--color-base-200);
-  line-height: var(--leading-normal);
-}
-
-.solid-voice {
-  font-family: var(--font-body);
-  font-size: var(--text-sm);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--leading-normal);
-}
-
-.micro-voice {
-  font-family: var(--font-body);
-  font-size: var(--text-xs);
-  line-height: var(--leading-normal);
-  font-weight: var(--font-weight-light);
+    @media screen and (min-width: 768px) {
+      --font-size-1: var(--text-xl);
+      --font-size-2: var(--text-2xl);
+      --font-size-3: 2rem;
+      --font-size-4: 2.5rem;
+      --font-size-5: var(--text-5xl);
+      --font-size-6: 3.5rem;
+    }
+  }
 }
 
 p,
@@ -74,4 +33,133 @@ select,
 option,
 label {
   font-family: var(--font-body);
+}
+
+/* previously voice-xs */
+.voice-xs,
+.micro-voice {
+  font-family: var(--font-body);
+  font-size: var(--font-size--2);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--leading-snug);
+}
+
+/* previously solid-voice and whisper-voice */
+.voice-sm,
+.whisper-voice,
+.solid-voice {
+  font-family: var(--font-body);
+  font-size: var(--font-size--1);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--leading-snug);
+}
+
+.whisper-voice {
+  @apply text-muted-foreground;
+}
+
+.solid-voice {
+  @apply font-bold;
+}
+
+/* previously calm-voice */
+.voice-base,
+.calm-voice {
+  font-family: var(--font-body);
+  font-size: var(--font-size-0);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--leading-normal);
+}
+
+/* Heading 6 from figma */
+/* previously notice-voice */
+.voice-lg,
+.notice-voice {
+  font-family: var(--font-body);
+  font-size: var(--font-size-1);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--leading-snug);
+
+  @media screen and (min-width: 768px) {
+    font-weight: var(--font-weight-semibold);
+  }
+}
+
+/* Heading 5 from figma */
+/* previously firm-voice */
+.voice-2l,
+.firm-voice {
+  font-family: var(--font-display);
+  font-size: var(--font-size-2);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--leading-snug);
+
+  @media screen and (min-width: 768px) {
+    font-weight: var(--font-weight-semibold);
+  }
+}
+
+/* Heading 4 from figma */
+/* previously attention-voice */
+.voice-3l,
+.attention-voice {
+  font-family: var(--font-body);
+  font-size: var(--font-size-3);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--leading-snug);
+}
+
+/* Heading 3 from figma */
+.type-4,
+.voice-4l {
+  font-family: var(--font-display);
+  font-size: var(--font-size-4);
+  font-weight: var(--font-weight-extrabold);
+  line-height: var(--leading-tight);
+
+  @media screen and (min-width: 768px) {
+    font-weight: var(--font-weight-bold);
+  }
+}
+
+/* Heading 2 from figma */
+/* previously loud-voice */
+.voice-5l,
+.loud-voice {
+  font-family: var(--font-display);
+  font-size: var(--font-size-5);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--leading-tight);
+}
+
+/* Heading 1 from figma */
+/* previously booming-voice */
+.voice-6l,
+.booming-voice {
+  font-family: var(--font-display);
+  font-size: var(--font-size-6);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--leading-tight);
+  /* text-shadow: var(--text-shadow); */
+  /* -webkit-text-stroke: 1px var(--color-ink);
+  -webkit-text-fill-color: transparent; */
+
+  @media screen and (min-width: 768px) {
+    font-weight: var(--font-weight-medium);
+  }
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: var(--font-size--1);
+  background-color: var(--base-800);
+  color: var(--ink);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--ink);
+}
+
+/* Style code elements, but not when they're inside pre tags */
+code:not(pre code) {
+  /* @apply text-[.5rem] max-w-[25em] bg-white/95 p-1.5 rounded border shadow-sm; */
 }

@@ -16,7 +16,7 @@ export const Badge = ({
     | 'warning'
 }) => {
   const classNameValue = cn(
-    'inline-flex items-center px-4 py-1 rounded-full solid-voice',
+    'inline-flex items-center px-4 py-1 rounded-full voice-sm font-bold',
     {
       'bg-primary text-primary-foreground': variant === 'primary',
       'bg-secondary text-secondary-foreground': variant === 'secondary',

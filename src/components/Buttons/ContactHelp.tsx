@@ -8,7 +8,7 @@ const ContactHelp: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="notice-voice text-2xl font-medium">Need help?</h2>
+      <h2 className="voice-lg text-2xl font-medium">Need help?</h2>
       <Button
         variant="outline"
         size="lg"

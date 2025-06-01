@@ -74,45 +74,39 @@ layer(base);
 /* then other contextual styles */
 
 @layer components {
-  /* Style code elements, but not when they're inside pre tags */
-  code:not(pre code) {
-    @apply text-[.5rem] max-w-[25em] bg-white/95 p-1.5 rounded border shadow-sm;
-  }
-
   /*  */
 
   /* scrollbar */
   * {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: var(--line-width, 4px); /* Firefox */
+    /* -ms-overflow-style: none; IE and Edge */
+    /* scrollbar-width: var(--line-width, 4px); Firefox */
   }
   /* This part is for the scrollbar track / */
-  *::-webkit-scrollbar {
+  /* *::-webkit-scrollbar {
     width: var(--line-width, 4px);
     height: var(--line-width, 4px);
-  }
+  } */
 
   /* / This part is for the track (the part that the thumb slides across) / */
-  ::-webkit-scrollbar-track {
+  /* ::-webkit-scrollbar-track {
     box-shadow: var(--shadow-xs);
     border-radius: var(--radius-lg);
-  }
+  } */
 
   /* / This part is for the thumb (the part you drag) / */
-  ::-webkit-scrollbar-thumb {
-    /* #todo fix gradient */
+  /* ::-webkit-scrollbar-thumb {
     background: linear-gradient(
       to bottom,
       var(--color-primary),
       var(--color-secondary)
     );
     border-radius: var(--radius-lg);
-  }
+  } */
 
   /* / This part is for the thumb when it's being hovered over  */
-  ::-webkit-scrollbar-thumb:hover {
+  /* ::-webkit-scrollbar-thumb:hover {
     filter: brightness(1.2);
-  }
+  } */
 }
 
 @layer utilities {
@@ -127,60 +121,6 @@ layer(base);
   );
   background-size: 1rem 1rem;
   background-repeat: round;
-}
-
-/* #todo maybe remove the bottom */
-
-@utility card {
-  background-color: white;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-  overflow: hidden;
-  transition:
-    transform var(--transition-normal),
-    box-shadow var(--transition-normal);
-
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
-  }
-}
-@utility btn-primary {
-  background-color: var(--color-primary);
-  color: white;
-  padding: 0.5rem 1rem;
-  border: none;
-  font-weight: var(--font-weight-medium);
-
-  &:hover {
-    background-color: var(--color-primary-dark);
-  }
-}
-@utility btn-secondary {
-  background-color: var(--color-secondary);
-  color: white;
-  padding: 0.5rem 1rem;
-  border: none;
-  font-weight: var(--font-weight-medium);
-
-  &:hover {
-    background-color: var(--color-secondary-dark);
-  }
-}
-@utility badge {
-  display: inline-block;
-  padding: 0.25rem 0.5rem;
-  border-radius: var(--radius-full);
-  font-size: 0.75rem;
-  font-weight: var(--font-weight-medium);
-}
-@utility badge-primary {
-  background-color: var(--color-primary-light);
-  color: var(--color-primary-dark);
-}
-@utility badge-secondary {
-  background-color: var(--color-secondary-light);
-  color: var(--color-secondary-dark);
 }
 
 /* components */

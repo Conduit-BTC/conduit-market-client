@@ -6,7 +6,7 @@ import { cn, formatPrice } from '@/lib/utils'
 import Button from '@/components/Buttons/Button'
 import CartItemCard from '@/components/Cards/CartItemCard'
 
-export const CartDrawer = () => {
+const CartDrawer: React.FC = () => {
   const {
     cart,
     decreaseQuantity,
@@ -82,3 +82,5 @@ export const CartDrawer = () => {
     </div>
   )
 }
+
+export default CartDrawer

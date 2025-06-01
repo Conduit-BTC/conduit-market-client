@@ -11,15 +11,13 @@ const NewsletterSignup: React.FC = () => {
   return (
     <div className="flex flex-col gap-4 max-w-md">
       <div>
-        <h2 className="notice-voice text-2xl font-medium">
-          Join our newsletter
-        </h2>
-        <p className="calm-voice text-base-200">
+        <h2 className="voice-lg text-2xl font-medium">Join our newsletter</h2>
+        <p className="voice-base text-base-200">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="flex gap-2">
+      <form onSubmit={handleSubmit} className="flex gap-2 flex-wrap">
         <Field
           name="email"
           type="email"
@@ -36,7 +34,7 @@ const NewsletterSignup: React.FC = () => {
         </Button>
       </form>
 
-      <p className="micro-voice">
+      <p className="voice-xs">
         By subscribing you agree to with our{' '}
         <Button variant="link" to="/privacy" isLink className="inline p-0">
           Privacy Policy

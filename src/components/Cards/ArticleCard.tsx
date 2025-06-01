@@ -45,9 +45,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ event }) => {
 
       {/* card content */}
       <CardContent className="">
-        <CardTitle className="firm-voice line-clamp-2">
-          {articleTitle}
-        </CardTitle>
+        <CardTitle className="voice-2l line-clamp-2">{articleTitle}</CardTitle>
       </CardContent>
 
       {/* Footer with article author avatar and read button */}

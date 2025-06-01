@@ -17,11 +17,11 @@ const buttonSizes = ['sm', 'md', 'lg'] as const
 export function ButtonGuide() {
   return (
     <div className="space-y-8">
-      <h2 className="attention-voice mb-6">Buttons</h2>
+      <h2 className="voice-3l mb-6">Buttons</h2>
 
       {/* Variants */}
       <div className="space-y-4">
-        <h3 className="firm-voice">Variants</h3>
+        <h3 className="voice-2l">Variants</h3>
         <div className="flex flex-wrap gap-4">
           {buttonVariants.map((variant) => (
             <Button key={variant} variant={variant as any}>

@@ -25,7 +25,7 @@ const ProductGrid: React.FC = () => {
   if (isLoading) {
     return (
       <PageSection>
-        <h1 className="attention-voice">Products</h1>
+        <h1 className="voice-3l">Products</h1>
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 list-none p-0">
           {[...Array(6)].map((_, index) => (
             <li key={index}>
@@ -51,7 +51,7 @@ const ProductGrid: React.FC = () => {
 
   return (
     <PageSection>
-      <h1 className="attention-voice">Products</h1>
+      <h1 className="voice-3l">Products</h1>
       <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 list-none p-0">
         {events.map((event) => (
           <li key={event.id}>

@@ -41,7 +41,7 @@ const CartItemCard: React.FC<CartItemCardProps> = ({ product }) => {
             loading="lazy"
           />
         </picture>
-        <p className="absolute bottom-1 left-1/2 -translate-x-1/2 p-2 firm-voice">
+        <p className="absolute bottom-1 left-1/2 -translate-x-1/2 p-2 voice-2l">
           {product.price}
         </p>
       </CardContent>

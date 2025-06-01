@@ -39,7 +39,7 @@ const Field = React.forwardRef<HTMLInputElement, FieldProps>(
 
     const labelClassNames = cn(
       // Typography - Using design system voice level for consistent text styling
-      'solid-voice',
+      'voice-sm font-bold',
 
       // Add any conditional classes if needed
       {
@@ -61,7 +61,7 @@ const Field = React.forwardRef<HTMLInputElement, FieldProps>(
       'bg-base-900',
 
       // Typography
-      'calm-voice',
+      'voice-base',
 
       // Interactive States
       'shadow-sm transition-colors focus-within:outline-none focus-within:ring-1 focus-within:ring-ring',

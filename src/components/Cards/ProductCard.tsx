@@ -115,14 +115,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
   return (
     <Card
       className={cn(
-        'w-full max-w-sm overflow-hidden',
+        'w-full overflow-hidden max-w-sm',
         isOutOfStock && 'grayscale',
-        isHomeCard && 'max-w-50'
+        isHomeCard && 'max-w-xs'
       )}
     >
       <div className="relative">
         {/* floating indicators */}
-        <div className="w-full absolute top-0 p-4 flex items-center justify-between">
+        <div className="w-full absolute top-0 p-2 flex items-center justify-between">
           {/* left */}
           <div>{badge}</div>
           {/* right */}

@@ -30,7 +30,7 @@ const PromoCard: React.FC<PromoCardProps> = ({ event, variant = '4items' }) => {
   const promoSlug = 'promo-slug'
 
   const titleClass = cn(
-    'firm-voice line-clamp-1',
+    'voice-2l line-clamp-1',
     variant === '1item' && 'line-clamp-2'
   )
 
@@ -66,7 +66,7 @@ const PromoCard: React.FC<PromoCardProps> = ({ event, variant = '4items' }) => {
                     className="w-full h-full object-cover"
                   />
                 </picture>
-                <p className="whisper-voice">{categoryName}</p>
+                <p className="voice-sm text-muted-foreground">{categoryName}</p>
               </li>
             ))}
           </ul>
@@ -75,7 +75,7 @@ const PromoCard: React.FC<PromoCardProps> = ({ event, variant = '4items' }) => {
 
       {/* Footer with article collection avatar and read button */}
       <CardFooter className="flex justify-between items-center ">
-        <p className="notice-voice">{categoryName}</p>
+        <p className="voice-lg">{categoryName}</p>
         <Button
           variant="muted"
           rounded={false}

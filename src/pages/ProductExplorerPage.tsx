@@ -1,10 +1,9 @@
 import Banner from '@/components/Banner'
 import Breadcrumbs from '@/components/Breadcumbs'
 import ContactHelp from '@/components/Buttons/ContactHelp'
-import CategoryHeader from '@/components/CategoryHeader/CategoryHeader'
+import CategoryHeader from '@/components/CategoryHeader'
 import NewsletterSignup from '@/components/NewsletterSignup'
 import { IconPill } from '@/components/Pill'
-import { CartDrawer } from '@/layouts/CartDrawer.tsx'
 import PageSection from '@/layouts/PageSection'
 import ProductGrid from '@/layouts/ProductGrid.tsx'
 import { SearchIcon } from 'lucide-react'
@@ -24,7 +23,6 @@ const content = {
   ]
 }
 
-//
 export const ProductExplorerPage: React.FC = () => {
   const shopName = 'Conduit Market'
 
@@ -43,7 +41,7 @@ export const ProductExplorerPage: React.FC = () => {
       <Banner />
 
       <PageSection width="wide">
-        <h2 className="firm-voice">Popular Searches in {shopName}</h2>
+        <h2 className="voice-2l">Popular Searches in {shopName}</h2>
         <div className="flex flex-wrap gap-2">
           {Array.from({ length: 20 }, (_, index) => (
             <IconPill leftIcon={<SearchIcon />} text={`Product ${index + 1}`} />

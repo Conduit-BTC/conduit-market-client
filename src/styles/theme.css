@@ -155,6 +155,9 @@
 }
 
 @theme {
+  /* breakpoints */
+  --breakpoint-3xl: 120rem;
+
   /* typography */
   /* Font families */
   --font-display: 'Whyte Inktrap Variable', system-ui, sans-serif;
@@ -165,9 +168,11 @@
   --font-secondary: var(--font-display);
 
   /* Line heights */
+
   --leading-tight: 1.2;
+  --leading-snug: 1.35;
   --leading-normal: 1.5;
-  --leading-relaxed: 1.75;
+  --leading-relaxed: 1.625;
 
   /* Border radius */
 
@@ -259,7 +264,7 @@
   --color-accent-foreground: var(--accent-200);
 
   --color-muted: var(--base-800);
-  --color-muted-foreground: var(--base-200);
+  --color-muted-foreground: var(--base-300);
 
   /* static colors */
   --color-destructive: hsla(0, 100%, var(--status-lightness), 1);
@@ -296,12 +301,11 @@
 
   /* Shadows */
 
-  --text-shadow:
-    0 0 0.625em var(--color-primary-500), 0 0 1.25em var(--color-primary-400),
-    0 0 2.5em var(--color-primary-300), 0 0 5em var(--color-primary-200);
+  --text-shadow: 0 0 0.625em var(--color-primary-500),
+    0 0 1.25em var(--color-primary-400), 0 0 2.5em var(--color-primary-300),
+    0 0 5em var(--color-primary-200);
 
-  --shadow-border-glow:
-    0 0 0.1rem var(--color-ink), 0 0 0.1rem var(--color-ink),
+  --shadow-border-glow: 0 0 0.1rem var(--color-ink), 0 0 0.1rem var(--color-ink),
     0 0 1rem var(--tw-shadow-color), 0 0 0.1rem var(--tw-shadow-color),
     0 0 0.15rem var(--tw-shadow-color), inset 0 0 0.2rem var(--tw-shadow-color);
 

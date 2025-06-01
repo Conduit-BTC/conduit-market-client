@@ -38,7 +38,7 @@ const CollectionCard: React.FC<CollectionCardProps> = ({ event }) => {
           <MultiUserPill className="border-none" showZap={true} size="md" />
           <ZapButton />
         </div>
-        <CardTitle className="firm-voice line-clamp-1">
+        <CardTitle className="voice-2l line-clamp-1">
           {collectionTitle}
         </CardTitle>
       </CardHeader>

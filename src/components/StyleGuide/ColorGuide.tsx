@@ -152,7 +152,7 @@ function ColorSwatch({ name, variable, category }: ColorSwatchProps) {
         role="presentation"
         aria-label={`${displayName} color swatch`}
       >
-        <p className="micro-voice">{displayName}</p>
+        <p className="voice-xs">{displayName}</p>
       </div>
       <div className="space-y-1"></div>
     </div>
@@ -162,7 +162,7 @@ function ColorSwatch({ name, variable, category }: ColorSwatchProps) {
 export function ColorGuide() {
   return (
     <div className="space-y-8" role="region" aria-label="Color guide">
-      <h2 className="attention-voice mb-6">Colors</h2>
+      <h2 className="voice-3l mb-6">Colors</h2>
 
       {Object.entries(colors).map(([category, value]) => {
         const categoryName =
@@ -170,7 +170,7 @@ export function ColorGuide() {
         return (
           <div key={category} className="space-y-4">
             <h3 className="text-lg font-medium">{categoryName} Colors</h3>
-            <p className="micro-voice font-mono">--color-{category}</p>
+            <p className="voice-xs font-mono">--color-{category}</p>
             <div className="flex flex-wrap gap-2">
               {Object.entries(value).map(([subKey, subValue]) => (
                 <ColorSwatch

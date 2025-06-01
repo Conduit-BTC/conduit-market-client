@@ -10,8 +10,8 @@ import { cn } from '@/lib/utils'
 import Breadcrumbs from '../Breadcumbs'
 import Field from '../Form/Field'
 import { SearchIcon, XIcon } from 'lucide-react'
-import RankingTable from '../RankingTable'
-import CategoryHeader from '../CategoryHeader/CategoryHeader'
+import RankingTable, { DualRankingTable } from '../RankingTable'
+import CategoryHeader from '../CategoryHeader'
 import {
   Pill,
   CategoryPill,
@@ -23,11 +23,15 @@ import {
 import Avatar from '../Avatar'
 import NewsletterSignup from '../NewsletterSignup'
 import ContactHelp from '../Buttons/ContactHelp'
+import Hero from '@/components/HomePage/Hero'
+import Logo from '../Logo'
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/Tabs'
 
 interface Component {
   name: string
   component: React.ComponentType<any>
   fullWidth?: boolean
+  display?: boolean
   states: {
     label: string
     props: any
@@ -35,6 +39,22 @@ interface Component {
 }
 
 const components: Component[] = [
+  {
+    name: 'Logo',
+    display: true,
+    component: Logo,
+    states: [
+      {
+        label: 'Full',
+        props: { variant: 'full' }
+      },
+      {
+        label: 'Background',
+        props: { variant: 'bg' }
+      }
+    ]
+  },
+
   {
     name: 'Miscellaneous',
     component: ({ variant, ...props }) => {
@@ -315,7 +335,18 @@ const components: Component[] = [
     fullWidth: true,
     states: [
       {
-        label: 'Default',
+        label: 'Ranking Table',
+        props: {}
+      }
+    ]
+  },
+  {
+    name: 'Dual Ranking Table',
+    component: DualRankingTable,
+    fullWidth: true,
+    states: [
+      {
+        label: 'Dual Ranking Table',
         props: {}
       }
     ]
@@ -334,46 +365,108 @@ const components: Component[] = [
         }
       }
     ]
+  },
+  {
+    name: 'Hero',
+    component: Hero,
+    fullWidth: true,
+    states: [
+      {
+        label: 'Default',
+        props: {}
+      }
+    ]
   }
 ]
 
 export function ComponentsGuide() {
   return (
-    <div className="space-y-20">
-      <h2 className="attention-voice mb-6">Components</h2>
+    <div className="space-y-8">
+      <h2 className="voice-3l mb-12">Components</h2>
 
-      {components.map((componentGroup, groupIndex) => (
-        <div key={groupIndex} className="space-y-4">
-          <h3 className="firm-voice">{componentGroup.name}</h3>
-          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {componentGroup.states.map((state, stateIndex) => {
-              const Component = componentGroup.component
-              return (
-                <li
-                  key={stateIndex}
-                  className={cn({
-                    'col-span-full': componentGroup.fullWidth
+      <Tabs defaultValue="all" className="w-full">
+        <TabsList className="w-full justify-start">
+          <TabsTrigger value="all">All</TabsTrigger>
+          {components.map((component) => (
+            <TabsTrigger
+              key={component.name}
+              value={component.name.toLowerCase()}
+            >
+              {component.name}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+
+        <TabsContent value="all" className="mt-12">
+          <div className="space-y-12">
+            {components.map((componentGroup, groupIndex) => (
+              <div key={groupIndex} className="space-y-4">
+                <h3 className="voice-2l">{componentGroup.name}</h3>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                  {componentGroup.states.map((state, stateIndex) => {
+                    const Component = componentGroup.component
+                    return (
+                      <li
+                        key={stateIndex}
+                        className={cn({
+                          'col-span-full': componentGroup.fullWidth
+                        })}
+                      >
+                        <Card className="border-base-900">
+                          <CardHeader>
+                            <CardTitle className="voice-sm font-bold">
+                              {state.label}
+                            </CardTitle>
+                          </CardHeader>
+                          <CardContent className="flex items-center justify-center min-h-[100px]">
+                            <Component {...state.props} />
+                          </CardContent>
+                        </Card>
+                      </li>
+                    )
                   })}
-                >
-                  <Card className="border-base-900">
-                    <CardHeader>
-                      <CardTitle className="solid-voice">
-                        {state.label}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="flex items-center justify-center min-h-[100px]">
-                      <Component {...state.props} />
-                    </CardContent>
-                  </Card>
-                </li>
-              )
-            })}
-          </ul>
-        </div>
-      ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </TabsContent>
 
-      {/* Cards */}
-      <CardsGuide />
+        {components.map((component) => (
+          <TabsContent
+            key={component.name}
+            value={component.name.toLowerCase()}
+            className="mt-12"
+          >
+            <div className="space-y-4">
+              <h3 className="voice-2l">{component.name}</h3>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                {component.states.map((state, stateIndex) => {
+                  const Component = component.component
+                  return (
+                    <li
+                      key={stateIndex}
+                      className={cn({
+                        'col-span-full': component.fullWidth
+                      })}
+                    >
+                      <Card className="border-base-900">
+                        <CardHeader>
+                          <CardTitle className="voice-sm font-bold">
+                            {state.label}
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent className="flex items-center justify-center min-h-[100px]">
+                          <Component {...state.props} />
+                        </CardContent>
+                      </Card>
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+          </TabsContent>
+        ))}
+      </Tabs>
     </div>
   )
 }

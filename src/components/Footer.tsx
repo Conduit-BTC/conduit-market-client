@@ -1,6 +1,10 @@
 import React from 'react'
 import Button from './Buttons/Button'
 import { Heart } from 'lucide-react'
+import NewsletterSignup from './NewsletterSignup'
+import PageSection from '@/layouts/PageSection'
+import ContactHelp from './Buttons/ContactHelp'
+import Logo from './Logo'
 
 interface NavLink {
   name: string
@@ -106,27 +110,63 @@ const navs: NavSection[] = [
     ]
   },
   {
-    heading: 'You',
+    heading: 'Site Map',
     links: [
       {
-        name: 'Your profile',
+        name: 'Home',
+        link: '/'
+      },
+      {
+        name: 'Style Guide',
+        link: '/style-guide'
+      },
+      {
+        name: 'How it Works',
+        link: '/how-it-works'
+      },
+      {
+        name: 'Auth',
+        link: '/auth'
+      },
+      {
+        name: 'List of Merchants',
+        link: '/merchants'
+      },
+      {
+        name: 'List of Merchant Products',
+        link: '/merchant/conduit'
+      },
+      {
+        name: 'List of Categories',
+        link: '/categories'
+      },
+      {
+        name: 'List of Products in a Category',
+        link: '/category/Drinks'
+      },
+      {
+        name: 'Product Detail Page',
+        link: '/product/123'
+      },
+      {
+        name: 'List of Carts',
+        link: '/carts'
+      },
+      {
+        name: 'Merchant Cart',
+        link: '/cart/conduit'
+      },
+      {
+        name: 'Profile',
         link: '/profile'
       },
       {
-        name: 'Settings',
-        link: '/settings'
+        name: 'Orders',
+        link: '/profile/orders'
       },
       {
-        name: 'Link Twenty Three',
-        link: '/link-23'
-      },
-      {
-        name: 'Link Twenty Four',
-        link: '/link-24'
-      },
-      {
-        name: 'Link Twenty Five',
-        link: '/link-25'
+        name: 'Zapout',
+        link: '/zapout'
       }
     ]
   }
@@ -177,21 +217,20 @@ const legalLinks = [
 
 const Footer = () => {
   return (
-    <footer className="bg-paper overflow-hidden">
-      <section className="links">
-        <div className="inner-column wide pt-12 grid gap-8 grid-cols-[repeat(auto-fill,minmax(200px,1fr))]">
-          <picture className="max-w-50">
-            <img
-              src={
-                new URL('@/assets/images/logo/logo-full.svg', import.meta.url)
-                  .href
-              }
-              alt="Conduit Market"
-            />
-          </picture>
+    <footer className="bg-paper overflow-hidden mt-10">
+      <PageSection width="wide">
+        <div className="flex gap-30 gap-y-10 flex-wrap">
+          <NewsletterSignup />
+          <ContactHelp />
+        </div>
+      </PageSection>
+
+      <PageSection width="wide">
+        <div className=" pt-12 grid gap-8 grid-cols-[repeat(auto-fill,minmax(200px,1fr))]">
+          <Logo className="max-w-50" />
           {navs.map((nav) => (
             <nav key={nav.heading}>
-              <h3 className="calm-voice font-bold">{nav.heading}</h3>
+              <h3 className="voice-base font-bold">{nav.heading}</h3>
               <ul className="mt-4 grid gap-1 justify-start">
                 {nav.links.map((link) => (
                   <li key={link.name}>
@@ -211,12 +250,12 @@ const Footer = () => {
             </nav>
           ))}
         </div>
-      </section>
+      </PageSection>
 
-      <section className="legal-social">
-        <div className="inner-column wide border-t border-base py-8 flex flex-col md:flex-row justify-between items-center">
+      <PageSection width="wide">
+        <div className="border-t border-base py-8 flex flex-col md:flex-row justify-between items-center">
           <div className="legal flex items-center flex-wrap gap-4">
-            <span className="whisper-voice">
+            <span className="voice-sm text-muted-foreground">
               © 2025 Conduit. All rights reserved.
             </span>
             {legalLinks.map((link) => (
@@ -250,7 +289,7 @@ const Footer = () => {
             ))}
           </div>
         </div>
-      </section>
+      </PageSection>
     </footer>
   )
 }

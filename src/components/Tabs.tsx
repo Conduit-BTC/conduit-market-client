@@ -62,7 +62,10 @@ function TabsList({ className, children, ...props }: TabsListProps) {
   return (
     <div
       role="tablist"
-      className={cn('flex items-center relative', className)}
+      className={cn(
+        'flex items-center relative flex-wrap gap-2 gap-y-4',
+        className
+      )}
       {...props}
     >
       {children}
@@ -85,7 +88,7 @@ function TabsTrigger({
       aria-selected={isSelected}
       onClick={() => onValueChange(value)}
       className={cn(
-        'solid-voice font-normal whitespace-nowrap px-3 py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ',
+        'voice-sm font-bold font-normal whitespace-nowrap px-3 py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ',
         isSelected &&
           'font-bold data-[state=active]:font-bold border-b-2 border-primary',
         className

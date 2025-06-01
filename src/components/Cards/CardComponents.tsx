@@ -2,10 +2,12 @@ import { cn } from '@/lib/utils'
 
 export const Card = ({
   children,
-  className = ''
+  className = '',
+  style = {}
 }: {
   children: React.ReactNode
   className?: string
+  style?: React.CSSProperties
 }) => {
   return (
     <div
@@ -13,6 +15,7 @@ export const Card = ({
         'bg-paper border-base-700 border rounded-lg shadow-md overflow-hidden hover:border-accent-500 transition-colors duration-300',
         className
       )}
+      style={style}
     >
       {children}
     </div>
@@ -36,7 +39,7 @@ export const CardTitle = ({
   children: React.ReactNode
   className?: string
 }) => {
-  return <h3 className={cn('firm-voice text-ink', className)}>{children}</h3>
+  return <h3 className={cn('voice-2l text-ink', className)}>{children}</h3>
 }
 
 export const CardDescription = ({
@@ -46,7 +49,7 @@ export const CardDescription = ({
   children: React.ReactNode
   className?: string
 }) => {
-  return <p className={cn('mt-1 calm-voice', className)}>{children}</p>
+  return <p className={cn('mt-1 voice-base', className)}>{children}</p>
 }
 
 export const CardContent = ({

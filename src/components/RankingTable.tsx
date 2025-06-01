@@ -27,20 +27,31 @@ const RankingTable: React.FC<RankingTableProps> = ({ limit = 5 }) => {
   }, [])
 
   return (
-    <div className="w-full max-w-5xl mx-auto">
-      <div className="grid gap-4">
+    <div className="w-full max-w-5xl mx-auto overflow-x-auto">
+      <ul className="grid gap-4 min-w-[650px]">
         {/* header */}
-        <div className="grid grid-cols-5 items-center justify-items-cendter gap-4 border-b border-ink-500 pb-2 mb-2">
-          <p className="solid-voice">Rank</p>
-          <p className="solid-voice col-span-2">Product</p>
-          <p className="solid-voice">Sales</p>
-          <p className="solid-voice">Store</p>
-        </div>
+        <li className="grid grid-cols-5 items-center justify-items-cendter gap-4 border-b border-ink-500 pb-2 mb-2">
+          <p className="voice-sm font-bold">Rank</p>
+          <p className="voice-sm font-bold col-span-2">Product</p>
+          <p className="voice-sm font-bold">Sales</p>
+          <p className="voice-sm font-bold">Store</p>
+        </li>
         {/* rows */}
         {products.map((event, index) => (
-          <RankProductCard key={index} event={event} />
+          <li key={index}>
+            <RankProductCard event={event} />
+          </li>
         ))}
-      </div>
+      </ul>
+    </div>
+  )
+}
+
+export const DualRankingTable: React.FC = () => {
+  return (
+    <div className="grid lg:grid-cols-2 gap-12">
+      <RankingTable />
+      <RankingTable />
     </div>
   )
 }

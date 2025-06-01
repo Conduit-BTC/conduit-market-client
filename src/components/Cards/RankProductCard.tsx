@@ -24,7 +24,7 @@ const RankProductCard: React.FC<RankProductCardProps> = ({ event }) => {
     <Card className="border-none">
       <CardContent className="grid grid-cols-5 items-center justify-items-cendter gap-4">
         {/* Rank number */}
-        <p className="firm-voice">{rank}</p>
+        <p className="voice-2l">{rank}</p>
         {/* Product image */}
 
         {/* Product info */}
