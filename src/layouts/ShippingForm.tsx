@@ -76,7 +76,7 @@ const ShippingForm = ({
       <div className="w-full h-1 bg-gray-600 my-8" />
 
       {displayError && (
-        <div className="sticky top-0 z-50 w-full p-4 mb-8 bg-red-100 border-2 border-red-500 text-red-700 text-center rounded-sm text-lg font-bold">
+        <div className="sticky top-0 z-50 w-full p-4 mb-8 bg-red-100 border-2 border-destructive text-destructive-foreground text-center rounded-sm text-lg font-bold">
           {displayError} ❌
         </div>
       )}

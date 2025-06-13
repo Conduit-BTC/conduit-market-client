@@ -8,6 +8,8 @@ const ProductGrid: React.FC = () => {
   const subId = 'all-events'
   const { events, isLoading, createSubscription } = useSubscription(subId)
 
+  console.log(events)
+
   useEffect(() => {
     // Create subscription with proper filters
     const filters = {

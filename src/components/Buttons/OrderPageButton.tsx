@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'wouter'
-import { ReceiptText } from 'lucide-react'
+import Icon from '../Icon'
 import { OrderEventType, useOrderStore } from '@/stores/useOrderStore'
 import { useOrderSubscription } from '@/hooks/useOrderSubscription'
 import Button from './Button'
@@ -32,7 +32,7 @@ const OrderPageButton: React.FC<OrderPageButtonProps> = ({
       aria-label={`Orders - ${unreadCount} unread`}
     >
       <Button>
-        <ReceiptText className="w-6 h-6" />
+        <Icon icon="receiptText" className="size-5" />
         {unreadCount > 0 && (
           <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full font-bold">
             {unreadCount > 9 ? '9+' : unreadCount}

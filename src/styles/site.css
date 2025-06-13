@@ -7,8 +7,6 @@ layer(base);
 /* S etup */
 @import './setup.css' layer(base);
 
-@import './structure.css' layer(base);
-
 @import './theme.css' layer(theme);
 
 @import './typography.css' layer(utilities);
@@ -55,10 +53,15 @@ layer(base);
 
   /* // */
 
+  body #root {
+    display: grid;
+    grid-auto-rows: auto 1fr auto; /* main fills up available space + push the footer down */
+    min-height: 100vh; /* be at least a full viewport height */
+  }
+
   body {
     background-color: var(--color-paper);
     color: var(--color-ink);
-    padding-bottom: 300px;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -126,19 +129,6 @@ layer(base);
 /* components */
 
 @layer components {
-  .cart-drawer {
-    @apply bg-primary mb-4 flex justify-between gap-4 from-primary-800 to-primary/80 bg-gradient-to-b relative rounded-lg;
-  }
-
-  .cart-drawer::before {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    background: linear-gradient(to bottom, var(--color-ink), transparent);
-    border-radius: var(--radius-lg);
-    z-index: -1;
-  }
-
   .tabs-list {
     @apply flex items-center p-1 relative;
 

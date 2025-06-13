@@ -16,7 +16,7 @@ export interface ButtonProps {
   rounded?: boolean
   disabled?: boolean
   children: React.ReactNode
-  onClick?: () => void
+  onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void
   isLink?: boolean
   to?: string
   className?: string
@@ -88,11 +88,17 @@ const Button: React.FC<ButtonProps> = ({
       </Link>
     )
   }
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    //  e.preventDefault()
+    onClick?.(e)
+  }
+
   return (
     <button
       className={classNameValue}
       disabled={disabled}
-      onClick={onClick}
+      onClick={handleClick}
       ref={ref}
     >
       {children}

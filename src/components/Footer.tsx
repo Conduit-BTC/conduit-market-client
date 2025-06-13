@@ -1,6 +1,6 @@
 import React from 'react'
 import Button from './Buttons/Button'
-import { Heart } from 'lucide-react'
+import Icon from './Icon'
 import NewsletterSignup from './NewsletterSignup'
 import PageSection from '@/layouts/PageSection'
 import ContactHelp from './Buttons/ContactHelp'
@@ -253,7 +253,7 @@ const Footer = () => {
       </PageSection>
 
       <PageSection width="wide">
-        <div className="border-t border-base py-8 flex flex-col md:flex-row justify-between items-center">
+        <div className="border-t border-muted py-8 flex flex-col md:flex-row justify-between items-center">
           <div className="legal flex items-center flex-wrap gap-4">
             <span className="voice-sm text-muted-foreground">
               © 2025 Conduit. All rights reserved.
@@ -284,7 +284,7 @@ const Footer = () => {
                 to={social.link}
                 rounded={false}
               >
-                <Heart />
+                <Icon icon="heart" />
               </Button>
             ))}
           </div>

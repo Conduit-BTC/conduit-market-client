@@ -1,5 +1,5 @@
 import Button from '@/components/Buttons/Button'
-import { Zap } from 'lucide-react'
+import Icon from '../Icon'
 
 const buttonVariants = [
   'primary',
@@ -52,7 +52,7 @@ export function ButtonGuide() {
           <Button size="md">Default</Button>
           <Button size="lg">Large</Button>
           <Button size="icon">
-            <Zap />
+            <Icon icon="zap" />
           </Button>
         </div>
       </div>
@@ -63,7 +63,7 @@ export function ButtonGuide() {
         <div className="flex flex-wrap gap-4 items-center">
           {buttonVariants.map((variant) => (
             <Button key={variant} variant={variant}>
-              <Zap className="size-6" />
+              <Icon icon="zap" className="size-6" />
               {variant} with Icon
             </Button>
           ))}

@@ -34,3 +34,8 @@ export function formatPrice(price: number, currency: string = 'SAT') {
 export function formatNumber(number: number) {
   return new Intl.NumberFormat('en-US').format(number)
 }
+
+const formatPubkey = (pubkey: string) => {
+  if (!pubkey) return ''
+  return `${pubkey.substring(0, 8)}...${pubkey.substring(pubkey.length - 4)}`
+}

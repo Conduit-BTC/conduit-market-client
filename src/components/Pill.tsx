@@ -1,7 +1,7 @@
 import React from 'react'
 import { cn, formatNumber } from '@/lib/utils'
-import { ChevronRight, Zap } from 'lucide-react'
 import Avatar from './Avatar'
+import Icon, { type IconName } from './Icon'
 
 interface PillProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
@@ -12,7 +12,7 @@ const Pill: React.FC<PillProps> = ({ children, className }) => {
   return (
     <div
       className={cn(
-        'flex items-center rounded-full bg-paper/50 px-1 py-1 pr-4 gap-2 border border-base',
+        'flex items-center rounded-full bg-paper/50 p-2 px-3 gap-2 border border-base whitespace-nowrap',
         className
       )}
     >
@@ -34,7 +34,7 @@ const CategoryPill: React.FC<CategoryPillProps> = ({
   ...props
 }) => {
   return (
-    <Pill>
+    <Pill className={cn('px-1 py-1 pr-4', className)}>
       <Avatar imageUrl={imageUrl} alt={label} size="lg" fallback={label} />
       <span className="font-semibold">{label}</span>
     </Pill>
@@ -54,7 +54,7 @@ const StorePill: React.FC<StorePillProps> = ({
   ...props
 }) => {
   return (
-    <Pill className={className}>
+    <Pill className={cn('px-1 py-1 pr-4', className)}>
       <Avatar
         imageUrl={imageUrl}
         alt={storeName}
@@ -65,7 +65,10 @@ const StorePill: React.FC<StorePillProps> = ({
         <span className="text-xs text-muted-foreground">Shop at</span>
         <span className="font-semibold whitespace-nowrap">{storeName}</span>
       </div>
-      <ChevronRight className="size-5 ml-auto text-muted-foreground shrink-0" />
+      <Icon
+        icon="chevronRight"
+        className="size-5 ml-auto shrink-0 text-muted-foreground"
+      />
     </Pill>
   )
 }
@@ -91,7 +94,7 @@ const UserPill: React.FC<UserPillProps> = ({
   )
 
   return (
-    <Pill className={className}>
+    <Pill className={cn('px-1 py-1 pr-4', className)}>
       <Avatar imageUrl={imageUrl} alt={name} size={size} fallback={name} />
       <span className={userNameClasses}>{name}</span>
     </Pill>
@@ -118,7 +121,7 @@ const MultiUserPill: React.FC<MultiUserPillProps> = ({
     size === 'sm' ? 'text-base' : size === 'lg' ? 'text-2xl' : 'text-lg'
   )
   const zapClasses = cn(
-    'text-transparent',
+    'text-transparent fill-primary',
     size === 'sm' ? 'size-4' : size === 'lg' ? 'size-8' : 'size-6'
   )
 
@@ -130,7 +133,7 @@ const MultiUserPill: React.FC<MultiUserPillProps> = ({
     })
 
   return (
-    <Pill className={className}>
+    <Pill className={cn('px-1 py-1 pr-4', className)}>
       <ul className="flex -space-x-2">
         {imageUrls.map((imageUrl, idx) => (
           <li key={idx} className={getAvatarListItemClasses(idx)}>
@@ -144,7 +147,7 @@ const MultiUserPill: React.FC<MultiUserPillProps> = ({
         ))}
       </ul>
       {showZap && (
-        <Zap className={zapClasses} fill="var(--color-primary-400)" />
+        <Icon icon="zap" className={zapClasses} fill="fill-primary" />
       )}
       <p className={numberClasses}>{formatNumber(count)}</p>
     </Pill>
@@ -153,9 +156,10 @@ const MultiUserPill: React.FC<MultiUserPillProps> = ({
 
 interface IconPillProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
+  className?: string
   text: string
-  leftIcon?: React.ReactNode
-  rightIcon?: React.ReactNode
+  leftIcon?: IconName
+  rightIcon?: IconName
   size?: 'sm' | 'md' | 'lg'
 }
 
@@ -175,16 +179,17 @@ const IconPill: React.FC<IconPillProps> = ({
   text,
   leftIcon,
   rightIcon,
-  size = 'md'
+  size = 'md',
+  className
 }) => {
   const iconSize = iconSizeClasses[size]
   const textClasses = cn('font-medium', textSizeClasses[size])
 
   return (
-    <Pill>
-      {leftIcon && <picture className={iconSize}>{leftIcon}</picture>}
+    <Pill className={cn('px-2 py-2 pr-4', className)}>
+      {leftIcon && <Icon icon={leftIcon} className={iconSize} />}
       <span className={textClasses}>{text}</span>
-      {rightIcon && <picture className={iconSize}>{rightIcon}</picture>}
+      {rightIcon && <Icon icon={rightIcon} className={iconSize} />}
     </Pill>
   )
 }

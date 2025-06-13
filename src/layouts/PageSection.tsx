@@ -2,17 +2,27 @@ import { cn } from '@/lib/utils'
 
 interface PageSectionProps {
   children: React.ReactNode
-  width?: 'wide' | 'narrow' | 'full'
+  width?: 'wide' | 'normal' | 'narrow' | 'xNarrow' | 'full'
   gap?: 'none' | 'sm' | 'md' | 'lg'
   className?: string
+  sectionClassName?: string
 }
 
 const PageSection: React.FC<PageSectionProps> = ({
   children,
   width = 'wide',
   gap = 'md',
-  className
+  className,
+  sectionClassName
 }) => {
+  const widthClass = {
+    full: 'max-w-full',
+    wide: 'max-w-350',
+    normal: 'max-w-275',
+    narrow: 'max-w-200',
+    xNarrow: 'max-w-150'
+  }[width]
+
   const gapClass = {
     none: 'gap-0',
     sm: 'gap-2',
@@ -20,10 +30,15 @@ const PageSection: React.FC<PageSectionProps> = ({
     lg: 'gap-6'
   }[gap]
 
-  const sectionClassName = cn('inner-column grid', gapClass, width, className)
+  const innerColumnClassName = cn(
+    'w-full mx-auto grid py-8 px-4',
+    gapClass,
+    widthClass,
+    className
+  )
   return (
-    <section>
-      <div className={sectionClassName}>{children}</div>
+    <section className={sectionClassName}>
+      <div className={innerColumnClassName}>{children}</div>
     </section>
   )
 }

@@ -2,12 +2,7 @@ import ProductCard from '@/components/Cards/ProductCard'
 import PromoCard from '@/components/Cards/PromoCard'
 import Carousel from '@/components/Carousel'
 import Hero from '@/components/HomePage/Hero'
-
 import PageSection from '@/layouts/PageSection'
-
-import { useState } from 'react'
-import { ProductListingMocks } from 'nostr-commerce-schema'
-import { useEffect } from 'react'
 import { NDKEvent } from '@nostr-dev-kit/ndk'
 import CollectionCard from '@/components/Cards/CollectionCard'
 import StoreCard from '@/components/Cards/StoreCard'
@@ -16,31 +11,53 @@ import RankingTable, { DualRankingTable } from '@/components/RankingTable'
 import ContactHelp from '@/components/Buttons/ContactHelp'
 import NewsletterSignup from '@/components/NewsletterSignup'
 import Banner from '@/components/Banner'
+import { useMockProducts } from '@/hooks/useMockProducts'
+
 const content = [
   {
     header: 'For You',
-    component: PromoCard
+    carousel: PromoCard
+  },
+  {
+    header: "What's Hot",
+    component: DualRankingTable
+  },
+  {
+    header: 'Holiday discounts',
+    carousel: ProductCard
+  },
+  {
+    header: 'Curated by the community',
+    carousel: CollectionCard
+  },
+  {
+    header: 'Trending Stores',
+    carousel: StoreCard
+  },
+  {
+    header: 'Real Coffee Beans',
+    carousel: ProductCard
+  },
+  {
+    header: 'Handmade Goods',
+    carousel: ProductCard
+  },
+  {
+    header: 'Tech Gadgets',
+    carousel: PromoCard
+  },
+  {
+    header: 'Nostr 101',
+    carousel: ArticleCard
   }
 ]
 
 const HomePage: React.FC = () => {
-  const [products, setProducts] = useState<NDKEvent[]>([])
+  const { products, loading } = useMockProducts({ count: 3 })
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const events = (await ProductListingMocks.generateEventsArray(
-          10
-        )) as unknown as NDKEvent[]
-        setProducts(events)
-      } catch (error) {
-        console.error('Error fetching products:', error)
-        setProducts([])
-      }
-    }
-
-    fetchProducts()
-  }, [])
+  if (loading) {
+    return <div>Loading...</div>
+  }
 
   return (
     <>
@@ -67,7 +84,7 @@ const HomePage: React.FC = () => {
         <h2 className="voice-3l">Holiday discounts</h2>
         <Carousel visibleItems={6}>
           {products.map((event, index) => {
-            return <ProductCard key={index} event={event} isHomeCard />
+            return <ProductCard key={index} event={event} variant="home" />
           })}
         </Carousel>
       </PageSection>
@@ -107,7 +124,7 @@ const HomePage: React.FC = () => {
         <h2 className="voice-3l">Handmade Goods</h2>
         <Carousel visibleItems={6} visibleItemsMobile={2}>
           {products.map((event, index) => {
-            return <ProductCard key={index} event={event} isHomeCard />
+            return <ProductCard key={index} event={event} variant="home" />
           })}
         </Carousel>
       </PageSection>

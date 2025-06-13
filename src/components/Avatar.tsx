@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils'
 interface AvatarProps {
   imageUrl?: string | null
   alt?: string
-  size?: 'sm' | 'md' | 'lg' | 'xl'
+  size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl'
   fallback?: string
 }
 
@@ -12,7 +12,8 @@ const sizeClasses = {
   sm: 'w-4 h-4',
   md: 'w-6 h-6',
   lg: 'w-9 h-9',
-  xl: 'w-12 h-12'
+  xl: 'w-12 h-12',
+  '2xl': 'w-16 h-16'
 } as const
 
 const DEFAULT_IMAGE_URL = 'https://avatar.iran.liara.run/public'

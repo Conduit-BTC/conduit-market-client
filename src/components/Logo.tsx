@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils'
+import { Link } from 'wouter'
 
 interface LogoProps {
   variant?: 'full' | 'bg' | 'icon' | 'word'
@@ -24,9 +25,11 @@ const Logo: React.FC<LogoProps> = ({ variant = 'full', className }) => {
   }
 
   return (
-    <picture className={cn(className)}>
-      <img src={logoSrc} alt="Logo" />
-    </picture>
+    <Link to="/">
+      <picture className={cn(className)}>
+        <img src={logoSrc} alt="Logo" />
+      </picture>
+    </Link>
   )
 }
 

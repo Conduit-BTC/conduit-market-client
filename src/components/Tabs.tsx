@@ -1,5 +1,3 @@
-'use client'
-
 import * as React from 'react'
 import { cn } from '@/lib/utils'
 
@@ -8,16 +6,20 @@ interface TabsProps extends React.HTMLAttributes<HTMLDivElement> {
   value?: string
   onValueChange?: (value: string) => void
   children: React.ReactNode
+  ref?: React.RefObject<HTMLDivElement>
 }
 
 interface TabsListProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
+  className?: string
 }
 
 interface TabsTriggerProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   value: string
   children: React.ReactNode
+  className?: string
+  isSelectedClassName?: string
 }
 
 interface TabsContentProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -68,7 +70,7 @@ function TabsList({ className, children, ...props }: TabsListProps) {
       )}
       {...props}
     >
-      {children}
+      {React.Children.map(children, (child) => child)}
     </div>
   )
 }
@@ -77,21 +79,27 @@ function TabsTrigger({
   className,
   value,
   children,
+  isSelectedClassName,
   ...props
 }: TabsTriggerProps) {
   const { value: selectedValue, onValueChange } = React.useContext(TabsContext)
   const isSelected = selectedValue === value
 
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    onValueChange(value)
+  }
+
   return (
     <button
       role="tab"
       aria-selected={isSelected}
-      onClick={() => onValueChange(value)}
+      onClick={handleClick}
       className={cn(
-        'voice-sm font-bold font-normal whitespace-nowrap px-3 py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ',
-        isSelected &&
-          'font-bold data-[state=active]:font-bold border-b-2 border-primary',
-        className
+        'voice-sm font-normal whitespace-nowrap px-3 py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ',
+        className,
+        isSelected && 'font-bold data-[state=active]:font-bold border-primary',
+        isSelected && isSelectedClassName
       )}
       {...props}
     >

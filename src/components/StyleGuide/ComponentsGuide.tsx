@@ -1,5 +1,4 @@
 import { Badge } from '../Badge'
-import { CardsGuide } from './CardsGuide'
 import {
   Card,
   CardHeader,
@@ -9,7 +8,6 @@ import {
 import { cn } from '@/lib/utils'
 import Breadcrumbs from '../Breadcumbs'
 import Field from '../Form/Field'
-import { SearchIcon, XIcon } from 'lucide-react'
 import RankingTable, { DualRankingTable } from '../RankingTable'
 import CategoryHeader from '../CategoryHeader'
 import {
@@ -26,6 +24,9 @@ import ContactHelp from '../Buttons/ContactHelp'
 import Hero from '@/components/HomePage/Hero'
 import Logo from '../Logo'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/Tabs'
+import Carousel from '../Carousel'
+import SkeletonCard from '../Cards/SkeletonCard'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 interface Component {
   name: string
@@ -35,10 +36,31 @@ interface Component {
   states: {
     label: string
     props: any
+    children?: React.ReactNode[]
   }[]
 }
 
 const components: Component[] = [
+  {
+    name: 'Carousel',
+    component: Carousel,
+    fullWidth: true,
+    states: [
+      {
+        label: 'Default',
+        props: {
+          visibleItems: 3
+        },
+        children: [
+          <SkeletonCard key={1} />,
+          <SkeletonCard key={2} />,
+          <SkeletonCard key={3} />,
+          <SkeletonCard key={4} />,
+          <SkeletonCard key={5} />
+        ]
+      }
+    ]
+  },
   {
     name: 'Logo',
     display: true,
@@ -128,7 +150,7 @@ const components: Component[] = [
         props: {
           variant: 'icon',
           text: 'Icon Pill',
-          leftIcon: <SearchIcon />
+          leftIcon: 'search'
         }
       },
       {
@@ -323,8 +345,8 @@ const components: Component[] = [
           name: 'search',
           type: 'search',
           placeholder: 'Search...',
-          leftIcon: <SearchIcon className="w-4 h-4 text-base-400" />,
-          rightIcon: <XIcon className="w-4 h-4 text-base-400" />
+          leftIcon: 'search',
+          rightIcon: 'xIcon'
         }
       }
     ]
@@ -379,12 +401,27 @@ const components: Component[] = [
   }
 ]
 
-export function ComponentsGuide() {
+interface ComponentsGuideProps {
+  currentTab: string
+  onTabChange: (value: string) => void
+}
+
+export function ComponentsGuide({
+  currentTab,
+  onTabChange
+}: ComponentsGuideProps) {
+  const [animate] = useAutoAnimate()
+
   return (
     <div className="space-y-8">
       <h2 className="voice-3l mb-12">Components</h2>
 
-      <Tabs defaultValue="all" className="w-full">
+      <Tabs
+        value={currentTab}
+        onValueChange={onTabChange}
+        className="w-full"
+        ref={animate}
+      >
         <TabsList className="w-full justify-start">
           <TabsTrigger value="all">All</TabsTrigger>
           {components.map((component) => (
@@ -456,7 +493,9 @@ export function ComponentsGuide() {
                           </CardTitle>
                         </CardHeader>
                         <CardContent className="flex items-center justify-center min-h-[100px]">
-                          <Component {...state.props} />
+                          <Component {...state.props}>
+                            {state.children}
+                          </Component>
                         </CardContent>
                       </Card>
                     </li>

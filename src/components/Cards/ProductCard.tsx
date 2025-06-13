@@ -13,8 +13,7 @@ import {
   CardHeader,
   CardTitle
 } from './CardComponents.tsx'
-import { ShoppingCart, Star } from 'lucide-react'
-import { useCartStore } from '@/stores/useCartStore.ts'
+import Icon from '../Icon'
 import { MultiUserPill } from '@/components/Pill'
 import { Badge } from '@/components/Badge.tsx'
 import { cn, formatPrice } from '@/lib/utils.ts'
@@ -24,12 +23,12 @@ const PLACEHOLDER_IMAGE = 'https://prd.place/600/400'
 
 interface ProductCardProps {
   event: NDKEvent
-  isHomeCard?: boolean
+  variant?: 'card' | 'home' | 'slide'
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
   event,
-  isHomeCard = false
+  variant = 'card'
 }) => {
   // #todo: remove this once we have a real event
 
@@ -56,7 +55,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   const productEvent = validationMemo.productEvent!
   const { pubkey } = event
-  const { addToCart } = useCartStore()
 
   const [imageError, setImageError] = useState(false)
 
@@ -97,10 +95,16 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const isOnSale = stock !== null && stock > 5 && visibility === 'on-sale'
   const isLowStock = stock !== null && stock <= 5 && stock > 0
   const discountPercent = 10 // mock value
-  const originalPrice = formatPrice(parseFloat(price.amount), price.currency)
-  const discountedPrice = formatPrice(
-    parseFloat(price.amount) * (1 - discountPercent / 100),
-    price.currency
+  const priceAmount = parseFloat(price.amount)
+  const priceInSats = formatPrice(priceAmount, 'SAT')
+  const priceInUSD = formatPrice(priceAmount, 'USD')
+  const discountedPriceInSats = formatPrice(
+    priceAmount * (1 - discountPercent / 100),
+    'SAT'
+  )
+  const discountedPriceInUSD = formatPrice(
+    priceAmount * (1 - discountPercent / 100),
+    'USD'
   )
 
   let badge = null
@@ -112,111 +116,241 @@ const ProductCard: React.FC<ProductCardProps> = ({
     badge = <Badge variant="success">-{discountPercent}%</Badge>
   }
 
-  return (
-    <Card
-      className={cn(
-        'w-full overflow-hidden max-w-sm',
-        isOutOfStock && 'grayscale',
-        isHomeCard && 'max-w-xs'
-      )}
-    >
-      <div className="relative">
-        {/* floating indicators */}
-        <div className="w-full absolute top-0 p-2 flex items-center justify-between">
-          {/* left */}
-          <div>{badge}</div>
-          {/* right */}
-          <div>
-            {!isHomeCard && hasUserInteractions && (
-              <MultiUserPill className="border-none" />
-            )}
-          </div>
-        </div>
-
-        {/* image */}
-        <picture
+  switch (variant) {
+    case 'home':
+      return (
+        <Card
           className={cn(
-            'bg-ink',
-            isHomeCard ? 'aspect-square' : 'aspect-video'
+            'w-full overflow-hidden max-w-xs',
+            isOutOfStock && 'grayscale'
           )}
         >
-          <img
-            src={mainImage}
-            alt={title}
-            className="w-full h-full object-contain"
-            onError={() => setImageError(true)}
-            loading="lazy"
-          />
-        </picture>
-      </div>
-      <CardHeader className="flex gap-1 items-start justify-between">
-        <CardTitle className={cn('line-clamp-2', isHomeCard && 'calm-voice')}>
-          {title}
-        </CardTitle>
+          <div className="relative">
+            {/* floating indicators */}
+            <div className="w-full absolute top-0 p-2 flex items-center justify-between">
+              {/* left */}
+              <div>{badge}</div>
+            </div>
 
-        {/* rating */}
-        <div className="flex items-center gap-1">
-          <Star
-            className="size-4 text-transparent"
-            fill="var(--color-primary-400)"
-          />
-          <p className="calm-voice font-bold">4.5</p>
-        </div>
-      </CardHeader>
-      <CardContent className="relative pb-0">
-        {/* pubkey */}
-        {/* <p className="whisper-voice">{pubkey}</p> */}
+            {/* image */}
+            <picture className="bg-ink aspect-square">
+              <img
+                src={mainImage}
+                alt={title}
+                className="w-full h-full object-contain"
+                onError={() => setImageError(true)}
+                loading="lazy"
+              />
+            </picture>
+          </div>
+          <CardHeader className="flex gap-1 items-start justify-between">
+            <CardTitle className="line-clamp-2 voice-sm">{title}</CardTitle>
 
-        {/* summary #todo*/}
-        {summary && false && (
-          <CardDescription className="line-clamp-2">{summary}</CardDescription>
-        )}
-
-        {/* in Satoshis */}
-        <div className="flex items-center gap-1">
-          <p className={cn('firm-voice font-bold', isHomeCard && 'calm-voice')}>
-            {discountedPrice} SAT
-          </p>
-          {isOnSale && (
-            <p
-              className={cn(
-                'text-base-600 line-through notice-voice',
-                isHomeCard && 'calm-voice'
+            {/* rating */}
+            <div className="flex items-center gap-1">
+              <Icon
+                icon="star"
+                className="size-4 text-transparent"
+                fill="fill-primary-400"
+              />
+              <p className="voice-base font-bold">4.5</p>
+            </div>
+          </CardHeader>
+          <CardContent className="relative pb-0">
+            {/* in Satoshis */}
+            <div className="flex items-center gap-1">
+              <p className="voice-lg font-bold">{discountedPriceInSats}</p>
+              {isOnSale && (
+                <p className="line-through voice-sm text-muted-foreground">
+                  {priceInSats}
+                </p>
               )}
-            >
-              {originalPrice}
-            </p>
+            </div>
+          </CardContent>
+          <CardFooter className="flex justify-between items-center pt-0">
+            <div className="flex flex-col">
+              {/* in Dollars */}
+              <p className="voice-base">{discountedPriceInUSD}</p>
+              {/* todo: add store name */}
+              {storeName && false && (
+                <p className="voice-sm text-muted-foreground font-bold">
+                  {storeName}
+                </p>
+              )}
+            </div>
+          </CardFooter>
+        </Card>
+      )
+
+    case 'slide':
+      return (
+        <Card
+          className={cn(
+            'w-full overflow-hidden max-w-sm border-none',
+            isOutOfStock && 'grayscale'
           )}
-        </div>
-      </CardContent>
-      <CardFooter className="flex justify-between items-center pt-0">
-        <div className="flex flex-col">
-          {/* in Dollars */}
-          <p className="whisper-voice">{discountedPrice}</p>
-          {isHomeCard && storeName && (
-            <p className="whisper-voice text-base-600">{storeName}</p>
+        >
+          <div className="relative grid grid-cols-3 items-center">
+            {/* floating indicators */}
+            <div className="w-full absolute top-0 p-2 flex items-center justify-between">
+              {/* left */}
+              {/* <div>{badge}</div> */}
+            </div>
+
+            {/* image */}
+            <picture className="bg-ink aspect-square rounded-lg">
+              <img
+                src={mainImage}
+                alt={title}
+                className="w-full h-full object-contain"
+                onError={() => setImageError(true)}
+                loading="lazy"
+              />
+            </picture>
+            <div className="col-span-2">
+              <CardHeader className="flex gap-1 items-start justify-between">
+                <CardTitle className="line-clamp-2 voice-sm font-medium">
+                  {title}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="relative pb-0">
+                {/* in Satoshis */}
+                <div className="flex items-center gap-1">
+                  <p className="voice-base font-bold">
+                    {discountedPriceInSats}
+                  </p>
+                  {isOnSale && (
+                    <p className="line-through voice-sm text-muted-foreground">
+                      {priceInSats}
+                    </p>
+                  )}
+                </div>
+
+                {/* in Dollars */}
+                <p className="voice-sm">{discountedPriceInUSD}</p>
+              </CardContent>
+              <CardFooter className="flex justify-between items-center pt-0">
+                {/* rating */}
+                <div className="flex items-center gap-1">
+                  <Icon
+                    icon="star"
+                    className="size-4 text-transparent"
+                    fill="fill-primary-400"
+                  />
+                  <p className="voice-base font-bold">4.5</p>
+                </div>
+
+                <AddToCartButton
+                  variant="slide"
+                  product={{
+                    merchantPubkey: pubkey,
+                    eventId: event.id,
+                    productId,
+                    tags: event.tags,
+                    image: mainImage,
+                    name: title,
+                    price: parseFloat(price.amount),
+                    currency: price.currency,
+                    quantity: 1
+                  }}
+                  disabled={isOutOfStock}
+                />
+              </CardFooter>
+            </div>
+          </div>
+        </Card>
+      )
+
+    default:
+      return (
+        <Card
+          className={cn(
+            'w-full overflow-hidden max-w-sm',
+            isOutOfStock && 'grayscale'
           )}
-        </div>
-        {/* add to cart - only show if not home card */}
-        {!isHomeCard && (
-          <AddToCartButton
-            product={{
-              eventId: event.id,
-              productId,
-              tags: event.tags,
-              image: mainImage,
-              name: title,
-              price: parseFloat(price.amount),
-              currency: price.currency,
-              quantity: 1,
-              merchantPubkey: pubkey
-            }}
-            disabled={isOutOfStock}
-          />
-        )}
-      </CardFooter>
-    </Card>
-  )
+        >
+          <div className="relative">
+            {/* floating indicators */}
+            <div className="w-full absolute top-0 p-2 flex items-center justify-between">
+              {/* left */}
+              <div>{badge}</div>
+              {/* right */}
+              <div>
+                {hasUserInteractions && (
+                  <MultiUserPill className="border-none" />
+                )}
+              </div>
+            </div>
+
+            {/* image */}
+            <picture className="bg-ink aspect-video">
+              <img
+                src={mainImage}
+                alt={title}
+                className="w-full h-full object-contain"
+                onError={() => setImageError(true)}
+                loading="lazy"
+              />
+            </picture>
+          </div>
+          <CardHeader className="flex gap-1 items-start justify-between">
+            <CardTitle className="line-clamp-2 voice-base">{title}</CardTitle>
+
+            {/* rating */}
+            <div className="flex items-center gap-1">
+              <Icon
+                icon="star"
+                className="size-4 text-transparent"
+                fill="fill-primary-400"
+              />
+              <p className="voice-base font-bold">4.5</p>
+            </div>
+          </CardHeader>
+          <CardContent className="relative pb-0">
+            {/* pubkey */}
+            {/* <p className="voice-sm text-muted-foreground">{pubkey}</p> */}
+
+            {/* summary #todo*/}
+            {summary && false && (
+              <CardDescription className="line-clamp-2">
+                {summary}
+              </CardDescription>
+            )}
+
+            {/* in Satoshis */}
+            <div className="flex items-center gap-1">
+              <p className="voice-lg font-bold">{discountedPriceInSats}</p>
+              {isOnSale && (
+                <p className="line-through voice-sm text-muted-foreground">
+                  {priceInSats}
+                </p>
+              )}
+            </div>
+          </CardContent>
+          <CardFooter className="flex justify-between items-center pt-0">
+            <div className="flex flex-col">
+              {/* in Dollars */}
+              <p className="voice-base">{discountedPriceInUSD}</p>
+            </div>
+            {/* add to cart - only show if not home card */}
+            <AddToCartButton
+              product={{
+                merchantPubkey: pubkey,
+                eventId: event.id,
+                productId,
+                tags: event.tags,
+                image: mainImage,
+                name: title,
+                price: parseFloat(price.amount),
+                currency: price.currency,
+                quantity: 1
+              }}
+              disabled={isOutOfStock}
+            />
+          </CardFooter>
+        </Card>
+      )
+  }
 }
 
 export default ProductCard

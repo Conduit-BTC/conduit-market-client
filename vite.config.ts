@@ -21,7 +21,7 @@ export default defineConfig({
       '@root': resolve(__dirname, '.'),
       'nostr-commerce-schema': resolve(
         __dirname,
-        'external/nostr-commerce-schema'
+        'external/nostr-commerce-schema/dist/index.mjs'
       )
     }
   }

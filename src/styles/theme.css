@@ -1,6 +1,12 @@
 /* Colors */
 @layer base {
   :root {
+    --dashed-border: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='hsl(281, 16%, 65%)' stroke-width='7' stroke-dasharray='6%2c 30' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+
+    --dashed-border-rounded: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='100' ry='100' stroke='hsl(281, 16%, 65%)' stroke-width='7' stroke-dasharray='6%2c 29' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+  }
+
+  :root {
     /* Base HSL values */
     --base-h: 255;
     --base-s: 8%;
@@ -301,7 +307,7 @@
 
   /* Shadows */
 
-  --text-shadow: 0 0 0.625em var(--color-primary-500),
+  --shadow-primary: 0 0 0.625em var(--color-primary-500),
     0 0 1.25em var(--color-primary-400), 0 0 2.5em var(--color-primary-300),
     0 0 5em var(--color-primary-200);
 

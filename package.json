@@ -5,10 +5,11 @@
   "scripts": {
     "dev": "bun run build:schema && vite",
     "build": "bun run build:schema && vite build",
-    "build:schema": "cd external/nostr-commerce-schema && bun run build",
+    "build:schema": "bun --cwd external/nostr-commerce-schema run build",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@formkit/auto-animate": "^0.8.2",
     "@nostr-dev-kit/ndk": "^2.10.7",
     "clsx": "^2.1.1",
     "lucide-react": "^0.469.0",
@@ -20,9 +21,8 @@
     "react-dom": "^19.0.0",
     "tailwind-merge": "^3.2.0",
     "wouter": "^3.3.5",
-    "zod": "^3.24.1",
+    "zod": "^3.25.50",
     "zustand": "5.0.2"
-
   },
   "devDependencies": {
     "@babel/plugin-transform-react-jsx-development": "^7.25.9",

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import Button from './Buttons/Button'
 import { cn } from '@/lib/utils'
-
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 interface CategoryHeaderProps {
   title: string
   description: string
@@ -14,7 +14,7 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({
   const [isExpanded, setIsExpanded] = useState(false)
   const [isTextTruncated, setIsTextTruncated] = useState(false)
   const textRef = useRef<HTMLParagraphElement>(null)
-
+  const [animate] = useAutoAnimate()
   useEffect(() => {
     const checkTruncation = () => {
       if (textRef.current) {
@@ -32,7 +32,7 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({
   return (
     <div className="grid gap-2">
       <h2 className="voice-5l">{title}</h2>
-      <div className="grid">
+      <div className="grid" ref={animate}>
         <p
           ref={textRef}
           className={cn('voice-lg max-w-prose', !isExpanded && 'line-clamp-3')}

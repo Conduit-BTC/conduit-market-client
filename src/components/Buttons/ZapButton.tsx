@@ -1,10 +1,10 @@
-import { Zap } from 'lucide-react'
 import Button from './Button'
+import Icon from '../Icon'
 
-export const ZapButton = () => {
+export const ZapButton: React.FC = () => {
   return (
     <Button variant="ghost" size="icon">
-      <Zap className="text-primary" />
+      <Icon icon="zap" className="text-primary" />
     </Button>
   )
 }
