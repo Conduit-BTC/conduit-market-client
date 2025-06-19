@@ -79,10 +79,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
     })
     return null
   }
-  // if price is not set, return 'Price not set'
-  if (!price) return 'Price not set'
-
-  // Format price with currency
 
   const mainImage =
     images.length > 0 && !imageError ? images[0].url : PLACEHOLDER_IMAGE
