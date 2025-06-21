@@ -3,151 +3,131 @@ import PromoCard from '@/components/Cards/PromoCard'
 import Carousel from '@/components/Carousel'
 import Hero from '@/components/HomePage/Hero'
 import PageSection from '@/layouts/PageSection'
-import { NDKEvent } from '@nostr-dev-kit/ndk'
 import CollectionCard from '@/components/Cards/CollectionCard'
 import StoreCard from '@/components/Cards/StoreCard'
 import ArticleCard from '@/components/Cards/ArticleCard'
-import RankingTable, { DualRankingTable } from '@/components/RankingTable'
-import ContactHelp from '@/components/Buttons/ContactHelp'
-import NewsletterSignup from '@/components/NewsletterSignup'
+import { DualRankingTable } from '@/components/RankingTable'
 import Banner from '@/components/Banner'
-import { useMockProducts } from '@/hooks/useMockProducts'
-
-const content = [
-  {
-    header: 'For You',
-    carousel: PromoCard
-  },
-  {
-    header: "What's Hot",
-    component: DualRankingTable
-  },
-  {
-    header: 'Holiday discounts',
-    carousel: ProductCard
-  },
-  {
-    header: 'Curated by the community',
-    carousel: CollectionCard
-  },
-  {
-    header: 'Trending Stores',
-    carousel: StoreCard
-  },
-  {
-    header: 'Real Coffee Beans',
-    carousel: ProductCard
-  },
-  {
-    header: 'Handmade Goods',
-    carousel: ProductCard
-  },
-  {
-    header: 'Tech Gadgets',
-    carousel: PromoCard
-  },
-  {
-    header: 'Nostr 101',
-    carousel: ArticleCard
-  }
-]
+import type { NDKFilter } from '@nostr-dev-kit/ndk'
+import { useSubscription } from 'nostr-hooks'
+import Skeleton from '@/components/Skeleton'
+import { useEffect } from 'react'
 
 const HomePage: React.FC = () => {
-  const { products, loading } = useMockProducts({ count: 3 })
-
-  if (loading) {
-    return <div>Loading...</div>
-  }
-
   return (
     <>
       <Hero />
 
-      {/* For You */}
-      <PageSection>
-        <h2 className="voice-3l">For You</h2>
-        <Carousel>
-          {products.map((event, index) => {
-            return <PromoCard key={index} variant="1item" event={event} />
-          })}
-        </Carousel>
-      </PageSection>
+      <CarouselSection
+        name="For You"
+        type={CardType.PromoCard}
+        variant="1item"
+        filters={[
+          {
+            kinds: [30402],
+            limit: 20
+          }
+        ]}
+      />
 
-      {/* Whats HOt */}
-      <PageSection>
+      {/* <PageSection>
         <h2 className="voice-3l">What's Hot</h2>
         <DualRankingTable />
-      </PageSection>
+      </PageSection> */}
 
-      {/* Holiday discounts */}
-      <PageSection>
-        <h2 className="voice-3l">Holiday discounts</h2>
-        <Carousel visibleItems={6}>
-          {products.map((event, index) => {
-            return <ProductCard key={index} event={event} variant="home" />
-          })}
-        </Carousel>
-      </PageSection>
+      <CarouselSection
+        name="Holiday discounts"
+        type={CardType.ProductCard}
+        variant="home"
+        visibleItems={6}
+        filters={[
+          {
+            kinds: [30402],
+            limit: 20
+          }
+        ]}
+      />
 
-      {/* Curated by the community */}
-      <PageSection>
-        <h2 className="voice-3l">Curated by the community</h2>
-        <Carousel>
-          {products.map((event, index) => {
-            return <CollectionCard key={index} event={event} />
-          })}
-        </Carousel>
-      </PageSection>
+      <CarouselSection
+        name="Curated by the community"
+        type={CardType.CollectionCard}
+        filters={[
+          {
+            kinds: [30402],
+            limit: 20
+          }
+        ]}
+      />
 
-      {/* Trending Stores */}
-      <PageSection>
-        <h2 className="voice-3l">Trending Stores</h2>
-        <Carousel>
-          {products.map((event, index) => {
-            return <StoreCard key={index} event={event} />
-          })}
-        </Carousel>
-      </PageSection>
+      <CarouselSection
+        name="Curated by the community"
+        type={CardType.CollectionCard}
+        filters={[
+          {
+            kinds: [30402],
+            limit: 20
+          }
+        ]}
+      />
 
-      {/* Real Coffee Beans */}
-      <PageSection>
-        <h2 className="voice-3l">Real Coffee Beans</h2>
-        <Carousel>
-          {products.map((event, index) => {
-            return <ProductCard key={index} event={event} />
-          })}
-        </Carousel>
-      </PageSection>
+      <CarouselSection
+        name="Trending stores"
+        type={CardType.StoreCard}
+        filters={[
+          {
+            kinds: [30402],
+            limit: 20
+          }
+        ]}
+      />
 
-      {/* Handmade Goods */}
-      <PageSection>
-        <h2 className="voice-3l">Handmade Goods</h2>
-        <Carousel visibleItems={6} visibleItemsMobile={2}>
-          {products.map((event, index) => {
-            return <ProductCard key={index} event={event} variant="home" />
-          })}
-        </Carousel>
-      </PageSection>
+      <CarouselSection
+        name="Real Coffee Beans"
+        type={CardType.CollectionCard}
+        filters={[
+          {
+            kinds: [30402],
+            limit: 20
+          }
+        ]}
+      />
 
-      {/* Tech Gadgets */}
-      <PageSection>
-        <h2 className="voice-3l">Tech Gadgets</h2>
-        <Carousel>
-          {products.map((event, index) => {
-            return <PromoCard key={index} variant="1item" event={event} />
-          })}
-        </Carousel>
-      </PageSection>
+      <CarouselSection
+        name="Handmade Goods"
+        type={CardType.ProductCard}
+        variant="home"
+        visibleItems={6}
+        visibleItemsMobile={2}
+        filters={[
+          {
+            kinds: [30402],
+            limit: 20
+          }
+        ]}
+      />
 
-      {/* Nostr 101 */}
-      <PageSection>
-        <h2 className="voice-3l">Nostr 101</h2>
-        <Carousel>
-          {products.map((event, index) => {
-            return <ArticleCard key={index} event={event} />
-          })}
-        </Carousel>
-      </PageSection>
+      <CarouselSection
+        name="Tech Gadgets"
+        type={CardType.PromoCard}
+        variant="1item"
+        filters={[
+          {
+            kinds: [30402],
+            limit: 20
+          }
+        ]}
+      />
+
+      <CarouselSection
+        name="Nostr 101"
+        type={CardType.ArticleCard}
+        filters={[
+          {
+            kinds: [30402],
+            limit: 20
+          }
+        ]}
+      />
 
       <Banner />
     </>
@@ -155,3 +135,86 @@ const HomePage: React.FC = () => {
 }
 
 export default HomePage
+
+const CardType = {
+  ArticleCard: 'ArticleCard',
+  CollectionCard: 'CollectionCard',
+  ProductCard: 'ProductCard',
+  PromoCard: 'PromoCard',
+  StoreCard: 'StoreCard'
+} as const
+
+interface CarouselSectionProps {
+  name: string
+  type: string
+  filters: NDKFilter[]
+  variant?: string
+  visibleItems?: number
+  visibleItemsMobile?: number
+}
+
+function CarouselSection({
+  name,
+  type,
+  filters,
+  variant,
+  visibleItems = undefined,
+  visibleItemsMobile = undefined
+}: CarouselSectionProps) {
+  const { events, isLoading, createSubscription } = useSubscription(
+    `${name.toLowerCase().replace(' ', '_')}-${crypto.randomUUID()}`
+  )
+
+  useEffect(() => {
+    console.log('Creating new subscription: ', name)
+    createSubscription({ filters })
+  }, [createSubscription])
+
+  useEffect(() => {
+    console.log('New subscription received: ')
+    console.log(events)
+  }, [events])
+
+  return (
+    <PageSection>
+      <h2 className="voice-3l">{name}</h2>
+      <Carousel
+        visibleItems={visibleItems}
+        visibleItemsMobile={visibleItemsMobile}
+      >
+        {isLoading && <Skeleton className="h-64 w-full" />}
+        {events &&
+          events.map((e, index) => {
+            switch (type) {
+              case CardType.ArticleCard:
+                return <ArticleCard key={index} event={e} />
+              case CardType.CollectionCard:
+                return <CollectionCard key={index} event={e} />
+              case CardType.ProductCard:
+                return (
+                  <ProductCard
+                    key={index}
+                    event={e}
+                    variant={variant as undefined}
+                  />
+                )
+              case CardType.PromoCard:
+                return (
+                  <PromoCard
+                    key={index}
+                    variant={variant as undefined}
+                    event={e}
+                  />
+                )
+              case CardType.StoreCard:
+              default:
+                return <StoreCard key={index} event={e} />
+            }
+          })}
+        {!isLoading && !events && (
+          <div className="animate-pulse">No events received from relays</div>
+        )}
+      </Carousel>
+    </PageSection>
+  )
+}
