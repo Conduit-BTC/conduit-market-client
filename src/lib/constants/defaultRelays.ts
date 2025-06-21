@@ -1,1 +1,1 @@
-export const DEFAULT_RELAYS = ['ws://localhost:7777']
+export const DEFAULT_RELAYS = ['wss://relay.conduit.market']
