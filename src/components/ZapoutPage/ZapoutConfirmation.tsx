@@ -4,17 +4,20 @@ import Icon from '../Icon'
 import Logo from '../Logo'
 import { cn } from '@/lib/utils'
 
-interface LoadingBarProps {
+import { useZapoutStore } from '@/stores/useZapoutStore'
+import { useAccountStore } from '@/stores/useAccountStore'
+import { useParams } from 'wouter'
+import { createOrder } from '@/lib/nostr/createOrder'
+import postOrder from '@/lib/nostr/postOrder'
+import { NDKEvent } from '@nostr-dev-kit/ndk'
+import { useLocation } from 'wouter' // ← Add at the top if not already
+
+
+const LoadingBar: React.FC<{
   duration?: number
   onComplete?: () => void
   onProgressUpdate?: (progress: number) => void
-}
-//  todo refactor and make more dynamic, maybe use gsap
-const LoadingBar: React.FC<LoadingBarProps> = ({
-  duration = 5000,
-  onComplete,
-  onProgressUpdate
-}) => {
+}> = ({ duration = 5000, onComplete, onProgressUpdate }) => {
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
@@ -38,11 +41,8 @@ const LoadingBar: React.FC<LoadingBarProps> = ({
 
     animationId = requestAnimationFrame(updateProgress)
 
-    // Cleanup - cancel the animation frame instead of resetting progress
     return () => {
-      if (animationId) {
-        cancelAnimationFrame(animationId)
-      }
+      if (animationId) cancelAnimationFrame(animationId)
     }
   }, [duration, onComplete, onProgressUpdate])
 
@@ -62,8 +62,16 @@ const ZapoutConfirmation: React.FC = () => {
   const [currentStepIndex, setCurrentStepIndex] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
   const [isComplete, setIsComplete] = useState(false)
+  // Inside the component
+  const [_, navigate] = useLocation()
 
-  const TOTAL_DURATION = 8000 // 8 seconds total
+  const { shippingInfo, paymentMethod, cartItems, notes } = useZapoutStore()
+  const user = useAccountStore((s) => s.user)
+  const pubkey = user?.pubkey
+
+  const { merchantPubkey } = useParams()
+
+  const TOTAL_DURATION = 8000 // 8 seconds
 
   const loadingSteps = [
     {
@@ -76,37 +84,76 @@ const ZapoutConfirmation: React.FC = () => {
     },
     {
       heading: 'Almost There!',
-      description:
-        'Just putting the final touches on your order... Magic takes time! ✨'
+      description: 'Just putting the final touches on your order... Magic takes time! ✨'
     }
   ]
 
   const handleLoadingComplete = useCallback(() => {
     console.log('Loading complete!')
-    // Handle completion here
     setIsLoading(false)
     setIsComplete(true)
   }, [])
 
   const handleProgressUpdate = useCallback(
     (progress: number) => {
-      // Calculate step size based on number of steps
       const stepSize = 100 / loadingSteps.length
-      // Calculate which step we should be on
       const stepIndex = Math.min(
         Math.floor(progress / stepSize),
         loadingSteps.length - 1
       )
-
-      setCurrentStepIndex((prevIndex) => {
-        if (prevIndex !== stepIndex) {
-          return stepIndex
-        }
-        return prevIndex
-      })
+      setCurrentStepIndex((prev) => (prev !== stepIndex ? stepIndex : prev))
     },
     [loadingSteps.length]
   )
+
+  const sendOrder = useCallback(async () => {
+    console.log('DEBUG ZapoutConfirmation Values:', {
+      cartItems,
+      shippingInfo,
+      paymentMethod,
+      pubkey,
+      merchantPubkey
+    })
+
+    if (!cartItems || !shippingInfo || !paymentMethod || !pubkey || !merchantPubkey) {
+      console.error('[ZapoutConfirmation] Missing order data.')
+      return
+    }
+
+    try {
+      const addressString = JSON.stringify(shippingInfo)
+
+      const orderData = {
+        items: cartItems.map((item) => ({
+          eventId: item.eventId,
+          productId: item.productId,
+          quantity: item.quantity,
+          price: item.price
+        })),
+        address: addressString,
+        message: `Order from Pubkey: ${pubkey}`,
+        // Optionally: include paymentMethod or notes here
+      }
+
+      const order = await createOrder(orderData, merchantPubkey)
+
+      if (!order || !(order instanceof NDKEvent)) {
+        console.error('[ZapoutConfirmation] Failed to create order:', order)
+        return
+      }
+
+      await postOrder(order, merchantPubkey)
+      console.log('✅ Order successfully posted.')
+    } catch (error) {
+      console.error('[ZapoutConfirmation] Order error:', error)
+    }
+  }, [cartItems, shippingInfo, paymentMethod, pubkey, merchantPubkey])
+
+  useEffect(() => {
+    if (isLoading) {
+      sendOrder()
+    }
+  }, [isLoading, sendOrder])
 
   const currentStep = loadingSteps[currentStepIndex]
 
@@ -120,7 +167,7 @@ const ZapoutConfirmation: React.FC = () => {
       {/* header */}
       <div className="flex items-center justify-between gap-2 px-8 py-4">
         <Logo className="max-w-50" />
-        <Button variant="ghost" size="lg">
+        <Button variant="ghost" size="lg" onClick={() => navigate('/')}>
           <Icon.Home className="size-6" />
           Back to Home
         </Button>
@@ -152,11 +199,11 @@ const ZapoutConfirmation: React.FC = () => {
             </p>
 
             <div className="flex items-center gap-4">
-              <Button variant="primary" size="lg" className="flex-1">
+              <Button variant="primary" size="lg" className="flex-1" onClick={() => navigate('/messages')}>
                 <Icon.Messages />
                 Go to Messages
               </Button>
-              <Button variant="muted" size="lg" className="flex-1">
+              <Button variant="muted" size="lg" className="flex-1" onClick={() => navigate('/shop')}>
                 <Icon.ShoppingBag />
                 Shop
               </Button>

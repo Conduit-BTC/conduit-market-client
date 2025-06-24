@@ -1,17 +1,34 @@
-import { useState } from 'react'
-import { useLocation } from 'wouter'
+import { useCallback, useState } from 'react'
+import { useLocation, useParams } from 'wouter'
 import Button from '../Buttons/Button'
 import Field from '../Form/Field'
 
 import Icon from '../Icon'
 import { IconPill } from '../Pill'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../Tabs'
+import { createOrder } from '@/lib/nostr/createOrder'
+import { NDKEvent } from '@nostr-dev-kit/ndk'
+import postOrder from '@/lib/nostr/postOrder'
+import { useCartStore } from '@/stores/useCartStore'
+import type { ShippingFormData } from './ShippingForm'
+
+import { useZapoutStore } from '@/stores/useZapoutStore'
 
 const PaymentMethod: React.FC = () => {
   const [location, navigate] = useLocation()
-
   const [isGeneratingInvoice, setIsGeneratingInvoice] = useState(false)
   const [isGenerated, setIsGenerated] = useState(false)
+  const { carts, getCart } = useCartStore()
+  const { merchantPubkey } = useParams()
+  const cart = useCallback(
+    () => merchantPubkey && getCart(merchantPubkey),
+    [merchantPubkey]
+  )
+
+  // ✅ Zustand integration + tab sync
+  const paymentMethod = useZapoutStore((s) => s.paymentMethod)
+  const setPaymentMethod = useZapoutStore((s) => s.setPaymentMethod)
+  const [selectedMethod, setSelectedMethod] = useState(paymentMethod ?? 'lightning')
 
   const paymentMethods = [
     {
@@ -37,16 +54,76 @@ const PaymentMethod: React.FC = () => {
     }
   ]
 
+  // TODO: guard this page from non-logged in users
+
+  interface OrderData {
+    items: Array<{
+      eventId: string
+      productId: string
+      quantity: number
+      price: number
+    }>
+    shipping?: {
+      eventId: string
+      methodId: string
+    }
+    address?: string
+    phone?: string
+    email?: string
+    message?: string
+  }
+
+  async function prepareOrder(
+    cart: CartItem[],
+    shippingInfo: ShippingFormData,
+    pubkey: string
+  ) {
+    const addressString =
+      typeof shippingInfo === 'string'
+        ? shippingInfo
+        : JSON.stringify(shippingInfo)
+
+    const orderData: OrderData = {
+      items: cart.map((item) => ({
+        eventId: item.eventId,
+        productId: item.productId,
+        quantity: item.quantity,
+        price: item.price
+      })),
+      address: addressString,
+      message: `Order from Pubkey: ${pubkey}`
+    }
+
+    const order = await createOrder(orderData, cart[0].merchantPubkey)
+
+    if (!order || !(order instanceof NDKEvent)) {
+      console.error(
+        '[ZapoutPage.prepareOrder] Failed to create order. Error:',
+        order?.message || 'Unknown error'
+      )
+      // TODO: Display error to user
+      return
+    }
+
+    postOrder(order, cart[0].merchantPubkey)
+  }
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     // when submitted, ie generate invoice, then the tabs content is shown
-
     navigate(`?zapoutStep=confirmation`)
   }
 
   return (
     <form onSubmit={handleSubmit}>
-      <Tabs className="mt-8" defaultValue="lightning">
+      <Tabs
+        className="mt-8"
+        value={selectedMethod}
+        onValueChange={(val) => {
+          setSelectedMethod(val)
+          setPaymentMethod(val)
+        }}
+      >
         <TabsList>
           {paymentMethods.map((method) => (
             <TabsTrigger
@@ -64,6 +141,7 @@ const PaymentMethod: React.FC = () => {
             </TabsTrigger>
           ))}
         </TabsList>
+
         {paymentMethods.map((method) => {
           if (isGenerated) {
             return (
