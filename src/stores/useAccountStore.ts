@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import { getNdk } from '@/services/ndkService'
-import { NDKUser } from '@nostr-dev-kit/ndk'
+import { NDKNip07Signer, NDKUser } from '@nostr-dev-kit/ndk'
 
 interface AccountState {
   user: NDKUser | null
@@ -31,6 +31,7 @@ export const useAccountStore = create<AccountState>()(
             set({ user })
           } else {
             // If can't get user, reset login state
+            ndk.signer = new NDKNip07Signer()
             set({ isLoggedIn: false })
           }
         } catch (error) {

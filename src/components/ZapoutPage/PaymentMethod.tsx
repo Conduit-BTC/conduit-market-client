@@ -13,6 +13,7 @@ import { useCartStore } from '@/stores/useCartStore'
 import type { ShippingFormData } from './ShippingForm'
 
 import { useZapoutStore } from '@/stores/useZapoutStore'
+import { paymentMethods } from '@/lib/constants/paymentMethods'
 
 const PaymentMethod: React.FC = () => {
   const [location, navigate] = useLocation()
@@ -27,31 +28,9 @@ const PaymentMethod: React.FC = () => {
 
   const paymentMethod = useZapoutStore((s) => s.paymentMethod)
   const setPaymentMethod = useZapoutStore((s) => s.setPaymentMethod)
-  const [selectedMethod, setSelectedMethod] = useState(paymentMethod ?? 'lightning')
-
-  const paymentMethods = [
-    {
-      label: 'Lightning',
-      value: 'lightning',
-      icon: 'Zap',
-      component: LightningPaymentMethod
-    },
-    {
-      label: 'USDT',
-      value: 'usdt',
-      icon: 'Type'
-    },
-    {
-      label: 'On-Chain',
-      value: 'onchain',
-      icon: 'Link'
-    },
-    {
-      label: 'Minipay',
-      value: 'minipay',
-      icon: 'PhoneCall'
-    }
-  ]
+  const [selectedMethod, setSelectedMethod] = useState(
+    paymentMethod ?? 'lightning'
+  )
 
   // TODO: guard this page from non-logged in users
 
@@ -119,6 +98,7 @@ const PaymentMethod: React.FC = () => {
         className="mt-8"
         value={selectedMethod}
         onValueChange={(val) => {
+          console.log('Setting payment method: ', val)
           setSelectedMethod(val)
           setPaymentMethod(val)
         }}
@@ -145,7 +125,7 @@ const PaymentMethod: React.FC = () => {
           if (isGenerated) {
             return (
               <TabsContent key={method.value} value={method.value}>
-                {method.component && <method.component />}
+                {method.value === 'lightning' && <LightningPaymentMethod />}
               </TabsContent>
             )
           }

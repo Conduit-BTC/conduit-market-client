@@ -12,7 +12,6 @@ import postOrder from '@/lib/nostr/postOrder'
 import { NDKEvent } from '@nostr-dev-kit/ndk'
 import { useLocation } from 'wouter'
 
-
 const LoadingBar: React.FC<{
   duration?: number
   onComplete?: () => void
@@ -83,7 +82,8 @@ const ZapoutConfirmation: React.FC = () => {
     },
     {
       heading: 'Almost There!',
-      description: 'Just putting the final touches on your order... Magic takes time! ✨'
+      description:
+        'Just putting the final touches on your order... Magic takes time! ✨'
     }
   ]
 
@@ -114,7 +114,13 @@ const ZapoutConfirmation: React.FC = () => {
       merchantPubkey
     })
 
-    if (!cartItems || !shippingInfo || !paymentMethod || !pubkey || !merchantPubkey) {
+    if (
+      !cartItems ||
+      !shippingInfo ||
+      !paymentMethod ||
+      !pubkey ||
+      !merchantPubkey
+    ) {
       console.error('[ZapoutConfirmation] Missing order data.')
       return
     }
@@ -130,10 +136,12 @@ const ZapoutConfirmation: React.FC = () => {
           price: item.price
         })),
         address: addressString,
-        message: `Order from Pubkey: ${pubkey}`,
+        message: `Order from Pubkey: ${pubkey}`
       }
 
-      const order = await createOrder(orderData, merchantPubkey)
+      console.log('Order ...')
+      // const order = await createOrder(orderData, merchantPubkey)
+      const order = null
 
       if (!order || !(order instanceof NDKEvent)) {
         console.error('[ZapoutConfirmation] Failed to create order:', order)
@@ -197,11 +205,21 @@ const ZapoutConfirmation: React.FC = () => {
             </p>
 
             <div className="flex items-center gap-4">
-              <Button variant="primary" size="lg" className="flex-1" onClick={() => navigate('/messages')}>
+              <Button
+                variant="primary"
+                size="lg"
+                className="flex-1"
+                onClick={() => navigate('/messages')}
+              >
                 <Icon.Messages />
                 Go to Messages
               </Button>
-              <Button variant="muted" size="lg" className="flex-1" onClick={() => navigate('/shop')}>
+              <Button
+                variant="muted"
+                size="lg"
+                className="flex-1"
+                onClick={() => navigate('/shop')}
+              >
                 <Icon.ShoppingBag />
                 Shop
               </Button>

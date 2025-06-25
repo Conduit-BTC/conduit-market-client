@@ -5,15 +5,15 @@ import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
 interface ZapoutState {
-  shippingInfo?: ShippingFormData;
-  paymentMethod?: string;
-  cartItems?: StoreCartItem[];
-  notes?: string;
+  shippingInfo?: ShippingFormData
+  paymentMethod?: string
+  cartItems?: StoreCartItem[]
+  notes?: string
 
-  setShippingInfo: (data: ShippingFormData) => void;
-  setPaymentMethod: (method: string) => void;
-  setCartItems: (items: StoreCartItem[]) => void;
-  setNotes: (text: string) => void;
+  setShippingInfo: (data: ShippingFormData) => void
+  setPaymentMethod: (method: string) => void
+  setCartItems: (items: StoreCartItem[]) => void
+  setNotes: (text: string) => void
 }
 
 export const useZapoutStore = create<ZapoutState>()(
@@ -23,33 +23,33 @@ export const useZapoutStore = create<ZapoutState>()(
       setShippingInfo: (data) => {
         set((state) => ({
           ...state,
-          shippingInfo: data,
-        }));
+          shippingInfo: data
+        }))
       },
 
-      paymentMethod: undefined,
+      paymentMethod: 'lightning',
       setPaymentMethod: (method) => {
         set((state) => ({
           ...state,
-          paymentMethod: method,
-        }));
+          paymentMethod: method
+        }))
       },
 
       cartItems: undefined,
       setCartItems: (items) => {
         set((state) => ({
           ...state,
-          cartItems: items,
-        }));
+          cartItems: items
+        }))
       },
 
       notes: undefined,
       setNotes: (notes) => {
         set((state) => ({
           ...state,
-          notes,
-        }));
-      },
+          notes
+        }))
+      }
     }),
     {
       name: 'conduit-customer-zapout-data',
@@ -58,9 +58,8 @@ export const useZapoutStore = create<ZapoutState>()(
         shippingInfo: state.shippingInfo,
         paymentMethod: state.paymentMethod,
         cartItems: state.cartItems,
-        notes: state.notes,
-      }),
+        notes: state.notes
+      })
     }
   )
-);
-
+)

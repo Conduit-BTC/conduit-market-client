@@ -18,6 +18,7 @@ import { MultiUserPill } from '@/components/Pill'
 import { Badge } from '@/components/Badge.tsx'
 import { cn, formatPrice } from '@/lib/utils.ts'
 import AddToCartButton from '../Buttons/index.tsx'
+import Avatar from '../Avatar.tsx'
 
 const PLACEHOLDER_IMAGE = 'https://prd.place/600/400'
 
@@ -72,11 +73,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   // If any required field is missing, don't render the card
   if (!productId || !title || !price) {
-    console.warn('Product missing required fields:', {
-      productId,
-      title,
-      price
-    })
+    // console.warn('Product missing required fields:', {
+    //   productId,
+    //   title,
+    //   price
+    // })
     return null
   }
   // if price is not set, return 'Price not set'
@@ -95,7 +96,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const isOnSale = stock !== null && stock > 5 && visibility === 'on-sale'
   const isLowStock = stock !== null && stock <= 5 && stock > 0
   const discountPercent = 10 // mock value
-  price && console.log('Price: ', price)
   const priceAmount = price?.amount ? parseFloat(price.amount) : 0
   const priceInSats = formatPrice(priceAmount, 'SAT')
   const priceInUSD = formatPrice(priceAmount, 'USD')
@@ -303,11 +303,15 @@ const ProductCard: React.FC<ProductCardProps> = ({
               />
               <p className="voice-base font-bold">4.5</p>
             </div>
-          </CardHeader>
-          <CardContent className="relative pb-0">
             {/* pubkey */}
-            {/* <p className="voice-sm text-muted-foreground">{pubkey}</p> */}
-
+          </CardHeader>
+          <p className="voice-sm text-muted-foreground italic mt-[-0.5rem] mb-[0.5rem] flex gap-1 ml-2">
+            <Avatar />
+            <span className="my-auto">{`${pubkey.slice(0, 6)}...${pubkey.slice(
+              -6
+            )}`}</span>
+          </p>
+          <CardContent className="relative pb-0">
             {/* summary #todo*/}
             {summary && false && (
               <CardDescription className="line-clamp-2">

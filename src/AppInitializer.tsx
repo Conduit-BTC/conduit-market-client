@@ -10,11 +10,13 @@ import useWindowState, {
 } from './stores/useWindowState.ts'
 import LoginWindow from './layouts/windows/LoginWindow.tsx'
 import NDKHeadless from './components/ndk.ts'
+import { useRelayState } from './stores/useRelayState.ts'
 
 const AppInitializer: React.FC<{ children: React.ReactNode }> = ({
   children
 }) => {
   const [isNdkReady, setNdkReady] = useState(false)
+  const { activeRelayPool } = useRelayState()
 
   /**
    * NDK initialization
@@ -22,11 +24,15 @@ const AppInitializer: React.FC<{ children: React.ReactNode }> = ({
   const { initNdk, ndk } = useNdk()
 
   useEffect(() => {
+    // Use activeRelayPool if available, otherwise fall back to DEFAULT_RELAYS
+    const relayUrls =
+      activeRelayPool.length > 0 ? activeRelayPool : DEFAULT_RELAYS
+
     initNdk({
-      explicitRelayUrls: DEFAULT_RELAYS,
+      explicitRelayUrls: relayUrls,
       signer: new NDKNip07Signer()
     })
-  }, [])
+  }, [initNdk, activeRelayPool])
 
   useEffect(() => {
     if (!ndk) return
