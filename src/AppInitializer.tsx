@@ -24,7 +24,6 @@ const AppInitializer: React.FC<{ children: React.ReactNode }> = ({
   const { initNdk, ndk } = useNdk()
 
   useEffect(() => {
-    // Use activeRelayPool if available, otherwise fall back to DEFAULT_RELAYS
     const relayUrls =
       activeRelayPool.length > 0 ? activeRelayPool : DEFAULT_RELAYS
 

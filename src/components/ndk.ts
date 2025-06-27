@@ -41,10 +41,11 @@ export default function NDKHeadless() {
 
       const currentRelays = Array.from(ndk.pool.relays.values())
       for (const relay of currentRelays) {
-        await relay.disconnect()
+        if (activeRelayPool.includes(relay.url)) return
+        relay.disconnect()
       }
 
-      ndk.pool.relays.clear()
+      // ndk.pool.relays.clear()
 
       if (activeRelayPool.length > 0) {
         activeRelayPool.forEach((relayUrl) => {

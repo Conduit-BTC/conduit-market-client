@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useRef } from 'react'
 import Button from '../Buttons/Button'
 import Icon from '../Icon'
 import Logo from '../Logo'
@@ -61,6 +61,8 @@ const ZapoutConfirmation: React.FC = () => {
   const [currentStepIndex, setCurrentStepIndex] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
   const [isComplete, setIsComplete] = useState(false)
+  const [isOrderInProgress, setIsOrderInProgress] = useState(false)
+  const hasOrderBeenSent = useRef(false)
   const [_, navigate] = useLocation()
 
   const { shippingInfo, paymentMethod, cartItems, notes } = useZapoutStore()
@@ -106,6 +108,14 @@ const ZapoutConfirmation: React.FC = () => {
   )
 
   const sendOrder = useCallback(async () => {
+    // Prevent multiple concurrent order creations
+    if (isOrderInProgress || hasOrderBeenSent.current) {
+      console.log(
+        '[ZapoutConfirmation] Order already in progress or sent, skipping...'
+      )
+      return
+    }
+
     console.log('DEBUG ZapoutConfirmation Values:', {
       cartItems,
       shippingInfo,
@@ -125,6 +135,10 @@ const ZapoutConfirmation: React.FC = () => {
       return
     }
 
+    // Set the flag to prevent multiple orders
+    setIsOrderInProgress(true)
+    hasOrderBeenSent.current = true
+
     try {
       const addressString = JSON.stringify(shippingInfo)
 
@@ -139,27 +153,30 @@ const ZapoutConfirmation: React.FC = () => {
         message: `Order from Pubkey: ${pubkey}`
       }
 
-      console.log('Order ...')
-      // const order = await createOrder(orderData, merchantPubkey)
-      const order = null
+      console.log('Creating order...')
+      const order = await createOrder(orderData, merchantPubkey)
 
-      if (!order || !(order instanceof NDKEvent)) {
+      if (!order || 'success' in order) {
         console.error('[ZapoutConfirmation] Failed to create order:', order)
         return
       }
 
+      console.log('Posting order...')
       await postOrder(order, merchantPubkey)
       console.log('Order successfully posted.')
     } catch (error) {
       console.error('[ZapoutConfirmation] Order error:', error)
+    } finally {
+      // Always reset the flag when the operation completes (success or failure)
+      setIsOrderInProgress(false)
     }
   }, [cartItems, shippingInfo, paymentMethod, pubkey, merchantPubkey])
 
   useEffect(() => {
-    if (isLoading) {
+    if (isLoading && !hasOrderBeenSent.current) {
       sendOrder()
     }
-  }, [isLoading, sendOrder])
+  }, [isLoading]) // Only depend on isLoading
 
   const currentStep = loadingSteps[currentStepIndex]
 
@@ -200,7 +217,7 @@ const ZapoutConfirmation: React.FC = () => {
         {isComplete && (
           <>
             <p className="voice-2l transition-all duration-300 text-center text-balance max-w-md">
-              This merchant doesn’t have a coordinator to automatically accept
+              This merchant doesn't have a coordinator to automatically accept
               transactions.
             </p>
 
