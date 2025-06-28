@@ -49,7 +49,7 @@ const formConfig = {
       layout: 'single',
       fields: [
         {
-          name: 'addressLine1',
+          name: 'street1',
           type: 'text',
           placeholder: 'Street Address',
           required: true,
@@ -62,7 +62,7 @@ const formConfig = {
       layout: 'single',
       fields: [
         {
-          name: 'addressLine2',
+          name: 'street2',
           type: 'text',
           placeholder: 'Apt, Suite, etc. (optional)',
           required: false,
@@ -75,7 +75,7 @@ const formConfig = {
       layout: 'row',
       fields: [
         {
-          name: 'postalCode',
+          name: 'zip',
           type: 'text',
           placeholder: 'Postal Code',
           required: true,
@@ -181,9 +181,9 @@ const ShippingForm: React.FC = () => {
       firstName: '',
       lastName: '',
       phone: '',
-      addressLine1: '',
-      addressLine2: '',
-      postalCode: '',
+      street1: '',
+      street2: '',
+      zip: '',
       city: '',
       region: '',
       country: ''

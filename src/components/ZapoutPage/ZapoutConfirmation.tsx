@@ -154,6 +154,7 @@ const ZapoutConfirmation: React.FC = () => {
       }
 
       console.log('Creating order...')
+      console.log(orderData)
       const order = await createOrder(orderData, merchantPubkey)
 
       if (!order || 'success' in order) {
