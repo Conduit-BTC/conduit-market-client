@@ -13,9 +13,11 @@ import {
 } from '@/components/Cards/CardComponents'
 import ZapoutButton from '@/components/Buttons/ZapoutButton'
 import RelatedProducts from '@/components/RelatedProducts'
+import { useSats } from '@/hooks/useSats'
 
 const CartDetailPage: React.FC = () => {
   const { merchantId } = useParams()
+  const { convertToSats } = useSats()
 
   const {
     getCart,
@@ -81,7 +83,7 @@ const CartDetailPage: React.FC = () => {
             </CardHeader>
             <CardContent className="flex gap-2 items-center">
               <p className="voice-2l text-primary-400">
-                {formatPrice(cartTotal, 'SAT')}
+                {formatPrice(cartTotal, 'USD', convertToSats)}
               </p>
               <p className="voice-base text-muted-foreground">
                 {formatPrice(cartTotal, 'USD')}

@@ -18,6 +18,8 @@ import { MultiUserPill } from '@/components/Pill'
 import { Badge } from '@/components/Badge.tsx'
 import { cn, formatPrice } from '@/lib/utils.ts'
 import AddToCartButton from '../Buttons/index.tsx'
+import Avatar from '../Avatar.tsx'
+import { useSats } from '@/hooks/useSats'
 
 const PLACEHOLDER_IMAGE = 'https://prd.place/600/400'
 
@@ -32,14 +34,17 @@ const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   // #todo: remove this once we have a real event
 
+  // Get the sats conversion function
+  const { convertToSats, convertToUsd } = useSats()
+
   // Memoize the validation check so it only runs when the event changes
   const validationMemo = useMemo(() => {
     const validationResult = validateProductListing(event)
 
-    if (!validationResult.success) {
-      console.warn('Invalid product event:', validationResult.error)
-      return { valid: false, productEvent: null }
-    }
+    // if (!validationResult.success) {
+    //   console.warn('Invalid product event:', validationResult.error)
+    //   return { valid: false, productEvent: null }
+    // }
 
     // Now we can safely treat it as a ProductListing
     return {
@@ -72,11 +77,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   // If any required field is missing, don't render the card
   if (!productId || !title || !price) {
-    console.warn('Product missing required fields:', {
-      productId,
-      title,
-      price
-    })
+    // console.warn('Product missing required fields:', {
+    //   productId,
+    //   title,
+    //   price
+    // })
     return null
   }
 
@@ -91,17 +96,29 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const isOnSale = stock !== null && stock > 5 && visibility === 'on-sale'
   const isLowStock = stock !== null && stock <= 5 && stock > 0
   const discountPercent = 10 // mock value
-  const priceAmount = parseFloat(price.amount)
-  const priceInSats = formatPrice(priceAmount, 'SAT')
-  const priceInUSD = formatPrice(priceAmount, 'USD')
+  const priceAmount = price?.amount ? parseFloat(price.amount) : 0
+
+  // Use actual conversion for USD prices
+  const priceInSats = formatPrice(priceAmount, price.currency, convertToSats)
+  const priceInUSD =
+    price.currency === 'SAT' || price.currency === 'SATS'
+      ? formatPrice(convertToUsd(price.currency, priceAmount), 'USD')
+      : formatPrice(priceAmount, 'USD')
   const discountedPriceInSats = formatPrice(
     priceAmount * (1 - discountPercent / 100),
-    'SAT'
+    price.currency,
+    convertToSats
   )
-  const discountedPriceInUSD = formatPrice(
-    priceAmount * (1 - discountPercent / 100),
-    'USD'
-  )
+  const discountedPriceInUSD =
+    price.currency === 'SAT' || price.currency === 'SATS'
+      ? formatPrice(
+          convertToUsd(
+            price.currency,
+            priceAmount * (1 - discountPercent / 100)
+          ),
+          'USD'
+        )
+      : formatPrice(priceAmount * (1 - discountPercent / 100), 'USD')
 
   let badge = null
   if (isOutOfStock) {
@@ -298,12 +315,15 @@ const ProductCard: React.FC<ProductCardProps> = ({
               />
               <p className="voice-base font-bold">4.5</p>
             </div>
-          </CardHeader>
-          <CardContent className="relative pb-0">
             {/* pubkey */}
-            {/* <p className="voice-sm text-muted-foreground">{pubkey}</p> */}
-
-            {/* summary #todo*/}
+          </CardHeader>
+          <p className="voice-sm text-muted-foreground italic mt-[-0.5rem] mb-[0.5rem] flex gap-1 ml-2">
+            <Avatar />
+            <span className="my-auto">{`${pubkey.slice(0, 6)}...${pubkey.slice(
+              -6
+            )}`}</span>
+          </p>
+          <CardContent className="relative pb-0">
             {summary && false && (
               <CardDescription className="line-clamp-2">
                 {summary}

@@ -422,7 +422,7 @@ export const useOrderStore = create<OrderState>()(
       }
     }),
     {
-      name: 'nostr-merchant-OrderEvents',
+      name: 'conduit-customer-orders',
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({
         // Persist all message arrays and selected order ID

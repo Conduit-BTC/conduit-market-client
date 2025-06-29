@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useAccountStore } from '@/stores/useAccountStore'
+import { useOrderStore, OrderEventType } from '@/stores/useOrderStore'
 import Button from './Buttons/Button'
 import useWindowState, { WindowTypes } from '@/stores/useWindowState'
 import Icon from './Icon'
@@ -14,6 +15,16 @@ const Header: React.FC = () => {
   const [displayName, setDisplayName] = useState<string>('')
   const { user, isLoggedIn, logout } = useAccountStore()
   const { pushWindow } = useWindowState()
+  const { getUnreadCount } = useOrderStore()
+
+  // Calculate total unread orders
+  const totalUnreadOrders = isLoggedIn
+    ? getUnreadCount(OrderEventType.ORDER) +
+      getUnreadCount(OrderEventType.PAYMENT_REQUEST) +
+      getUnreadCount(OrderEventType.STATUS_UPDATE) +
+      getUnreadCount(OrderEventType.SHIPPING_UPDATE) +
+      getUnreadCount(OrderEventType.PAYMENT_RECEIPT)
+    : 0
 
   const openLoginWindow = (): void => {
     pushWindow(WindowTypes.LOGIN, {
@@ -90,12 +101,17 @@ const Header: React.FC = () => {
 
             {/* how it works button if logged in else orders page */}
             {isLoggedIn ? (
-              <Button variant="ghost" isLink to="/orders">
-                <Icon.Wand />
+              <Button variant="ghost" isLink to="/orders" className="relative">
+                <Icon.ShoppingBag />
                 <span className="">Orders</span>
+                {totalUnreadOrders > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs px-1.5 py-0.5 rounded-full min-w-[18px] text-center">
+                    {totalUnreadOrders > 99 ? '99+' : totalUnreadOrders}
+                  </span>
+                )}
               </Button>
             ) : (
-              <Button variant="ghost" isLink to="/orders">
+              <Button variant="ghost" isLink to="/how-it-works">
                 <Icon.Wand />
                 <span className="">How it works</span>
               </Button>

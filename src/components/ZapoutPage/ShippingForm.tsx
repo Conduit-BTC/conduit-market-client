@@ -6,6 +6,7 @@ import { z } from 'zod'
 import Button from '../Buttons/Button'
 import Field from '../Form/Field'
 import { useLocation } from 'wouter'
+import { useZapoutStore } from '@/stores/useZapoutStore'
 
 // Form configuration object
 const formConfig = {
@@ -48,7 +49,7 @@ const formConfig = {
       layout: 'single',
       fields: [
         {
-          name: 'addressLine1',
+          name: 'street1',
           type: 'text',
           placeholder: 'Street Address',
           required: true,
@@ -61,7 +62,7 @@ const formConfig = {
       layout: 'single',
       fields: [
         {
-          name: 'addressLine2',
+          name: 'street2',
           type: 'text',
           placeholder: 'Apt, Suite, etc. (optional)',
           required: false,
@@ -74,7 +75,7 @@ const formConfig = {
       layout: 'row',
       fields: [
         {
-          name: 'postalCode',
+          name: 'zip',
           type: 'text',
           placeholder: 'Postal Code',
           required: true,
@@ -167,6 +168,7 @@ const DynamicField: React.FC<{
 
 const ShippingForm: React.FC = () => {
   const [location, navigate] = useLocation()
+  const { setShippingInfo } = useZapoutStore()
 
   const {
     control,
@@ -179,9 +181,9 @@ const ShippingForm: React.FC = () => {
       firstName: '',
       lastName: '',
       phone: '',
-      addressLine1: '',
-      addressLine2: '',
-      postalCode: '',
+      street1: '',
+      street2: '',
+      zip: '',
       city: '',
       region: '',
       country: ''
@@ -190,8 +192,8 @@ const ShippingForm: React.FC = () => {
 
   const onSubmit = async (data: ShippingFormData) => {
     try {
-      console.log('Form data:', data)
-      // If validation passes, proceed to payment
+      // TODO: Data sanitization and validation
+      setShippingInfo(data)
       navigate(`?zapoutStep=payment`)
     } catch (error) {
       console.error('Form submission error:', error)

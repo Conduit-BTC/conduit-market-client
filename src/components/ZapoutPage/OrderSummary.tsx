@@ -9,6 +9,7 @@ import {
 import { OrderSummaryItemCard } from '../Cards/CartItemCard'
 import { type CartItem, useCartStore } from '@/stores/useCartStore'
 import { useSearch } from 'wouter'
+import { useSats } from '@/hooks/useSats'
 
 interface OrderSummaryProps {
   merchantPubkey: string
@@ -16,6 +17,7 @@ interface OrderSummaryProps {
 
 const OrderSummary: React.FC<OrderSummaryProps> = ({ merchantPubkey }) => {
   const { getCart, getCartTotal } = useCartStore()
+  const { convertToSats } = useSats()
 
   const cart = getCart(merchantPubkey)
 
@@ -47,7 +49,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ merchantPubkey }) => {
             Subtotal <span>({products?.length} items)</span>
           </p>
           <p className="font-bold">
-            {formatPrice(getCartTotal(merchantPubkey), 'SAT')}
+            {formatPrice(getCartTotal(merchantPubkey), 'USD', convertToSats)}
           </p>
         </div>
 
@@ -59,7 +61,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ merchantPubkey }) => {
         <div className="flex items-center justify-between">
           <p>Total</p>
           <p className="font-bold">
-            {formatPrice(getCartTotal(merchantPubkey), 'SAT')}
+            {formatPrice(getCartTotal(merchantPubkey), 'USD', convertToSats)}
           </p>
         </div>
       </div>
