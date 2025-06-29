@@ -20,6 +20,7 @@
     "nostr-commerce-schema": "file:external/nostr-commerce-schema",
     "nostr-hooks": "^4.3.3",
     "nostr-tools": "^2.15.0",
+    "qrcode.react": "^4.2.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-hook-form": "^7.58.1",

@@ -130,6 +130,11 @@ const routes: RouteConfig[] = [
     pageComponent: ProfilePage
   },
   {
+    label: 'Orders',
+    path: '/orders',
+    pageComponent: OrdersPage
+  },
+  {
     label: 'My Orders',
     path: '/profile/orders',
     pageComponent: OrdersPage
