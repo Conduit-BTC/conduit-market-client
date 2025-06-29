@@ -12,6 +12,7 @@ import { useState } from 'react'
 import { Pill } from '../Pill.tsx'
 import { cn, formatPrice } from '@/lib/utils.ts'
 import Icon from '../Icon.tsx'
+import { useSats } from '@/hooks/useSats'
 
 const PLACEHOLDER_IMAGE = '/images/placeholders/cart-item.svg'
 
@@ -57,6 +58,8 @@ export const CartHUDItem: React.FC<CartItemProps> = ({ product }) => {
 export const CartItemCard: React.FC<CartItemProps> = ({ product }) => {
   const [imageError, setImageError] = useState(false)
   const { toggleItemSelectionForZapout } = useCartStore()
+  const { convertToSats } = useSats()
+
   return (
     <Card className="border-none flex flex-wrap items-center gap-4">
       <CardHeader className="flex items-center gap-4  min-w-[120px] max-w-[250px] flex-1">
@@ -100,7 +103,9 @@ export const CartItemCard: React.FC<CartItemProps> = ({ product }) => {
       <CardFooter className="col-span-2 grid justify-items-end">
         <div className="flex items-center gap-2">
           {/* Price in Satoshis */}
-          <p className="voice-2l ">{formatPrice(product?.price ?? 0, 'SAT')}</p>
+          <p className="voice-2l ">
+            {formatPrice(product?.price ?? 0, 'USD', convertToSats)}
+          </p>
 
           {/* price in USD */}
           <p className="voice-base ">
@@ -112,7 +117,7 @@ export const CartItemCard: React.FC<CartItemProps> = ({ product }) => {
         <div className="flex items-center gap-2">
           {/* old price */}
           <p className="line-through voice-sm text-muted-foreground">
-            {formatPrice(product?.price ?? 0, 'SAT')}
+            {formatPrice(product?.price ?? 0, 'USD', convertToSats)}
           </p>
           {/* percentage off */}
           <p className="voice-sm text-muted-foreground">-20%</p>
@@ -125,6 +130,8 @@ export const CartItemCard: React.FC<CartItemProps> = ({ product }) => {
 export const OrderSummaryItemCard: React.FC<CartItemProps> = ({ product }) => {
   const [imageError, setImageError] = useState(false)
   const { toggleItemSelectionForZapout } = useCartStore()
+  const { convertToSats } = useSats()
+
   return (
     <Card className="border-none flex flex-wrap items-center gap-4">
       <CardHeader className="flex items-center gap-4  min-w-[120px] max-w-[250px] flex-1">
@@ -149,7 +156,7 @@ export const OrderSummaryItemCard: React.FC<CartItemProps> = ({ product }) => {
         <div className="grid gap-2 justify-items-end">
           {/* Price in Satoshis */}
           <p className="voice-lg font-bold ">
-            {formatPrice(product?.price ?? 0, 'SAT')}
+            {formatPrice(product?.price ?? 0, 'USD', convertToSats)}
           </p>
 
           {/* price in USD */}

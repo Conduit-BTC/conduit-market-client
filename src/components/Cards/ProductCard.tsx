@@ -19,6 +19,7 @@ import { Badge } from '@/components/Badge.tsx'
 import { cn, formatPrice } from '@/lib/utils.ts'
 import AddToCartButton from '../Buttons/index.tsx'
 import Avatar from '../Avatar.tsx'
+import { useSats } from '@/hooks/useSats'
 
 const PLACEHOLDER_IMAGE = 'https://prd.place/600/400'
 
@@ -32,6 +33,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
   variant = 'card'
 }) => {
   // #todo: remove this once we have a real event
+
+  // Get the sats conversion function
+  const { convertToSats, convertToUsd } = useSats()
 
   // Memoize the validation check so it only runs when the event changes
   const validationMemo = useMemo(() => {
@@ -97,16 +101,28 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const isLowStock = stock !== null && stock <= 5 && stock > 0
   const discountPercent = 10 // mock value
   const priceAmount = price?.amount ? parseFloat(price.amount) : 0
-  const priceInSats = formatPrice(priceAmount, 'SAT')
-  const priceInUSD = formatPrice(priceAmount, 'USD')
+
+  // Use actual conversion for USD prices
+  const priceInSats = formatPrice(priceAmount, price.currency, convertToSats)
+  const priceInUSD =
+    price.currency === 'SAT' || price.currency === 'SATS'
+      ? formatPrice(convertToUsd(price.currency, priceAmount), 'USD')
+      : formatPrice(priceAmount, 'USD')
   const discountedPriceInSats = formatPrice(
     priceAmount * (1 - discountPercent / 100),
-    'SAT'
+    price.currency,
+    convertToSats
   )
-  const discountedPriceInUSD = formatPrice(
-    priceAmount * (1 - discountPercent / 100),
-    'USD'
-  )
+  const discountedPriceInUSD =
+    price.currency === 'SAT' || price.currency === 'SATS'
+      ? formatPrice(
+          convertToUsd(
+            price.currency,
+            priceAmount * (1 - discountPercent / 100)
+          ),
+          'USD'
+        )
+      : formatPrice(priceAmount * (1 - discountPercent / 100), 'USD')
 
   let badge = null
   if (isOutOfStock) {
@@ -312,7 +328,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
             )}`}</span>
           </p>
           <CardContent className="relative pb-0">
-            {/* summary #todo*/}
             {summary && false && (
               <CardDescription className="line-clamp-2">
                 {summary}

@@ -6,11 +6,9 @@ import {
 } from '@/stores/useOrderStore'
 import { useOrderSubscription } from '@/hooks/useOrderSubscription'
 import { OrderUtils } from 'nostr-commerce-schema'
-import BackButton from '@/components/Buttons/BackButton'
 import PageSection from '@/layouts/PageSection'
 import Icon from '@/components/Icon'
 import Button from '@/components/Buttons/Button'
-import { formatPrice } from '@/lib/utils'
 import OrderDetails from '@/components/OrderDetails'
 import type { NostrEvent } from '@nostr-dev-kit/ndk'
 import OrderPayQR from '@/components/OrderPayQR'
@@ -40,8 +38,6 @@ const OrdersPage: React.FC = () => {
     getShippingUpdates,
     getReceipts,
     getUnreadCount,
-    markAsRead,
-    setSelectedOrderEvent,
     getOrderById
   } = useOrderStore()
 
@@ -432,7 +428,8 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, onClick, onPayNow }) => {
 
   const typeInfo = getOrderTypeInfo()
   const amount = OrderUtils.getOrderAmount(event as any)
-  const summary = OrderUtils.getOrderSummary(event)
+  console.log('Event: ')
+  console.log(JSON.stringify(event))
   const formattedTime = OrderUtils.formatOrderTime(timestamp)
 
   // Add merchant info and expiration for payment requests
@@ -485,11 +482,7 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, onClick, onPayNow }) => {
 
   return (
     <div
-      className={`border rounded-lg p-6 cursor-pointer transition-all hover:shadow-md ${
-        unread
-          ? `${typeInfo.bgColor} ${typeInfo.borderColor}`
-          : 'bg-paper border-muted'
-      }`}
+      className={`border rounded-lg p-6 cursor-pointer transition-all hover:shadow-md bg-paper border-muted`}
       onClick={handleCardClick}
     >
       <div className="flex items-start justify-between">
@@ -509,11 +502,13 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, onClick, onPayNow }) => {
                 </span>
               )}
             </div>
-            <p className="voice-base text-ink mb-2">{summary}</p>
+            <div className="flex items-center gap-4 text-sm text-muted-foreground my-1">
+              <span>{formattedTime}</span>
+            </div>
             {amount && (
-              <p className="voice-base font-semibold text-ink mb-1">
+              <h4 className="voice-base font-semibold text-orange-600 mb-1">
                 {OrderUtils.formatSats(amount)}
-              </p>
+              </h4>
             )}
             {/* Order ID on its own line, purple label */}
             <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
@@ -528,9 +523,6 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, onClick, onPayNow }) => {
                 Expires: {expirationCountdown}
               </div>
             )}
-            <div className="flex items-center gap-4 text-sm text-muted-foreground mt-1">
-              <span>{formattedTime}</span>
-            </div>
             {/* Show tracking info for shipping updates */}
             {type === OrderEventType.SHIPPING_UPDATE && (
               <div className="mt-3">

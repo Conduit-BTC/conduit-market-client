@@ -94,6 +94,8 @@ function CarouselSection({
           <div className="animate-pulse">No events received from relays</div>
         ) : (
           localEvents.map((e, index) => {
+            console.log('Event: ')
+            console.log(e.tags)
             switch (type) {
               case CardType.ArticleCard:
                 return <ArticleCard key={index} event={e} />
