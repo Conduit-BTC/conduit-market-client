@@ -112,9 +112,9 @@ layer(base);
   }
 
   .tabs-list {
-      @apply flex items-center p-1 relative;
+    @apply flex items-center p-1 relative;
 
-      /* &::before {
+    /* &::before {
         content: '';
         position: absolute;
         height: 2px;
@@ -124,7 +124,7 @@ layer(base);
         background: var(--color-primary);
         transition: left var(--transition-normal), width var(--transition-normal);
       }*/
-    }
+  }
 }
 
 @layer utilities {
@@ -132,7 +132,7 @@ layer(base);
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
-  
+
   .hide-scrollbar::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera */
   }
@@ -150,5 +150,16 @@ layer(base);
 }
 
 @layer components {
-  
+}
+
+@keyframes loading {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }
