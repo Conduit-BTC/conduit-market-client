@@ -5,7 +5,7 @@ import CategoryHeader from '@/components/CategoryHeader'
 import NewsletterSignup from '@/components/NewsletterSignup'
 import { IconPill } from '@/components/Pill'
 import PageSection from '@/layouts/PageSection'
-import ProductGrid from '@/layouts/ProductGrid.tsx'
+
 
 const content = {
   title: 'Product Explorer',
@@ -35,7 +35,7 @@ export const ProductExplorerPage: React.FC = () => {
         />
       </PageSection>
 
-      <ProductGrid />
+   
 
       <Banner />
 
@@ -43,7 +43,7 @@ export const ProductExplorerPage: React.FC = () => {
         <h2 className="voice-2l">Popular Searches in {shopName}</h2>
         <div className="flex flex-wrap gap-2">
           {Array.from({ length: 20 }, (_, index) => (
-            <IconPill leftIcon="search" text={`Product ${index + 1}`} />
+            <IconPill key={index} leftIcon="Search" text={`Product ${index + 1}`} />
           ))}
         </div>
       </PageSection>

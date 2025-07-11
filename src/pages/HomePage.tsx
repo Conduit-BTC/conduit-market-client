@@ -10,13 +10,25 @@ import type { NDKFilter } from '@nostr-dev-kit/ndk'
 import { useEffect, useState } from 'react'
 import { useSubscribe } from '@nostr-dev-kit/ndk-hooks'
 import { useRelayState } from '@/stores/useRelayState'
+import ItemGrid from '@/layouts/ItemGrid'
+import { isValidProductEvent } from '@/lib/utils/productValidation'
 
 const HomePage: React.FC = () => {
   return (
     <>
       {/* <Hero /> */}
+      <ItemGrid
+        type="ProductCard"
+        name="All Products"
+        filters={[
+          {
+            kinds: [30402], // Product kind
+            limit: 60
+          }
+        ]}
+      />
 
-      <CarouselSection
+      {/* <CarouselSection
         name="All Products"
         type={CardType.ProductCard}
         variant="card"
@@ -26,7 +38,7 @@ const HomePage: React.FC = () => {
             limit: 60
           }
         ]}
-      />
+      /> */}
 
       <Banner />
     </>
@@ -57,8 +69,8 @@ function CarouselSection({
   type,
   filters,
   variant,
-  visibleItems = undefined,
-  visibleItemsMobile = undefined
+  visibleItems = 4,
+  visibleItemsMobile = 1
 }: CarouselSectionProps) {
   const { relayPoolVersion } = useRelayState()
   const { events } = useSubscribe(filters)
@@ -74,6 +86,12 @@ function CarouselSection({
     setLocalEvents(events)
   }, [events])
 
+  // Filter events based on card type - only filter ProductCards
+  const validEvents =
+    type === 'ProductCard'
+      ? localEvents.filter(isValidProductEvent)
+      : localEvents
+
   return (
     <PageSection>
       <div className="mb-4">
@@ -83,10 +101,10 @@ function CarouselSection({
         visibleItems={visibleItems}
         visibleItemsMobile={visibleItemsMobile}
       >
-        {!localEvents || localEvents.length === 0 ? (
+        {!validEvents || validEvents.length === 0 ? (
           <div className="animate-pulse">No events received from relays</div>
         ) : (
-          localEvents.map((e, index) => {
+          validEvents.map((e, index) => {
             switch (type) {
               case CardType.ArticleCard:
                 return <ArticleCard key={index} event={e} />

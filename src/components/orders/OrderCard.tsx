@@ -96,7 +96,7 @@ const OrderCard: React.FC<{
     const npub = merchant.npub
     const avatar = (
       <Avatar
-        picture={merchant.picture}
+        imageUrl={merchant.picture}
         alt={username || npub}
         size="sm"
         npub={npub}

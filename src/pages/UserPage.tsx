@@ -137,7 +137,7 @@ const UserPage: React.FC = () => {
               {/* Avatar and Basic Info */}
               <div className="text-center">
                 <Avatar
-                  picture={profile?.picture}
+                  imageUrl={profile?.picture}
                   alt={profile?.displayName || profile?.name || 'User'}
                   size="xl"
                   npub={user.npub}

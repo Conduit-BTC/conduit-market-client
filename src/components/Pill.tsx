@@ -35,7 +35,7 @@ const CategoryPill: React.FC<CategoryPillProps> = ({
 }) => {
   return (
     <Pill className={cn('px-1 py-1 pr-4', className)}>
-      <Avatar imageUrl={imageUrl} alt={label} size="lg" fallback={label} />
+      <Avatar imageUrl={imageUrl} alt={label} size="lg" />
       <span className="font-semibold">{label}</span>
     </Pill>
   )
@@ -59,7 +59,6 @@ const StorePill: React.FC<StorePillProps> = ({
         imageUrl={imageUrl}
         alt={storeName}
         size="lg"
-        fallback={storeName}
       />
       <div className="flex flex-col leading-none">
         <span className="text-xs text-muted-foreground">Shop at</span>
@@ -92,7 +91,7 @@ const UserPill: React.FC<UserPillProps> = ({
 
   return (
     <Pill className={cn('px-1 py-1 pr-4', className)}>
-      <Avatar imageUrl={imageUrl} alt={name} size={size} fallback={name} />
+      <Avatar imageUrl={imageUrl} alt={name} size={size} />
       <span className={userNameClasses}>{name}</span>
     </Pill>
   )
@@ -138,7 +137,6 @@ const MultiUserPill: React.FC<MultiUserPillProps> = ({
               imageUrl={imageUrl}
               alt={`User ${idx + 1}`}
               size={size}
-              fallback={`User ${idx + 1}`}
             />
           </li>
         ))}

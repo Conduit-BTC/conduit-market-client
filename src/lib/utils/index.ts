@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from 'clsx'
 import { extendTailwindMerge } from 'tailwind-merge'
-
+import React from 'react'
+import Icon from '@/components/Icon'
 type VoiceClassGroupIds = 'voice'
 
 const twMerge = extendTailwindMerge<VoiceClassGroupIds>({
@@ -24,15 +25,37 @@ export function formatPrice(
   price: number,
   currency: string = 'SAT',
   convertToSats?: (currency: string, value: number) => number
-) {
+): React.ReactNode | string {
   if (currency === 'SAT' || currency === 'SATS') {
-    return `S ${new Intl.NumberFormat('en-US').format(price)}`
+    return React.createElement(
+      'span',
+      { className: 'flex items-center gap-1' },
+      [
+        React.createElement(Icon.Satoshi, { key: 'icon', className: 'w-4' }),
+        React.createElement(
+          'span',
+          { key: 'amount' },
+          new Intl.NumberFormat('en-US').format(price)
+        )
+      ]
+    )
   }
 
   // If we have a convertToSats function and the currency is USD, convert to sats
   if (convertToSats && currency.toUpperCase() === 'USD') {
     const sats = convertToSats(currency, price)
-    return `S ${new Intl.NumberFormat('en-US').format(sats)}`
+    return React.createElement(
+      'span',
+      { className: 'flex items-center gap-1' },
+      [
+        React.createElement(Icon.Satoshi, { key: 'icon', className: ' w-4  ' }),
+        React.createElement(
+          'span',
+          { key: 'amount' },
+          new Intl.NumberFormat('en-US').format(sats)
+        )
+      ]
+    )
   }
 
   return new Intl.NumberFormat('en-US', {
@@ -45,7 +68,7 @@ export function formatNumber(number: number) {
   return new Intl.NumberFormat('en-US').format(number)
 }
 
-const formatPubkey = (pubkey: string) => {
+export const formatPubkey = (pubkey: string) => {
   if (!pubkey) return ''
-  return `${pubkey.substring(0, 8)}...${pubkey.substring(pubkey.length - 4)}`
+  return `${pubkey.substring(0, 6)}...${pubkey.substring(pubkey.length - 4)}`
 }
