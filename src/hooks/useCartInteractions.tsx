@@ -16,7 +16,7 @@ import { useInterfaceStore } from '@/stores/useInterfaceStore'
  */
 
 const INACTIVITY_DELAY = 4000
-const USE_SHOW_ON_INACTIVITY_DELAY = true
+const USE_SHOW_ON_INACTIVITY_DELAY = false // Disable auto-show to prevent unexpected behavior
 const USE_HIDE_ON_SCROLL = true
 const USE_TOUCH_DRAG = true
 
@@ -128,7 +128,7 @@ export const useCartInteractions = ({
   dragOpenThreshold = 80,
   swipeThreshold = 60,
   displayDragFactor = 0.35,
-  inactivityDelay = 2000
+  inactivityDelay = INACTIVITY_DELAY
 }: UseCartInteractionsOptions = {}) => {
   const elementRef = useRef<HTMLDivElement>(null)
 

@@ -301,13 +301,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 />
                 <p className="voice-base font-bold">4.5</p>
               </div>
-				  </div>
+            </div>
 
-              {/* pubkey #todo dont use scale*/}
-              <Pill className=" justify-self-start border-muted scale-75 origin-left">
-                <Avatar />
-                <span className="my-auto">{formatPubkey(pubkey)}</span>
-              </Pill>
+            {/* pubkey #todo dont use scale*/}
+            <Pill className=" justify-self-start border-muted scale-75 origin-left">
+              <Avatar />
+              <span className="my-auto">{formatPubkey(pubkey)}</span>
+            </Pill>
           </CardHeader>
 
           <CardContent className="relative pb-0">

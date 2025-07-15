@@ -96,7 +96,7 @@ const CartDrawer: React.FC = () => {
   // ===========================================================================
   const TabsTriggerClasses = (merchantPubkey: string) =>
     cn(
-      'pb-4 pt-2 bg-accent rounded-t-[999px] from-primary-800 to-accent bg-gradient-to-t flex items-center gap-2 transition-all duration-300',
+      'pb-4 pt-2 bg-primary rounded-t-[999px] flex items-center gap-2 transition-all duration-300',
       {
         'rounded-t-lg': selectedHUDCart?.merchantPubkey === merchantPubkey
       }
@@ -107,7 +107,9 @@ const CartDrawer: React.FC = () => {
   )
 
   const cartDrawerClassName = cn(
-    'bg-primary grid md:grid-cols-3 justify-between gap-4 from-primary-800 to-primary/80 bg-gradient-to-b rounded-lg px-3 py-2 relative cursor-pointer ',
+    'bg-primary grid md:grid-cols-3 justify-between gap-4 from-primary-800 to-primary/80 bg-gradient-to-b rounded-lg px-3 py-2 relative cursor-pointer',
+    // Force background if needed
+    'bg-primary-600 !bg-opacity-100',
     //  after
     'after:absolute after:inset-[-1px] after:bg-gradient-to-b after:from-ink after:to-transparent after:rounded-lg after:z-[-2]'
   )
@@ -124,7 +126,7 @@ const CartDrawer: React.FC = () => {
       <div className={cartDrawerClassName} onClick={handleCartClick}>
         {/* Close Button */}
         {isCartHUDOpen && (
-          <div className="absolute top-[-30px] right-10 z-1 pb-2 bg-accent rounded-t-full from-primary-800 to-accent bg-gradient-to-t">
+          <div className="absolute top-[-30px] right-10 z-1 pb-2 bg-primary rounded-t-full">
             <Button variant="ghost" size="icon" onClick={handleCloseClick}>
               <Icon.XIcon />
             </Button>
@@ -150,7 +152,9 @@ const CartDrawer: React.FC = () => {
                     <div className="flex items-center gap-2" ref={animate}>
                       <Avatar imageUrl={PLACEHOLDER_IMAGE} size="md" />
                       {selectedHUDCart?.merchantPubkey ===
-                        cart.merchantPubkey && <span>Merchant Name</span>}
+                        cart.merchantPubkey && (
+                        <span>{`...${cart.merchantPubkey.slice(-8)}`}</span>
+                      )}
                     </div>
                   </TabsTrigger>
                 ))}
