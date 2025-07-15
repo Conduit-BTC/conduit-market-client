@@ -67,7 +67,7 @@ const OrderPayQRContent = memo<{
         {/* Merchant Info */}
         <div className="flex flex-col items-center gap-2 mb-2">
           <Avatar
-            picture={merchant.picture}
+            imageUrl={merchant.picture}
             alt={merchant.name || merchant.npub}
             size="lg"
             npub={merchant.npub}

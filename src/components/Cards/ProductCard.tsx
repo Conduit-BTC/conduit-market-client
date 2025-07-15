@@ -1,10 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import { NDKEvent } from '@nostr-dev-kit/ndk'
-import {
-  type ProductListing,
-  ProductListingUtils,
-  validateProductListing
-} from 'nostr-commerce-schema'
+import { type ProductListing, ProductListingUtils } from 'nostr-commerce-schema'
 import {
   Card,
   CardContent,
@@ -14,12 +10,14 @@ import {
   CardTitle
 } from './CardComponents.tsx'
 import Icon from '../Icon'
-import { MultiUserPill } from '@/components/Pill'
+import { MultiUserPill, StorePill } from '@/components/Pill'
 import { Badge } from '@/components/Badge.tsx'
-import { cn, formatPrice } from '@/lib/utils.ts'
+import { cn, formatPrice, formatPubkey } from '@/lib/utils/index.ts'
 import AddToCartButton from '../Buttons/index.tsx'
 import Avatar from '../Avatar.tsx'
 import { useSats } from '@/hooks/useSats'
+import { isValidProductEvent } from '@/lib/utils/productValidation'
+import { Pill } from '@/components/Pill.tsx'
 
 const PLACEHOLDER_IMAGE = 'https://prd.place/600/400'
 
@@ -37,28 +35,17 @@ const ProductCard: React.FC<ProductCardProps> = ({
   // Get the sats conversion function
   const { convertToSats, convertToUsd } = useSats()
 
-  // Memoize the validation check so it only runs when the event changes
-  const validationMemo = useMemo(() => {
-    const validationResult = validateProductListing(event)
-
-    // if (!validationResult.success) {
-    //   console.warn('Invalid product event:', validationResult.error)
-    //   return { valid: false, productEvent: null }
-    // }
-
-    // Now we can safely treat it as a ProductListing
-    return {
-      valid: true,
-      productEvent: event as unknown as ProductListing
-    }
-  }, [event.id, event.tags, event.content, event.pubkey]) // Dependencies that should trigger revalidation
+  // Use shared validation logic
+  const isValid = useMemo(() => {
+    return isValidProductEvent(event)
+  }, [event.id, event.tags, event.content, event.pubkey])
 
   // Early return if validation failed
-  if (!validationMemo.valid) {
+  if (!isValid) {
     return null
   }
 
-  const productEvent = validationMemo.productEvent!
+  const productEvent = event as unknown as ProductListing
   const { pubkey } = event
 
   const [imageError, setImageError] = useState(false)
@@ -75,13 +62,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
   //   const storeName = ProductListingUtils.getStoreName(productEvent) #fixme
   const storeName = 'Example Store'
 
-  // If any required field is missing, don't render the card
+  // Since we've already validated, we can safely assert these are not null
   if (!productId || !title || !price) {
-    // console.warn('Product missing required fields:', {
-    //   productId,
-    //   title,
-    //   price
-    // })
+    console.warn(
+      'Product validation passed but fields are missing - this should not happen'
+    )
     return null
   }
 
@@ -304,25 +289,27 @@ const ProductCard: React.FC<ProductCardProps> = ({
               />
             </picture>
           </div>
-          <CardHeader className="flex gap-1 items-start justify-between">
-            <CardTitle className="line-clamp-2 voice-base">{title}</CardTitle>
+          <CardHeader className="grid gap-1">
+            <div className="flex gap-1 items-start justify-between">
+              <CardTitle className="line-clamp-1 voice-2l">{title}</CardTitle>
 
-            {/* rating */}
-            <div className="flex items-center gap-1">
-              <Icon.Star
-                className="size-4 text-transparent"
-                fill="fill-primary-400"
-              />
-              <p className="voice-base font-bold">4.5</p>
+              {/* rating */}
+              <div className="flex items-center gap-1">
+                <Icon.Star
+                  className="size-4 text-transparent"
+                  fill="fill-primary-400"
+                />
+                <p className="voice-base font-bold">4.5</p>
+              </div>
             </div>
-            {/* pubkey */}
+
+            {/* pubkey #todo dont use scale*/}
+            <Pill className=" justify-self-start border-muted scale-75 origin-left">
+              <Avatar />
+              <span className="my-auto">{formatPubkey(pubkey)}</span>
+            </Pill>
           </CardHeader>
-          <p className="voice-sm text-muted-foreground italic mt-[-0.5rem] mb-[0.5rem] flex gap-1 ml-2">
-            <Avatar />
-            <span className="my-auto">{`${pubkey.slice(0, 6)}...${pubkey.slice(
-              -6
-            )}`}</span>
-          </p>
+
           <CardContent className="relative pb-0">
             {summary && false && (
               <CardDescription className="line-clamp-2">

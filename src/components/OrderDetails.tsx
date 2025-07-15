@@ -86,7 +86,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
             </span>
             <div className="flex items-center gap-3 ml-2">
               <Avatar
-                picture={merchant.picture}
+                imageUrl={merchant.picture}
                 alt={merchant.name || merchant.npub}
                 size="sm"
                 npub={merchant.npub}
@@ -259,7 +259,7 @@ const OrderNotFoundComponent: React.FC<{ merchant: NostrProfile }> = ({
         </span>
         <div className="flex items-center gap-2 justify-center">
           <Avatar
-            picture={merchant.picture}
+            imageUrl={merchant.picture}
             alt={merchant.name || merchant.npub}
             size="sm"
             npub={merchant.npub}

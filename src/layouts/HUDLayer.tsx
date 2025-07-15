@@ -25,13 +25,24 @@ const HUDLayer: React.FC = () => {
     setIsHealthBarOpen(false)
   }
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && anyHudOpen) {
+        hideAllHud()
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [anyHudOpen])
+
   //   conditional classes
 
   // hud layer container
   const hudLayerContainerClassName = cn(
     'fixed inset-0 z-50 pointer-events-none grid transition-all duration-300',
     {
-      'bg-paper/40 md:bg-transparent': anyHudOpen
+      // 'pointer-events-auto': anyHudOpen // No background - let cart drawer handle its own styling
     }
   )
 
@@ -39,7 +50,7 @@ const HUDLayer: React.FC = () => {
     'self-end pointer-events-auto transition-all duration-600 ease-bounce',
     {
       'translate-y-0 opacity-100': isCartHUDOpen,
-      'translate-y-9/10 md:translate-y-8/10  opacity-50 hover:translate-y-7/10':
+      'translate-y-4/5 md:translate-y-3/4 opacity-100 hover:translate-y-3/5 md:hover:translate-y-2/3':
         !isCartHUDOpen
     }
   )
@@ -53,10 +64,11 @@ const HUDLayer: React.FC = () => {
   )
 
   const handleHudLayerClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    //  if (anyHudOpen) {
-    //    e.stopPropagation()
-    //    hideAllHud()
-    //  }
+    // Click outside the cart drawer to close (with transparent background)
+    if (anyHudOpen && e.target === e.currentTarget) {
+      e.stopPropagation()
+      hideAllHud()
+    }
   }
 
   return (

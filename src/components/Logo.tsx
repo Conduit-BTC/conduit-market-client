@@ -25,11 +25,12 @@ const Logo: React.FC<LogoProps> = ({ variant = 'full', className }) => {
   }
 
   return (
-    <Link to="/">
-      <picture className={cn(className)}>
-        <img src={logoSrc} alt="Logo" />
-      </picture>
-    </Link>
+	<Link to="/" className="flex items-center gap-2 select-none">
+	<picture className={cn('', className)}>
+	  <img src={logoSrc} alt="Logo" />
+	</picture>
+	<p className="font-bold font-display text-4xl border-l border-primary-foreground pl-2">market</p>
+ </Link>
   )
 }
 

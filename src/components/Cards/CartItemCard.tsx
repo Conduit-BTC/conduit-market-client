@@ -10,7 +10,7 @@ import {
 import { UpdateCartItemQuantityButtons } from '../Buttons/index.tsx'
 import { useState } from 'react'
 import { Pill } from '../Pill.tsx'
-import { cn, formatPrice } from '@/lib/utils.ts'
+import { cn, formatPrice } from '@/lib/utils/index.ts'
 import Icon from '../Icon.tsx'
 import { useSats } from '@/hooks/useSats'
 
