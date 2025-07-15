@@ -19,6 +19,7 @@ import MainLayout from '@/layouts/MainLayout'
 import SimpleLayout from '@/layouts/SimpleLayout'
 import HUDLayer from '@/layouts/HUDLayer.tsx'
 import CreateAccountPage from './CreateAccountPage'
+import NotFoundPage from './NotFoundPage'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 interface RouteConfig {
@@ -182,6 +183,10 @@ export const AppRoutes: React.FC = () => {
         <Redirect to="/" />
       </Route>
       {renderRoutes(routes)}
+      {/* 404 catch-all route - no layout wrapper */}
+      <Route path="/:rest*">
+        <NotFoundPage />
+      </Route>
     </Switch>
   )
 }
