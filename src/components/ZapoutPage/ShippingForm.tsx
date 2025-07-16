@@ -103,7 +103,7 @@ const formConfig = {
       fields: [
         {
           name: 'country',
-          type: 'select',
+          type: 'dropdown',
           placeholder: 'Select Country',
           required: true,
           options: [
