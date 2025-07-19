@@ -20,7 +20,6 @@ import SimpleLayout from '@/layouts/SimpleLayout'
 import HUDLayer from '@/layouts/HUDLayer.tsx'
 import CreateAccountPage from './CreateAccountPage'
 import NotFoundPage from './NotFoundPage'
-import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 interface RouteConfig {
   label: string
@@ -174,18 +173,17 @@ const renderRoutes = (
 }
 
 export const AppRoutes: React.FC = () => {
-  const [animate] = useAutoAnimate()
-
   return (
     <Switch>
-      {/* Redirect /shop to homepage */}
       <Route path="/shop">
         <Redirect to="/" />
       </Route>
       {renderRoutes(routes)}
-      {/* 404 catch-all route - no layout wrapper */}
+      {/* 404 catch-all route */}
       <Route path="/:rest*">
-        <NotFoundPage />
+        <MainLayout>
+          <NotFoundPage />
+        </MainLayout>
       </Route>
     </Switch>
   )

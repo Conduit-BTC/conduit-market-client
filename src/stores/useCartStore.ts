@@ -25,7 +25,7 @@ interface CartState {
 
   // HUD state
   selectedHUDCart: Cart | null
-  setSelectedHUDCart: (cart: Cart) => void
+  setSelectedHUDCart: (cart: Cart | null) => void
 
   // Cart actions
   clearCart: (merchantPubkey: string) => void
