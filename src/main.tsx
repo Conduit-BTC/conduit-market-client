@@ -1,7 +1,4 @@
-// import "@/styles/index.css";
 import '@/styles/site.css'
-import React from 'react' // Add this import
-import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
